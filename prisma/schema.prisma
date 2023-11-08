@@ -28,23 +28,79 @@ model User {
   resetPasswordExpires DateTime?
 }
 
+model Patient {
+  id        String           @id @default(uuid())
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  firstName String
+  lastName  String
+  bookings  ServiceBooking[]
+}
+
 model Clinic {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String            @id @default(uuid())
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
   name       String
   address    String
   city       String
   province   String
   postalCode String
+  doctors    Doctor[]
+  services   ServiceOffering[]
 }
 
 model ClinicalService {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String            @id @default(uuid())
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
   name       String
   branchCode String
   leaCode    String
   nomenCode  String
+  doctors    ServiceOffering[]
+}
+
+model Doctor {
+  id        String            @id @default(uuid())
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  firstName String
+  lastName  String
+  worksAt   Clinic[]
+  services  ServiceOffering[]
+}
+
+model ServiceOffering {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctor   Doctor @relation(fields: [doctorId], references: [id])
+  doctorId String
+
+  service   ClinicalService @relation(fields: [serviceId], references: [id])
+  serviceId String
+
+  clinic   Clinic @relation(fields: [clinicId], references: [id])
+  clinicId String
+
+  amount Int
+
+  duration Int
+  bookings ServiceBooking[]
+}
+
+model ServiceBooking {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+
+  service   ServiceOffering @relation(fields: [serviceId], references: [id])
+  serviceId String
+
+  bookedAt DateTime // 12 Novembre 12:30
 }

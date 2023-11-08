@@ -26,6 +26,7 @@ export function ClinicDialog(p: {
           method="post"
           key={p.clinic?.id}
           validator={validator}
+          resetAfterSubmit={true}
           defaultValues={p.clinic ?? {}}
           encType="multipart/form-data"
           action="/clinics/upsert"
