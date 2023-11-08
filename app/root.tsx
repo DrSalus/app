@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import { LoaderFunction, json, type LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -8,10 +8,24 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import styles from "./tailwind.css";
+import AppToasts from "./components/appToasts";
+import NavigationBar from "./components/navigationBar";
+import { authenticator } from "./services/auth.server";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  ...(cssBundleHref
+    ? [{ rel: "stylesheet", href: cssBundleHref }]
+    : [{ rel: "stylesheet", href: styles }]),
 ];
+
+// dashboard if it is or return null if it's not
+export let loader: LoaderFunction = async ({ request }) => {
+  // If the user is already authenticated redirect to /dashboard directly
+  const user = await authenticator.isAuthenticated(request, {});
+
+  return json({ user });
+};
 
 export default function App() {
   return (
@@ -23,9 +37,11 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <NavigationBar />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
+        <AppToasts />
         <LiveReload />
       </body>
     </html>

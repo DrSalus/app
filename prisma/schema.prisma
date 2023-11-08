@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserState {
+  INVITED
+  ACTIVE
+  DISABLED
+}
+
+model User {
+  id                   String    @id @default(uuid())
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  state                UserState @default(ACTIVE)
+  firstName            String
+  lastName             String
+  email                String    @unique
+  password             String
+  isAdmin              Boolean   @default(false)
+  companyId            String?
+  resetPasswordToken   String?   @unique
+  resetPasswordExpires DateTime?
+}
+
+model Clinic {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  name       String
+  address    String
+  city       String
+  province   String
+  postalCode String
+}
+
+model ClinicalService {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  name       String
+  branchCode String
+  leaCode    String
+  nomenCode  String
+}
