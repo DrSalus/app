@@ -8,6 +8,7 @@ import {
   BuildingOfficeIcon,
   ReceiptPercentIcon,
   UserCircleIcon,
+  UserGroupIcon,
   WrenchIcon,
 } from "@heroicons/react/24/solid";
 import HomeItem from "~/components/homeItem";
@@ -52,6 +53,11 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="grid grid-cols-5 gap-4 p-4">
+        <HomeItem
+          icon={<UserGroupIcon />}
+          to="/patients"
+          title="Gestione Pazienti"
+        />
         <HomeItem
           icon={<BuildingOfficeIcon />}
           to="/clinics"

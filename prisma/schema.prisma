@@ -16,6 +16,7 @@ enum UserState {
 enum Gender {
   MALE
   FEMALE
+  NOT_SPECIFIED
 }
 
 model User {
@@ -41,7 +42,7 @@ model Patient {
   lastName     String
   gender       Gender
   fiscalCode   String           @unique
-  emailAddress String           @unique
+  emailAddress String?          @unique
   bookings     ServiceBooking[]
 }
 

@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@emotion/react':
     specifier: ^11.11.1
@@ -44,6 +40,9 @@ dependencies:
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
+  codice-fiscale-js:
+    specifier: ^2.3.20
+    version: 2.3.20
   invariant:
     specifier: ^2.2.4
     version: 2.2.4
@@ -2494,6 +2493,10 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
     dev: true
+
+  /codice-fiscale-js@2.3.20:
+    resolution: {integrity: sha512-ryMsurNvZwbOuqq0M0jaFtH354RrRk1mqZ+9C1L3VQEe0KgJuxu4jYHg2I8SWLx5K4nJQB+qnHN/GesrlbDHiQ==}
+    dev: false
 
   /color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
@@ -7206,3 +7209,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

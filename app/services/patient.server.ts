@@ -1,15 +1,12 @@
 import { parseMultipartFormData } from "~/utils/utils.server";
 import { authenticator } from "./auth.server";
-import { clinicKeys, validator } from "~/validators/clinic";
+import { validator } from "~/validators/patient";
 import { validationError } from "remix-validated-form";
 import { db } from "~/utils/db.server";
-import { pickBy } from "lodash-es";
-import { Clinic } from "@prisma/client";
 
 export async function handleRequest(request: Request) {
   const form = await parseMultipartFormData(request);
 
- 
   // Validate
   const result = await validator.validate(form);
   if (result.error) {
@@ -21,7 +18,7 @@ export async function handleRequest(request: Request) {
   switch (data._action) {
     case "update": {
       const { _action, _redirect, _id, ...other } = data;
-      await db.clinic.update({
+      await db.patient.update({
         where: {
           id: _id,
         },
@@ -32,7 +29,7 @@ export async function handleRequest(request: Request) {
 
     case "create": {
       const { _action, _redirect, ...other } = data;
-      await db.clinic.create({
+      await db.patient.create({
         data: other,
       });
       break;
@@ -40,7 +37,7 @@ export async function handleRequest(request: Request) {
 
     case "delete": {
       const { _id } = data;
-      await db.clinic.delete({
+      await db.patient.delete({
         where: {
           id: _id,
         },
