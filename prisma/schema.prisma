@@ -13,6 +13,11 @@ enum UserState {
   DISABLED
 }
 
+enum Gender {
+  MALE
+  FEMALE
+}
+
 model User {
   id                   String    @id @default(uuid())
   createdAt            DateTime  @default(now())
@@ -29,12 +34,15 @@ model User {
 }
 
 model Patient {
-  id        String           @id @default(uuid())
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  firstName String
-  lastName  String
-  bookings  ServiceBooking[]
+  id           String           @id @default(uuid())
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  firstName    String
+  lastName     String
+  gender       Gender
+  fiscalCode   String           @unique
+  emailAddress String           @unique
+  bookings     ServiceBooking[]
 }
 
 model Clinic {
@@ -102,5 +110,6 @@ model ServiceBooking {
   service   ServiceOffering @relation(fields: [serviceId], references: [id])
   serviceId String
 
-  bookedAt DateTime // 12 Novembre 12:30
+  bookedAt DateTime
+  duration Int
 }
