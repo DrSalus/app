@@ -12,6 +12,7 @@ import {
   WrenchIcon,
 } from "@heroicons/react/24/solid";
 import HomeItem from "~/components/homeItem";
+import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   // If the user is already authenticated redirect to /dashboard directly
@@ -67,6 +68,11 @@ export default function Dashboard() {
           icon={<ReceiptPercentIcon />}
           to="/clinicalServices"
           title="Gestione Prestazioni"
+        />
+        <HomeItem
+          icon={<DocumentArrowUpIcon />}
+          to="/doctors"
+          title="Gestione Dottori"
         />
         <HomeItem icon={<WrenchIcon />} to="/admin" title="Admin" />
       </div>

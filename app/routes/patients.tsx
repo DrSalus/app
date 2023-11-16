@@ -4,13 +4,14 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import type { Clinic, Patient } from "@prisma/client";
+import { Gender, type Patient } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
+import classNames from "classnames";
+import { DateTime } from "luxon";
 import Button from "~/components/button";
 import DeleteModal from "~/components/deleteModal";
 import Pagination, { getPaginationState } from "~/components/pagination";
-import { ClinicDialog } from "~/dialogs/clinicDialog";
 import { PatientDialog } from "~/dialogs/patientDialog";
 import { authenticator } from "~/services/auth.server";
 import type { WithSerializedTypes } from "~/utils/client";
@@ -33,6 +34,25 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const patients = await db.patient.findMany({
     ...queryParams,
+    where: {
+      OR: [
+        {
+          firstName: {
+            contains: query,
+          },
+        },
+        {
+          lastName: {
+            contains: query,
+          },
+        },
+        {
+          fiscalCode: {
+            contains: query,
+          },
+        },
+      ],
+    },
   });
 
   return { user, pagination, patients };
@@ -70,20 +90,33 @@ export default function Patients() {
         <table>
           <thead>
             <tr>
-              <th className="">Nome</th>
-              <th className="">Cognome</th>
+              <th className="">Paziente</th>
               <th className="">Cod. Fiscale</th>
+              <th className="">Data di Nascita</th>
+              <th className="">Città di Nascita</th>
               <th className="w-2">Azioni</th>
             </tr>
           </thead>
           <tbody>
             {patients.map((u) => (
               <tr key={u.id}>
-                <td className="font-medium">{u.firstName}</td>
-                <td className="font-medium">{u.lastName}</td>
-                <td className="text-gray-800">
-                  {u.fiscalCode}
+                <td className="font-medium">
+                  <div className="flex text-bas font-medium items-center gap-x-1">
+                    <div>{u.firstName}</div>
+                    <div>{u.lastName}</div>
+                    <div className="flex-grow" />
+                    <PatientAge patient={u} />
+                  </div>
                 </td>
+                <td className="text-gray-800">{u.fiscalCode}</td>
+                <td className="text-gray-800">
+                  <div className="flex items-center gap-x-2">
+                    {DateTime.fromISO(u.birthDate).toLocaleString(
+                      DateTime.DATE_MED
+                    )}
+                  </div>
+                </td>
+                <td className="text-gray-800">{u.birthCity}</td>
                 <td className="flex gap-x-2">
                   <Button
                     onClick={() => openModal(u)}
@@ -118,6 +151,28 @@ export default function Patients() {
         redirectTo={`/patients`}
         onClose={onCloseRemove}
       />
+    </div>
+  );
+}
+
+export function PatientAge(p: { patient: WithSerializedTypes<Patient> }) {
+  const age = Math.floor(
+    Math.abs(DateTime.fromISO(p.patient.birthDate).diffNow("years").years)
+  );
+
+  return (
+    <div
+      className={classNames(
+        "flex rounded-lg px-2 text-sm font-semibold py-0.5",
+        {
+          "bg-blue-200 text-blue-600": p.patient.gender === Gender.MALE,
+          "bg-pink-200 text-pink-600": p.patient.gender === Gender.FEMALE,
+          "bg-gray-200 text-gray-800":
+            p.patient.gender === Gender.NOT_SPECIFIED,
+        }
+      )}
+    >
+      {age} Anni
     </div>
   );
 }

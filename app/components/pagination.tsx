@@ -58,7 +58,7 @@ export async function getPaginationState(
   return [queryParams, paginationState];
 }
 
-export default function Pagination() {
+export default function Pagination(p: { primaryButton?: JSX.Element }) {
   const data = useLoaderData<PaginatedResponse>();
 
   const paginationRange = useMemo(() => {
@@ -89,6 +89,8 @@ export default function Pagination() {
 
   return (
     <div className="pagination">
+      <div className="fixed bottom-3 right-3">{p.primaryButton}</div>
+
       <LinkButton
         disabled={currentPage <= 1}
         icon={<ChevronLeftIcon />}

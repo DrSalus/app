@@ -40,6 +40,8 @@ model Patient {
   updatedAt    DateTime         @updatedAt
   firstName    String
   lastName     String
+  birthDate    DateTime         @db.Date
+  birthCity    String
   gender       Gender
   fiscalCode   String           @unique
   emailAddress String?          @unique
@@ -57,6 +59,7 @@ model Clinic {
   postalCode String
   doctors    Doctor[]
   services   ServiceOffering[]
+  plans      ClinicPlan[]
 }
 
 model ClinicalService {
@@ -78,6 +81,7 @@ model Doctor {
   lastName  String
   worksAt   Clinic[]
   services  ServiceOffering[]
+  plans     ClinicPlan[]
 }
 
 model ServiceOffering {
@@ -98,6 +102,7 @@ model ServiceOffering {
 
   duration Int
   bookings ServiceBooking[]
+  plans    ClinicPlan[]
 }
 
 model ServiceBooking {
@@ -113,4 +118,37 @@ model ServiceBooking {
 
   bookedAt DateTime
   duration Int
+}
+
+model ClinicPlan {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String
+
+  clinic   Clinic @relation(fields: [clinicId], references: [id])
+  clinicId String
+
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+  doctorId String?
+
+  services   ServiceOffering[]
+  dailyPlans DailyCalendarPlan[]
+}
+
+model DailyCalendarPlan {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dayOfWeek  Int
+  validFrom  DateTime?
+  validUntil DateTime?
+
+  fromHour Int
+  toHour   Int
+
+  clinicPlan   ClinicPlan @relation(fields: [clinicPlanId], references: [id])
+  clinicPlanId String
 }

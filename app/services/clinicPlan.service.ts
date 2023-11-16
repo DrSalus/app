@@ -1,5 +1,5 @@
 import { parseMultipartFormData } from "~/utils/utils.server";
-import { validator } from "~/validators/patient";
+import { validator } from "~/validators/clinicPlan";
 import { validationError } from "remix-validated-form";
 import { db } from "~/utils/db.server";
 
@@ -16,35 +16,25 @@ export async function handleRequest(request: Request) {
   const { _redirect } = data;
   switch (data._action) {
     case "update": {
-      const {
-        _action,
-        _redirect,
-        _id,
-        birthDate: birthDateISO,
-        ...other
-      } = data;
-      const birthDate = new Date(birthDateISO);
-      await db.patient.update({
-        where: {
-          id: _id,
-        },
-        data: { ...other, birthDate },
+      const { _action, _redirect, _id, ...other } = data;
+      await db.clinicPlan.update({
+        where: { id: _id },
+        data: other,
       });
       break;
     }
 
     case "create": {
-      const { _action, _redirect, birthDate: birthDateISO, ...other } = data;
-      const birthDate = new Date(birthDateISO);
-      await db.patient.create({
-        data: { ...other, birthDate },
+      const { _action, _redirect, ...other } = data;
+      await db.clinicPlan.create({
+        data: other,
       });
       break;
     }
 
     case "delete": {
       const { _id } = data;
-      await db.patient.delete({
+      await db.clinicPlan.delete({
         where: {
           id: _id,
         },

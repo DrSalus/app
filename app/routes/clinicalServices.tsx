@@ -9,6 +9,7 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import Button from "~/components/button";
 import DeleteModal from "~/components/deleteModal";
+import Header from "~/components/header";
 import Pagination, { getPaginationState } from "~/components/pagination";
 import { ClinicDialog } from "~/dialogs/clinicDialog";
 import { ClinicalServiceDialog } from "~/dialogs/clinicalServiceDialog";
@@ -50,25 +51,9 @@ export default function ClinicalService() {
   ] = useDialog<string>();
 
   return (
-    <div className="flex flex-col pt-4">
-      <div className="search-bar-container">
-        <Form className="search-bar">
-          <input
-            type="text"
-            name="query"
-            defaultValue={""}
-            placeholder="Cerca prestazioni..."
-          />
-          <button type="submit">
-            <MagnifyingGlassIcon className="h-6 px-2 text-sky-800" />
-          </button>
-        </Form>
-        <Button
-          onClick={() => openModal()}
-          intent="primary"
-          text="Aggiungi Clinica"
-          icon={<PlusIcon />}
-        />
+    <div className="page">
+      <div className="headed-card">
+        <Header title="Gestione Prestazioni" />
       </div>
       <div className="table mx-6">
         <table>
@@ -108,18 +93,28 @@ export default function ClinicalService() {
           </tbody>
         </table>
       </div>
-      <Pagination />
+      <Pagination
+        primaryButton={
+          <Button
+            onClick={() => openModal()}
+            intent="primary"
+            small
+            text="Aggiungi"
+            icon={<PlusIcon />}
+          />
+        }
+      />
       <ClinicalServiceDialog
         isOpen={isModalOpen}
         clinicalService={clinicalService}
-        redirectTo={`/clinicalService`}
+        redirectTo={`/clinicalServices`}
         onClose={onCloseModal}
       />
       <DeleteModal
         id={clinicalServiceToRemove ?? ""}
         isOpen={isRemoveOpen}
         action="/clinicalService/upsert"
-        redirectTo={`/clinicalService`}
+        redirectTo={`/clinicalServices`}
         onClose={onCloseRemove}
       />
     </div>

@@ -1,7 +1,10 @@
-import type { ZodRawShape, ZodSchema, ZodTypeAny } from "zod";
+import type { ZodRawShape } from "zod";
 import z, { object } from "zod";
 
-export function getBaseUnion<T extends ZodRawShape, Z extends ZodRawShape>(schema: z.ZodObject<T>, updateSchema?: z.ZodObject<Z>) {
+export function getBaseUnion<T extends ZodRawShape, Z extends ZodRawShape>(
+  schema: z.ZodObject<T>,
+  updateSchema?: z.ZodObject<Z>
+) {
   return z.discriminatedUnion("_action", [
     schema.extend({
       _action: z.literal("create"),
@@ -16,6 +19,6 @@ export function getBaseUnion<T extends ZodRawShape, Z extends ZodRawShape>(schem
       _action: z.literal("update"),
       _id: z.string(),
       _redirect: z.string().optional(),
-    })
+    }),
   ]);
 }

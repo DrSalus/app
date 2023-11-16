@@ -6,9 +6,10 @@ import {
 } from "@heroicons/react/24/solid";
 import type { Clinic } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import Button from "~/components/button";
 import DeleteModal from "~/components/deleteModal";
+import Header from "~/components/header";
 import Pagination, { getPaginationState } from "~/components/pagination";
 import { ClinicDialog } from "~/dialogs/clinicDialog";
 import { authenticator } from "~/services/auth.server";
@@ -39,33 +40,18 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function Clinics() {
   const { clinics } = useLoaderData<typeof loader>();
+  const navigate = useNavigate();
   const [isModalOpen, clinic, openModal, onCloseModal] =
     useDialog<WithSerializedTypes<Clinic>>();
   const [isRemoveOpen, clinicToRemove, removeClinic, onCloseRemove] =
     useDialog<string>();
 
   return (
-    <div className="flex flex-col pt-4">
-      <div className="search-bar-container">
-        <Form className="search-bar">
-          <input
-            type="text"
-            name="query"
-            defaultValue={""}
-            placeholder="Cerca cliniche..."
-          />
-          <button type="submit">
-            <MagnifyingGlassIcon className="h-6 px-2 text-sky-800" />
-          </button>
-        </Form>
-        <Button
-          onClick={() => openModal()}
-          intent="primary"
-          text="Aggiungi Clinica"
-          icon={<PlusIcon />}
-        />
+    <div className="page">
+      <div className="headed-card">
+        <Header title="Gestione Cliniche" />
       </div>
-      <div className="table mx-6">
+      <div className="table mx-4">
         <table>
           <thead>
             <tr>
@@ -76,7 +62,11 @@ export default function Clinics() {
           </thead>
           <tbody>
             {clinics.map((u) => (
-              <tr key={u.id}>
+              <tr
+                key={u.id}
+                className="hover:bg-gray-100 cursor-pointer"
+                onClick={() => navigate(`/clinic/${u.id}/dashboard`)}
+              >
                 <td className="font-medium">{u.name}</td>
                 <td className="text-gray-800">
                   {u.address}, {u.city}
@@ -101,7 +91,17 @@ export default function Clinics() {
           </tbody>
         </table>
       </div>
-      <Pagination />
+      <Pagination
+        primaryButton={
+          <Button
+            onClick={() => openModal()}
+            intent="primary"
+            small
+            text="Aggiungi"
+            icon={<PlusIcon />}
+          />
+        }
+      />
       <ClinicDialog
         isOpen={isModalOpen}
         clinic={clinic}

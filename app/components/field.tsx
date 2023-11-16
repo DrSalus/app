@@ -1,38 +1,25 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
-import classNames from "classnames";
-import { useField } from "remix-validated-form";
+import { useControlField, useField } from "remix-validated-form";
 
-interface FieldProps {
+export interface FieldProps {
   name: string;
   label: string;
   helperText?: string;
-  inputClassName?: string;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  children: JSX.Element;
 }
 
 export default function Field({
   name,
   label,
   helperText,
-  inputClassName,
-  inputProps,
+  children,
 }: FieldProps) {
-  const { error, getInputProps } = useField(name);
+  const { error } = useField(name);
 
   return (
     <>
       <label htmlFor={name}>{label}</label>
-      <input
-        className={classNames(
-          "input",
-          {
-            error: error,
-          },
-          inputClassName
-        )}
-        {...getInputProps({ id: name })}
-        {...(inputProps ?? {})}
-      />
+      {children}
       <span className="helperText">{helperText}</span>
       {error && (
         <span className="errorText">

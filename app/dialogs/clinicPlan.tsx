@@ -1,35 +1,43 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import type { Clinic } from "@prisma/client";
+import type { ClinicPlan, Doctor } from "@prisma/client";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
 import { ValidatedForm } from "remix-validated-form";
-import { validator } from "~/validators/clinic";
+import { validator } from "~/validators/clinicPlan";
 import InputField from "~/components/fields/inputField";
+import { last } from "lodash-es";
 import { v4 } from "uuid";
+import { useMatches } from "@remix-run/react";
+import SelectField from "~/components/fields/selectField";
+import DoctorField from "~/components/fields/doctorField";
 
-export function ClinicDialog(p: {
-  clinic?: WithSerializedTypes<Clinic | null>;
+export function ClinicPlanDialog(p: {
+  clinicPlan?: WithSerializedTypes<ClinicPlan | null>;
+  doctors: Doctor[];
   redirectTo?: string;
+  clinicId: string;
   isOpen: boolean;
   onClose?: () => void;
 }) {
-  const isNew = p.clinic == null;
+  const isNew = p.clinicPlan == null;
+  const matches = useMatches();
+  const redirectTo = p.redirectTo ?? last(matches)?.pathname;
 
   return (
     <Overlay isOpen={p.isOpen}>
       <div className="card w-3/5 z-10">
-        <h2>{isNew ? "Aggiungi Clinica" : "Modifica Clinica"}</h2>
+        <h2>{isNew ? "Aggiungi Agenda" : "Modifica Agenda"}</h2>
         <XMarkIcon className="close-button" onClick={p.onClose} />
 
         <ValidatedForm
           method="post"
-          key={p.clinic?.id ?? v4()}
+          key={p.clinicPlan?.id ?? v4()}
           validator={validator}
           resetAfterSubmit={true}
-          defaultValues={p.clinic ?? {}}
+          defaultValues={p.clinicPlan ?? {}}
           encType="multipart/form-data"
-          action="/clinics/upsert"
+          action="/clinicPlan/upsert"
         >
           <DialogCloseOnSubmit onClose={p.onClose} />
           <div className="form-grid px-4 pt-4">
@@ -38,26 +46,13 @@ export function ClinicDialog(p: {
               value={isNew ? "create" : "update"}
               name="_action"
             />
-            <input type="hidden" name="_redirect" value={p.redirectTo} />
-            <input type="hidden" name="_id" value={p.clinic?.id} />
+            <input type="hidden" name="_redirect" value={redirectTo} />
+            <input type="hidden" name="_id" value={p.clinicPlan?.id} />
+            <input type="hidden" name="clinicId" value={p.clinicId} />
 
-            <InputField
-              name="name"
-              label="Nome"
-              helperText="Il nome della clinica."
-            />
-            <InputField name="address" label="Indirizzo" />
-            <InputField name="city" label="Città" />
-            <InputField
-              name="province"
-              label="Provincia"
-              inputProps={{ maxLength: 2 }}
-            />
-            <InputField
-              name="postalCode"
-              label="CAP"
-              inputProps={{ maxLength: 5 }}
-            />
+            <DoctorField doctors={p.doctors} />
+
+            <InputField name="name" label="Nome" />
           </div>
 
           <div className="p-4 pb-2">
@@ -65,7 +60,7 @@ export function ClinicDialog(p: {
               intent="primary"
               className="w-full"
               type="submit"
-              text={isNew ? "Aggiungi Clinica" : "Modifica Clinica"}
+              text={isNew ? "Aggiungi Agenda" : "Modifica Agenda"}
               icon={<PlusIcon />}
             />
           </div>

@@ -100,12 +100,13 @@
     @apply h-full flex flex-col;
   }
 
+
   .card {
     @apply rounded-xl relative shadow-2xl border-2 px-4 py-3 m-2 bg-white flex flex-col;
   }
 
   .headed-card {
-    @apply flex flex-col bg-white rounded-xl m-4 shadow-lg border;
+    @apply flex flex-col bg-white -mt-3 shadow-lg mb-4;
   }
 
   .non-ideal-state {
@@ -333,11 +334,11 @@
   }
 
   .table th {
-    @apply text-left px-3 py-1;
+    @apply text-left px-3 py-0.5;
   }
 
   .table tr td {
-    @apply px-3 py-2 print:px-2 print:py-1.5;
+    @apply px-3 py-1.5 print:px-2 print:py-1.5;
   }
   .table td:not(:last-child),
   .table th:not(:last-child) {
@@ -436,7 +437,7 @@
   }
 
   .pagination {
-    @apply bg-gray-100 border-t flex justify-center fixed bottom-0 py-3 left-0 w-full h-14 gap-x-2;
+    @apply bg-white border-t flex justify-center fixed bottom-0 py-3 left-0 w-full h-14 gap-x-2;
   }
   .pagination .btn:not(.btn-primary) {
     @apply bg-white shadow-md hover:bg-gray-100;
