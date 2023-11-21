@@ -42,7 +42,7 @@ export default function Clinic() {
               icon: <GlobeAmericasIcon />,
             },
             {
-              id: "plans",
+              id: "agendas",
               title: "Agende",
               icon: <CalendarDaysIcon />,
             },

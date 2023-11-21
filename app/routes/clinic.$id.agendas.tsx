@@ -1,17 +1,17 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useParams } from "@remix-run/react";
 import { getPaginationState } from "~/components/pagination";
-import ClinicPlansTable from "~/tables/clinicPlans";
+import AgendasTable from "~/tables/agendas";
 import { db } from "~/utils/db.server";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const where = { clinicId: params.id };
   const [queryParams, pagination] = await getPaginationState(
     request,
-    db.clinicPlan.count({ where }),
+    db.agenda.count({ where }),
     13
   );
-  const clinicPlans = await db.clinicPlan.findMany({
+  const agendas = await db.agenda.findMany({
     ...queryParams,
     include: {
       doctor: true,
@@ -19,6 +19,14 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     where: {
       AND: [where],
     },
+  });
+  const services = await db.serviceOffering.findMany({
+    where: {
+      clinicId: params.id
+    },
+    include: {
+      service: true
+    }
   });
   const doctors = await db.doctor.findMany({
     ...queryParams,
@@ -31,10 +39,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
       },
     },
   });
-  return { clinicPlans, pagination, doctors };
+  return { agendas, services, pagination, doctors };
 }
 
 export default function ClinicDashboard() {
   const { id } = useParams();
-  return <ClinicPlansTable clinic={id!} />;
+  return <AgendasTable clinic={id!} />;
 }

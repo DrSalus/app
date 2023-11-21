@@ -1,3 +1,4 @@
+import { ServiceType } from "@prisma/client";
 import { withZod } from "@remix-validated-form/with-zod";
 import z from "zod";
 
@@ -9,6 +10,9 @@ export const clinicalServiceSchema = {
     .string()
     .min(1, { message: "Il codice branca è obbligatoria. " }),
   leaCode: z.string().min(1, { message: "La codifica LEA è obbligatoria. " }),
+  type:  z.nativeEnum(ServiceType, {
+    errorMap: () => ({ message: "Il tipo è obbligatorio" }),
+  }),
   nomenCode: z
     .string()
     .min(1, { message: "La codifica Nazionale DM 2012 è obbligatoria. " }),

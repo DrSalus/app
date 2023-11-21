@@ -8,6 +8,7 @@ import { ValidatedForm } from "remix-validated-form";
 import { validator } from "~/validators/clinicalService";
 import InputField from "~/components/fields/inputField";
 import { v4 } from "uuid";
+import ServiceTypeField from "~/components/fields/serviceTypeField";
 
 export function ClinicalServiceDialog(p: {
   clinicalService?: WithSerializedTypes<ClinicalService | null>;
@@ -46,6 +47,8 @@ export function ClinicalServiceDialog(p: {
               label="Nome"
               helperText="Il nome della prestazione."
             />
+                        <ServiceTypeField />
+
             <InputField
               name="nomenCode"
               label="Codice Nazionale"

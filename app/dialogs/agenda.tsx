@@ -1,26 +1,29 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import type { ClinicPlan, Doctor } from "@prisma/client";
+import { ServiceType, type Agenda, type Doctor, ClinicalService, ServiceOffering } from "@prisma/client";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
 import { ValidatedForm } from "remix-validated-form";
-import { validator } from "~/validators/clinicPlan";
+import { validator } from "~/validators/agenda";
 import InputField from "~/components/fields/inputField";
 import { last } from "lodash-es";
 import { v4 } from "uuid";
 import { useMatches } from "@remix-run/react";
 import SelectField from "~/components/fields/selectField";
 import DoctorField from "~/components/fields/doctorField";
+import ServiceTypeField from "~/components/fields/serviceTypeField";
+import ServicesField from "~/components/fields/servicesField";
 
-export function ClinicPlanDialog(p: {
-  clinicPlan?: WithSerializedTypes<ClinicPlan | null>;
+export function AgendaDialog(p: {
+  agenda?: WithSerializedTypes<Agenda | null>;
   doctors: Doctor[];
+  services: WithSerializedTypes<ServiceOffering & { service: ClinicalService }>[];
   redirectTo?: string;
   clinicId: string;
   isOpen: boolean;
   onClose?: () => void;
 }) {
-  const isNew = p.clinicPlan == null;
+  const isNew = p.agenda == null;
   const matches = useMatches();
   const redirectTo = p.redirectTo ?? last(matches)?.pathname;
 
@@ -32,12 +35,12 @@ export function ClinicPlanDialog(p: {
 
         <ValidatedForm
           method="post"
-          key={p.clinicPlan?.id ?? v4()}
+          key={p.agenda?.id ?? v4()}
           validator={validator}
           resetAfterSubmit={true}
-          defaultValues={p.clinicPlan ?? {}}
+          defaultValues={p.agenda ?? {}}
           encType="multipart/form-data"
-          action="/clinicPlan/upsert"
+          action="/agendas/upsert"
         >
           <DialogCloseOnSubmit onClose={p.onClose} />
           <div className="form-grid px-4 pt-4">
@@ -47,12 +50,13 @@ export function ClinicPlanDialog(p: {
               name="_action"
             />
             <input type="hidden" name="_redirect" value={redirectTo} />
-            <input type="hidden" name="_id" value={p.clinicPlan?.id} />
+            <input type="hidden" name="_id" value={p.agenda?.id} />
             <input type="hidden" name="clinicId" value={p.clinicId} />
-
-            <DoctorField doctors={p.doctors} />
-
             <InputField name="name" label="Nome" />
+            <ServiceTypeField />
+            <DoctorField doctors={p.doctors} />
+            <ServicesField name="services" services={p.services} />
+
           </div>
 
           <div className="p-4 pb-2">

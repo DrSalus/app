@@ -11,6 +11,8 @@ import { v4 } from "uuid";
 import { useMatches } from "@remix-run/react";
 import SelectField from "~/components/fields/selectField";
 import DoctorField from "~/components/fields/doctorField";
+import ServiceTypeField from "~/components/fields/serviceTypeField";
+import ServiceField from "~/components/fields/serviceField";
 
 export function OfferingDialog(p: {
   serviceOffering?: WithSerializedTypes<ServiceOffering | null>;
@@ -51,15 +53,11 @@ export function OfferingDialog(p: {
             <input type="hidden" name="_id" value={p.serviceOffering?.id} />
             <input type="hidden" name="clinicId" value={p.clinicId} />
 
+            <ServiceTypeField />
             <DoctorField doctors={p.doctors} />
 
-            <SelectField
-              name="serviceId"
-              label="Prestazione"
-              options={p.services.map((d) => ({
-                value: d.id,
-                label: d.name,
-              }))}
+            <ServiceField
+              services={p.services}
             />
             <InputField
               inputProps={{ type: "number" }}

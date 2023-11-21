@@ -31,7 +31,7 @@ export function ClinicDialog(p: {
           encType="multipart/form-data"
           action="/clinics/upsert"
         >
-          <DialogCloseOnSubmit onClose={p.onClose} />
+          <DialogCloseOnSubmit onClose={p.onClose} /> 
           <div className="form-grid px-4 pt-4">
             <input
               type="hidden"

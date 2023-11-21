@@ -1,23 +1,20 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
-import type { ClinicPlan, Doctor } from "@prisma/client";
+import type { Agenda, ClinicalService, Doctor } from "@prisma/client";
 import { useLoaderData } from "@remix-run/react";
 import Button from "~/components/button";
 import DeleteModal from "~/components/deleteModal";
 import Pagination from "~/components/pagination";
-import { ClinicPlanDialog } from "~/dialogs/clinicPlan";
+import { AgendaDialog } from "~/dialogs/agenda";
+import { loader } from "~/routes/clinic.$id.agendas";
 import type { WithSerializedTypes } from "~/utils/client";
 import { useDialog } from "~/utils/dialog";
 
-interface Data {
-  clinicPlans: ClinicPlan & { doctor: Doctor }[];
-  doctors: Doctor[];
-}
 
-export default function ClinicPlansTable(p: { clinic: string }) {
-  const { clinicPlans, doctors } = useLoaderData<Data>();
-  const [isModalOpen, clinicPlan, openModal, onCloseModal] =
-    useDialog<WithSerializedTypes<ClinicPlan>>();
-  const [isRemoveOpen, clinicPlanToRemove, removeClinicPlan, onCloseRemove] =
+export default function AgendasTable(p: { clinic: string }) {
+  const { agendas, services, doctors } = useLoaderData<typeof loader>();
+  const [isModalOpen, agenda, openModal, onCloseModal] =
+    useDialog<WithSerializedTypes<Agenda>>();
+  const [isRemoveOpen, agendaToRemove, removeAgenda, onCloseRemove] =
     useDialog<string>();
 
   return (
@@ -31,7 +28,7 @@ export default function ClinicPlansTable(p: { clinic: string }) {
             </tr>
           </thead>
           <tbody>
-            {clinicPlans.map((u) => (
+            {agendas?.map((u) => (
               <tr key={u.id}>
                 <td className="">{u.name}</td>
                 <td className="">
@@ -45,7 +42,7 @@ export default function ClinicPlansTable(p: { clinic: string }) {
                     icon={<PencilIcon />}
                   />
                   <Button
-                    onClick={() => removeClinicPlan(u.id)}
+                    onClick={() => removeAgenda(u.id)}
                     small
                     intent="danger"
                     text="Rimuovi"
@@ -68,18 +65,19 @@ export default function ClinicPlansTable(p: { clinic: string }) {
           />
         }
       />
-      <ClinicPlanDialog
+      <AgendaDialog
         isOpen={isModalOpen}
         doctors={doctors}
+        services={services}
         onClose={onCloseModal}
         clinicId={p.clinic}
-        clinicPlan={clinicPlan}
+        agenda={agenda}
       />
 
       <DeleteModal
-        id={clinicPlanToRemove ?? ""}
+        id={agendaToRemove ?? ""}
         isOpen={isRemoveOpen}
-        action="/clinicPlan/upsert"
+        action="/agendas/upsert"
         onClose={onCloseRemove}
       />
     </div>

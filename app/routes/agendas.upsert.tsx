@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { handleRequest } from "~/services/clinicPlan.service";
+import { handleRequest } from "~/services/agendas";
 
 export const action: ActionFunction = async ({ request }) => {
   const redirectTo = await handleRequest(request);

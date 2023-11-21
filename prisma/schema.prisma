@@ -19,6 +19,12 @@ enum Gender {
   NOT_SPECIFIED
 }
 
+enum ServiceType {
+  VISIT
+  LAB
+  INSTRUMENTAL
+}
+
 model User {
   id                   String    @id @default(uuid())
   createdAt            DateTime  @default(now())
@@ -59,7 +65,7 @@ model Clinic {
   postalCode String
   doctors    Doctor[]
   services   ServiceOffering[]
-  plans      ClinicPlan[]
+  plans      Agenda[]
 }
 
 model ClinicalService {
@@ -70,6 +76,7 @@ model ClinicalService {
   branchCode String
   leaCode    String
   nomenCode  String
+  type       ServiceType       @default(VISIT)
   doctors    ServiceOffering[]
 }
 
@@ -81,7 +88,7 @@ model Doctor {
   lastName  String
   worksAt   Clinic[]
   services  ServiceOffering[]
-  plans     ClinicPlan[]
+  agendas   Agenda[]
 }
 
 model ServiceOffering {
@@ -89,8 +96,8 @@ model ServiceOffering {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  doctor   Doctor @relation(fields: [doctorId], references: [id])
-  doctorId String
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+  doctorId String?
 
   service   ClinicalService @relation(fields: [serviceId], references: [id])
   serviceId String
@@ -102,7 +109,7 @@ model ServiceOffering {
 
   duration Int
   bookings ServiceBooking[]
-  plans    ClinicPlan[]
+  agendas  Agenda[]
 }
 
 model ServiceBooking {
@@ -120,12 +127,13 @@ model ServiceBooking {
   duration Int
 }
 
-model ClinicPlan {
+model Agenda {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   name String
+  type ServiceType
 
   clinic   Clinic @relation(fields: [clinicId], references: [id])
   clinicId String
@@ -149,6 +157,6 @@ model DailyCalendarPlan {
   fromHour Int
   toHour   Int
 
-  clinicPlan   ClinicPlan @relation(fields: [clinicPlanId], references: [id])
-  clinicPlanId String
+  agenda   Agenda @relation(fields: [agendaId], references: [id])
+  agendaId String
 }
