@@ -8,6 +8,7 @@ import { AgendaDialog } from "~/dialogs/agenda";
 import { loader } from "~/routes/clinic.$id.agendas";
 import type { WithSerializedTypes } from "~/utils/client";
 import { useDialog } from "~/utils/dialog";
+import { getDisplayName } from "~/utils/patient";
 
 
 export default function AgendasTable(p: { clinic: string }) {
@@ -24,15 +25,16 @@ export default function AgendasTable(p: { clinic: string }) {
           <thead>
             <tr>
               <th className="">Nome</th>
-              <th className="">Dottore</th>
+              <th className=""></th>
+              <th className="">Azioni</th>
             </tr>
           </thead>
           <tbody>
             {agendas?.map((u) => (
               <tr key={u.id}>
-                <td className="">{u.name}</td>
+                <td className="">{u.name} {u.doctor != null ? <span className="italic text-gray-500">- {getDisplayName(u.doctor)}</span> : ''}</td>
                 <td className="">
-                  {u.doctor.firstName} {u.doctor.lastName}
+                  {u.services.length} Prestazioni
                 </td>
                 <td className="flex gap-x-2">
                   <Button

@@ -51,10 +51,12 @@ export function AgendaDialog(p: {
             />
             <input type="hidden" name="_redirect" value={redirectTo} />
             <input type="hidden" name="_id" value={p.agenda?.id} />
-            <input type="hidden" name="clinicId" value={p.clinicId} />
+            <input type="hidden" name="clinicId" value={p.agenda?.clinicId ?? p.clinicId} />
             <InputField name="name" label="Nome" />
             <ServiceTypeField />
             <DoctorField doctors={p.doctors} />
+            <InputField name="validFrom" label="Valido dal" inputProps={{ type: 'date' }} />
+            <InputField name="validUntil" label="Valido fino a" inputProps={{ type: 'date' }} />
             <ServicesField name="services" services={p.services} />
 
           </div>

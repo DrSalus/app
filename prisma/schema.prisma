@@ -123,7 +123,7 @@ model ServiceBooking {
   service   ServiceOffering @relation(fields: [serviceId], references: [id])
   serviceId String
 
-  bookedAt DateTime
+  bookedAt DateTime 
   duration Int
 }
 
@@ -141,6 +141,9 @@ model Agenda {
   doctor   Doctor? @relation(fields: [doctorId], references: [id])
   doctorId String?
 
+  validFrom  DateTime? @db.Date
+  validUntil DateTime? @db.Date
+
   services   ServiceOffering[]
   dailyPlans DailyCalendarPlan[]
 }
@@ -151,9 +154,6 @@ model DailyCalendarPlan {
   updatedAt DateTime @updatedAt
 
   dayOfWeek  Int
-  validFrom  DateTime?
-  validUntil DateTime?
-
   fromHour Int
   toHour   Int
 

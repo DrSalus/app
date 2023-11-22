@@ -15,6 +15,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     ...queryParams,
     include: {
       doctor: true,
+      services: true
     },
     where: {
       AND: [where],
