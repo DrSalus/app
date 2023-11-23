@@ -145,6 +145,8 @@ model Agenda {
   doctor   Doctor? @relation(fields: [doctorId], references: [id])
   doctorId String?
 
+  slotInterval Int @default(30)
+
   validFrom  DateTime? @db.Date
   validUntil DateTime? @db.Date
 
