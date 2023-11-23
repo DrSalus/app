@@ -34,6 +34,7 @@
     "react-dom": "^18.2.0",
     "remix-auth": "^3.6.0",
     "remix-auth-form": "^1.4.0",
+    "remix-auth-webauthn": "^0.0.11",
     "remix-validated-form": "^5.1.5",
     "uuid": "^9.0.1",
     "zod": "^3.22.4",

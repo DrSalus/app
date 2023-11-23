@@ -81,14 +81,18 @@ model ClinicalService {
 }
 
 model Doctor {
-  id        String            @id @default(uuid())
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-  firstName String
-  lastName  String
-  worksAt   Clinic[]
-  services  ServiceOffering[]
-  agendas   Agenda[]
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  firstName     String
+  lastName      String
+  email         String?
+  fiscalCode    String?
+  qualification String?
+
+  worksAt  Clinic[]
+  services ServiceOffering[]
+  agendas  Agenda[]
 }
 
 model ServiceOffering {
@@ -123,7 +127,7 @@ model ServiceBooking {
   service   ServiceOffering @relation(fields: [serviceId], references: [id])
   serviceId String
 
-  bookedAt DateTime 
+  bookedAt DateTime
   duration Int
 }
 
@@ -153,9 +157,9 @@ model DailyCalendarPlan {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  dayOfWeek  Int
-  fromHour Int
-  toHour   Int
+  dayOfWeek Int
+  fromHour  Int
+  toHour    Int
 
   agenda   Agenda @relation(fields: [agendaId], references: [id])
   agendaId String

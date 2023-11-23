@@ -26,6 +26,8 @@ export async function handleRequest(request: Request) {
 				clinicId,
 				...other
 			} = data;
+			const doctor =
+				doctorId != null ? { connect: { id: doctorId } } : { disconnect: true };
 			await db.agenda.update({
 				where: { id: _id },
 				data: {
@@ -34,7 +36,7 @@ export async function handleRequest(request: Request) {
 					validUntil: !isEmpty(other.validUntil)
 						? new Date(other.validUntil)
 						: undefined,
-					doctorId: doctorId != null ? doctorId : undefined,
+					doctor,
 					services: {
 						set: services ?? [],
 					},
@@ -44,15 +46,22 @@ export async function handleRequest(request: Request) {
 		}
 
 		case "create": {
-			const { _action, _redirect, doctorId, services, ...other } = data;
+			const { _action, _redirect, doctorId, clinicId, services, ...other } =
+				data;
+			const doctor =
+				doctorId != null ? { connect: { id: doctorId } } : { disconnect: true };
+
 			await db.agenda.create({
 				data: {
 					...other,
 					validFrom: new Date(other.validFrom),
 					validUntil: !isEmpty(other.validUntil)
-						? new Date(other.validUntil)
+						? new Date(other.validUntil!)
 						: undefined,
-					doctorId: doctorId != null ? doctorId : undefined,
+					doctor,
+					clinic: {
+						connect: { id: clinicId },
+					},
 					services: {
 						connect: services ?? [],
 					},

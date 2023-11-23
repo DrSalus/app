@@ -4,6 +4,8 @@ import { useControlField, useField } from "remix-validated-form";
 export interface FieldProps {
   name: string;
   label: string;
+  showLabel?: boolean;
+  showError?: boolean;
   helperText?: string;
   children: JSX.Element;
 }
@@ -12,16 +14,18 @@ export default function Field({
   name,
   label,
   helperText,
+  showLabel,
+  showError,
   children,
 }: FieldProps) {
   const { error } = useField(name);
 
   return (
     <>
-      <label htmlFor={name}>{label}</label>
+      {showLabel !== false && <label htmlFor={name}>{label}</label>}
       {children}
       <span className="helperText">{helperText}</span>
-      {error && (
+      {showError !== false && error && (
         <span className="errorText">
           <ExclamationTriangleIcon className="h-6" /> {error}
         </span>
