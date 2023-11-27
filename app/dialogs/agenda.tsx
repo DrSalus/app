@@ -91,7 +91,7 @@ export function AgendaDialog(p: {
               label="Slot di Prenotazione"
             />
 
-            <ServicesField name="services" services={p.services} />
+            <ServicesField name="services" options={p.services} />
           </div>
 
           <div className="p-4 pb-2">

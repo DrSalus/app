@@ -7,6 +7,9 @@ export const clinicSchema = {
   city: z.string().min(1, { message: "La città è obbligatoria" }),
   province: z.string().length(2, { message: "La provincia è obbligatoria" }),
   postalCode: z.string().length(5, { message: "Il CAP è obbligatoria" }),
+  phoneNumber: z
+    .string()
+    .min(5, { message: "Il numero di telefono è obbligatoria" }),
 };
 export const clinic = z.object(clinicSchema);
 
@@ -30,7 +33,5 @@ const union = z.discriminatedUnion("_action", [
     _redirect: z.string().optional(),
   }),
 ]);
-
-
 
 export const validator = withZod(union);

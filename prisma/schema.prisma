@@ -56,23 +56,24 @@ model Patient {
   birthCity    String?
   gender       Gender?
   fiscalCode   String?          @unique
-  emailAddress String?          @unique
-  phoneNumber  String?          @unique
+  emailAddress String?
+  phoneNumber  String?
   bookings     ServiceBooking[]
 }
 
 model Clinic {
-  id         String            @id @default(uuid())
-  createdAt  DateTime          @default(now())
-  updatedAt  DateTime          @updatedAt
-  name       String
-  address    String
-  city       String
-  province   String
-  postalCode String
-  doctors    Doctor[]
-  services   ServiceOffering[]
-  plans      Agenda[]
+  id          String            @id @default(uuid())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  name        String
+  address     String
+  city        String
+  province    String
+  postalCode  String
+  phoneNumber String?
+  doctors     Doctor[]
+  services    ServiceOffering[]
+  plans       Agenda[]
 }
 
 model ClinicalService {
@@ -88,18 +89,27 @@ model ClinicalService {
 }
 
 model Doctor {
-  id            String   @id @default(uuid())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  firstName     String
-  lastName      String
-  email         String?
-  fiscalCode    String?
-  qualification String?
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  firstName  String
+  lastName   String
+  email      String?
+  fiscalCode String?
 
-  worksAt  Clinic[]
-  services ServiceOffering[]
-  agendas  Agenda[]
+  worksAt      Clinic[]
+  services     ServiceOffering[]
+  agendas      Agenda[]
+  specialities DoctorSpecialty[]
+}
+
+model DoctorSpecialty {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+
+  doctors Doctor[]
 }
 
 model ServiceOffering {

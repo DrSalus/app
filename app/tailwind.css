@@ -183,6 +183,10 @@
     @apply flex flex-col gap-y-1 text-gray-700 py-2 col-span-3 xl:col-span-3;
   }
 
+  .form-col {
+    @apply flex flex-col;
+  }
+
   .form-col label {
     @apply text-gray-700 py-2 col-span-3 xl:col-span-3;
   }
@@ -203,6 +207,7 @@
 
   .form-grid input,
   .form-grid .input-container,
+  .form-grid .PhoneInput,
   .form-grid .input {
     @apply col-span-5 xl:col-span-5;
   }

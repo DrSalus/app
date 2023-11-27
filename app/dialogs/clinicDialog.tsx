@@ -7,6 +7,7 @@ import { ValidatedForm } from "remix-validated-form";
 import { validator } from "~/validators/clinic";
 import InputField from "~/components/fields/inputField";
 import { v4 } from "uuid";
+import PhoneInputField from "~/components/fields/phoneInputField";
 
 export function ClinicDialog(p: {
   clinic?: WithSerializedTypes<Clinic | null>;
@@ -31,7 +32,7 @@ export function ClinicDialog(p: {
           encType="multipart/form-data"
           action="/clinics/upsert"
         >
-          <DialogCloseOnSubmit onClose={p.onClose} /> 
+          <DialogCloseOnSubmit onClose={p.onClose} />
           <div className="form-grid px-4 pt-4">
             <input
               type="hidden"
@@ -58,6 +59,7 @@ export function ClinicDialog(p: {
               label="CAP"
               inputProps={{ maxLength: 5 }}
             />
+            <PhoneInputField name="phoneNumber" label="Numero di Telefono" />
           </div>
 
           <div className="p-4 pb-2">

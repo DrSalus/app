@@ -16,6 +16,7 @@ import { authenticator } from "~/services/auth.server";
 import type { WithSerializedTypes } from "~/utils/client";
 import { db } from "~/utils/db.server";
 import { useDialog } from "~/utils/dialog";
+import useStopPropagation from "~/utils/events";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -46,6 +47,8 @@ export default function Clinics() {
   const [isRemoveOpen, clinicToRemove, removeClinic, onCloseRemove] =
     useDialog<string>();
 
+  const stopPropagation = useStopPropagation();
+
   return (
     <div className="page">
       <div className="headed-card">
@@ -71,7 +74,7 @@ export default function Clinics() {
                 <td className="text-gray-800">
                   {u.address}, {u.city}
                 </td>
-                <td className="flex gap-x-2">
+                <td className="flex gap-x-2" {...stopPropagation}>
                   <Button
                     onClick={() => openModal(u)}
                     small

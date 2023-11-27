@@ -4,7 +4,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { Doctor, Gender, type Patient } from "@prisma/client";
+import { Doctor, DoctorSpecialty, Gender, type Patient } from "@prisma/client";
 import { Form, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
 import { DateTime } from "luxon";
@@ -15,8 +15,11 @@ import { DoctorDialog } from "~/dialogs/doctorDialog";
 import type { WithSerializedTypes } from "~/utils/client";
 import { useDialog } from "~/utils/dialog";
 
+type D = Doctor & { specialities: DoctorSpecialty[] };
+
 interface Data {
-  doctors: Doctor[];
+  doctors: D[];
+  specialities: DoctorSpecialty[];
 }
 
 export default function DoctorsTable(p: {
@@ -24,7 +27,7 @@ export default function DoctorsTable(p: {
   filterable?: boolean;
   redirectTo?: string;
 }) {
-  const { doctors } = useLoaderData<Data>();
+  const { doctors, specialities } = useLoaderData<Data>();
   const [isModalOpen, doctor, openModal, onCloseModal] =
     useDialog<WithSerializedTypes<Doctor>>();
   const [isRemoveOpen, doctorToRemove, removeDoctor, onCloseRemove] =
@@ -38,6 +41,7 @@ export default function DoctorsTable(p: {
             <tr>
               <th className="">Nome</th>
               <th className="">Cognome</th>
+              <th className="">Specializzazioni</th>
               <th className="w-2">Azioni</th>
             </tr>
           </thead>
@@ -46,6 +50,9 @@ export default function DoctorsTable(p: {
               <tr key={u.id}>
                 <td className="">{u.firstName}</td>
                 <td className="">{u.lastName}</td>
+                <td className="">
+                  {u.specialities.map((d) => d.name).join(", ")}
+                </td>
                 <td className="flex gap-x-2">
                   <Button
                     onClick={() => openModal(u)}
@@ -81,6 +88,7 @@ export default function DoctorsTable(p: {
         isOpen={isModalOpen}
         worksAt={p.clinic}
         doctor={doctor}
+        specialities={specialities}
         onClose={onCloseModal}
       />
       <DeleteModal

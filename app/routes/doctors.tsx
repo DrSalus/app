@@ -34,8 +34,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
     13
   );
 
+  const specialities = await db.doctorSpecialty.findMany({});
+
   const doctors = await db.doctor.findMany({
     ...queryParams,
+    include: {
+      specialities: true,
+    },
     where: {
       OR: [
         {
@@ -52,7 +57,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
     },
   });
 
-  return { user, pagination, doctors };
+  return { user, pagination, doctors, specialities };
 }
 
 export default function Doctors() {

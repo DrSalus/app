@@ -16,23 +16,29 @@ export async function handleRequest(request: Request) {
   const { _redirect } = data;
   switch (data._action) {
     case "update": {
-      const { _action, _redirect, _id, worksAt, ...other } = data;
+      const { _action, _redirect, _id, worksAt, specialities, ...other } = data;
       await db.doctor.update({
         where: {
           id: _id,
         },
         data: {
           ...other,
+          specialities: {
+            connect: specialities,
+          },
         },
       });
       break;
     }
 
     case "create": {
-      const { _action, _redirect, worksAt, ...other } = data;
+      const { _action, _redirect, worksAt, specialities, ...other } = data;
       await db.doctor.create({
         data: {
           ...other,
+          specialities: {
+            connect: specialities,
+          },
           worksAt:
             worksAt != null
               ? {

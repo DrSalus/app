@@ -3,7 +3,7 @@ import Field, { FieldProps } from "../field";
 import classNames from "classnames";
 import { isObject } from "lodash-es";
 
-interface Option {
+export interface Option {
   value: string;
   label?: string;
 }

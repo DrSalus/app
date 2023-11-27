@@ -19,15 +19,19 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     db.doctor.count({ where }),
     13
   );
+  const specialities = await db.doctorSpecialty.findMany({});
 
   const doctors = await db.doctor.findMany({
     ...queryParams,
+    include: {
+      specialities: true,
+    },
     where: {
       AND: [where],
     },
   });
 
-  return { user, pagination, doctors };
+  return { user, pagination, specialities, doctors };
 }
 
 export default function ClinicDashboard() {
