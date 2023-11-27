@@ -183,6 +183,24 @@
     @apply flex flex-col gap-y-1 text-gray-700 py-2 col-span-3 xl:col-span-3;
   }
 
+  .form-col label {
+    @apply text-gray-700 py-2 col-span-3 xl:col-span-3;
+  }
+
+  .form-col .helperText {
+    @apply text-gray-400 italic text-sm -mt-2 mb-2;
+  }
+  .form-col .errorText {
+    @apply text-red-400 italic text-sm -mt-2 mb-2 flex items-center;
+  }
+  .form-col .errorText svg {
+    @apply h-5 mr-2; 
+  }
+  
+  .form-col input.PhoneInputInput {
+    @apply mb-0
+  }
+
   .form-grid input,
   .form-grid .input-container,
   .form-grid .input {

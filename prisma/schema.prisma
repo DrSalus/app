@@ -25,6 +25,12 @@ enum ServiceType {
   INSTRUMENTAL
 }
 
+enum BookingState {
+  BOOKED
+  CANCELLED
+  COMPLETED
+}
+
 model User {
   id                   String    @id @default(uuid())
   createdAt            DateTime  @default(now())
@@ -46,11 +52,12 @@ model Patient {
   updatedAt    DateTime         @updatedAt
   firstName    String
   lastName     String
-  birthDate    DateTime         @db.Date
-  birthCity    String
-  gender       Gender
-  fiscalCode   String           @unique
+  birthDate    DateTime?        @db.Date
+  birthCity    String?
+  gender       Gender?
+  fiscalCode   String?          @unique
   emailAddress String?          @unique
+  phoneNumber  String?          @unique
   bookings     ServiceBooking[]
 }
 
@@ -121,11 +128,16 @@ model ServiceBooking {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  agenda   Agenda @relation(fields: [agendaId], references: [id])
+  agendaId String
+
   patient   Patient @relation(fields: [patientId], references: [id])
   patientId String
 
   service   ServiceOffering @relation(fields: [serviceId], references: [id])
   serviceId String
+
+  status BookingState @default(BOOKED)
 
   bookedAt DateTime
   duration Int
@@ -152,6 +164,7 @@ model Agenda {
 
   services   ServiceOffering[]
   dailyPlans DailyCalendarPlan[]
+  booking    ServiceBooking[]
 }
 
 model DailyCalendarPlan {
