@@ -13,15 +13,17 @@ import {
 
 export function DailyAgendaView(p: {
 	className?: string;
+	selectedBookingId?: string | null;
 	agenda: WithSerializedTypes<
 		Agenda & { doctor?: WithSerializedTypes<Doctor> }
 	>;
+	onSelectBooking?: (bookingId: string | null) => void;
 	calendar: CalendarSlot;
 }) {
 	return (
 		<div
 			className={classNames(
-				"rounded-lg border bg-white flex flex-col items-center relative py-4",
+				"rounded-lg  border shadow bg-white flex flex-col items-center relative py-4",
 				p.className,
 			)}
 		>
@@ -30,46 +32,68 @@ export function DailyAgendaView(p: {
 				{p.agenda.doctor != null ? getDisplayName(p.agenda.doctor) : ""}
 			</div>
 			<div className="py-4 flex-grow flex flex-col gap-y-2 items-stretch w-full relative">
-				{p.calendar.slots.map((slot, i) => (
-					<div
-						className={classNames(
-							"h-16 bg-gray-100 border flex items-center mx-4 px-4 rounded",
-							{
-								"bg-gray-50 ": slot.available,
-								"bg-blue-100 bg-opacity-40  border-primary border-2 border-opacity-30":
-									!slot.available,
-							},
-						)}
-					>
-						<div className="flex-grow flex items-center">
-							{slot.booking != null ? (
-								<>
-									<div className="pr-4">
-										<BookingStatusIcon status={slot.booking.status} />
-									</div>
-									<div className="flex flex-col">
-										<div className="font-bold text-primary">
-											{slot.booking.patient}
-										</div>
-										<div className="text-gray-600 text-sm">
-											{slot.booking.service}
-										</div>
-									</div>
-								</>
-							) : (
-								<React.Fragment />
-							)}
-						</div>
+				{p.calendar.slots.map((slot, i) => {
+					const isSelected =
+						slot.booking?.id != null &&
+						slot.booking?.id === p.selectedBookingId;
+					return (
 						<div
-							className={classNames("text-lg text-gray-800", {
-								"text-primary font-medium": !slot.available,
-								"text-gray-400": slot.available,
-							})}
+							onKeyDown={() => p.onSelectBooking?.(slot.booking?.id ?? null)}
+							onClick={() => p.onSelectBooking?.(slot.booking?.id ?? null)}
+							className={classNames(
+								"h-16  border cursor-pointer flex items-center mx-4 px-4 rounded",
+								{
+									"bg-gray-50 hover:bg-gray-100": slot.available && !isSelected,
+									"bg-blue-100 bg-opacity-40  border-primary border-2 border-opacity-30":
+										!slot.available && !isSelected,
+									"bg-primary": isSelected,
+								},
+							)}
 						>
-							{DateTime.fromISO(slot.time).toLocaleString(DateTime.TIME_SIMPLE)}
+							<div className="flex-grow flex items-center">
+								{slot.booking != null ? (
+									<>
+										<div className="pr-4">
+											<BookingStatusIcon status={slot.booking.status} />
+										</div>
+										<div className="flex flex-col">
+											<div
+												className={classNames({
+													"text-white font-bold": !slot.available && isSelected,
+													"text-primary font-bold":
+														!slot.available && !isSelected,
+												})}
+											>
+												{slot.booking.patient}
+											</div>
+											<div
+												className={classNames("text-sm", {
+													"text-gray-100": !slot.available && isSelected,
+													"text-gray-600": !slot.available && !isSelected,
+												})}
+											>
+												{slot.booking.service}
+											</div>
+										</div>
+									</>
+								) : (
+									<React.Fragment />
+								)}
+							</div>
+							<div
+								className={classNames("text-lg text-gray-800", {
+									"text-primary font-medium": !slot.available && !isSelected,
+									"text-white font-medium": !slot.available && isSelected,
+									"text-gray-400": slot.available,
+								})}
+							>
+								{DateTime.fromISO(slot.time).toLocaleString(
+									DateTime.TIME_SIMPLE,
+								)}
+							</div>
 						</div>
-					</div>
-				))}
+					);
+				})}
 			</div>
 		</div>
 	);

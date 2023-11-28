@@ -15,16 +15,20 @@ export async function getCalendarSlots(
 	agenda: Agenda,
 	options?: {
 		lookAhead?: number;
+		date?: DateTime;
 		includeBookings?: boolean;
 	},
 ): Promise<CalendarSlot[]> {
 	const lookAhead = options?.lookAhead ?? 1;
+	const date = options?.date ?? DateTime.now();
+	// console.log("gte", date.startOf("day").toJSDate());
+	// console.log("lte", date.plus({ days: lookAhead }).endOf("day").toJSDate());
 	const bookings = await db.serviceBooking.findMany({
 		where: {
 			agendaId: agenda.id,
 			bookedAt: {
-				lte: DateTime.now().plus({ days: lookAhead }).endOf("day").toJSDate(),
-				gte: DateTime.now().startOf("day").toJSDate(),
+				lte: date.plus({ days: lookAhead }).endOf("day").toJSDate(),
+				gte: date.startOf("day").toJSDate(),
 			},
 		},
 		include: {
@@ -38,11 +42,11 @@ export async function getCalendarSlots(
 	});
 
 	return times(lookAhead).map((index) => {
-		const date = DateTime.now().plus({ days: index });
+		const d = date.plus({ days: index });
 		return {
-			date: date.toISODate()!,
+			date: d.toISODate()!,
 			slots: times(10).map((index) => {
-				const time = date
+				const time = d
 					.startOf("day")
 					.plus({ hours: 8, minutes: agenda.slotInterval * index });
 				const booking = bookings.find((booking) => {

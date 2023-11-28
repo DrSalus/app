@@ -1,22 +1,41 @@
 import { DateTime } from "luxon";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FixedSizeList as List } from "react-window";
 import useDimensions from "react-cool-dimensions";
+import classNames from "classnames";
 
 const NUMBER_OF_DAYS_TO_SHOW = 366;
 const TODAY_INDEX = NUMBER_OF_DAYS_TO_SHOW / 2;
 
-export default function CalendarStream(p: { className: string }) {
+export default function CalendarStream(props: {
+	className?: string;
+	date?: string | null;
+	onChangeDate?: (date: Date) => void;
+}) {
 	const listRef = useRef<any>(null);
+	const { date } = props;
 	const [currentIndex, setCurrentIndex] = useState(TODAY_INDEX);
-	const date = dayFromIndex(TODAY_INDEX - currentIndex).toJSDate();
+
+	useEffect(() => {
+		const index = Math.ceil(
+			DateTime.fromISO(date ?? "")
+				.startOf("day")
+				.diff(DateTime.now().startOf("day"), "days").days,
+		);
+		setCurrentIndex(NUMBER_OF_DAYS_TO_SHOW / 2 + index);
+	}, [date]);
 
 	const { observe, width } = useDimensions();
 	const Item = useCallback(
 		(p: { style: {}; index: number }) => {
 			return (
 				<DayItem
-					onClick={setCurrentIndex}
+					key={p.index}
+					onClick={(index) => {
+						setCurrentIndex(index);
+						const date = dayFromIndex(TODAY_INDEX - index).toJSDate();
+						props.onChangeDate?.(date);
+					}}
 					isActive={p.index === currentIndex}
 					{...p}
 				/>
@@ -24,16 +43,21 @@ export default function CalendarStream(p: { className: string }) {
 		},
 		[currentIndex],
 	);
-
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		if (width !== 0) {
+			listRef.current?.scrollToItem(currentIndex, "center");
+		}
+	}, [width]);
 	return (
-		<div className={p.className}>
+		<div ref={observe} className={classNames("", props.className)}>
 			<List
-				ref={observe}
 				height={88}
+				ref={listRef}
 				itemCount={NUMBER_OF_DAYS_TO_SHOW}
 				itemSize={100}
 				layout="horizontal"
-				width={width}
+				width={width ?? 100}
 			>
 				{Item}
 			</List>
@@ -61,13 +85,33 @@ function DayItem(p: {
 	return (
 		<div
 			onClick={onClick}
-			className={`scroll-view-item ${endOfMonth && "end-of-month"} ${
-				isFuture && "is-future"
-			} ${p.isActive && "active"}`}
+			onKeyDown={onClick}
+			// className={`scroll-view-item ${endOfMonth && "end-of-month"} ${
+			// 	isFuture && "is-future"
+			// } ${p.isActive && "active"}`}
 			style={p.style}
+			className={classNames(
+				"flex flex-col items-center justify-center border-b cursor-pointer",
+				{
+					"bg-primary": p.isActive,
+					"hover:bg-gray-100": !p.isActive,
+				},
+			)}
 		>
-			<div className="day">{date.day}</div>
-			<div className="month-short">
+			<div
+				className={classNames("text-primary text-2xl font-medium", {
+					"text-primary": !p.isActive,
+					"text-white": p.isActive,
+				})}
+			>
+				{date.day}
+			</div>
+			<div
+				className={classNames("text-sm", {
+					"text-gray-200": p.isActive,
+					"text-gray-500": !p.isActive,
+				})}
+			>
 				{date.monthShort} {shortYear}
 			</div>
 		</div>
