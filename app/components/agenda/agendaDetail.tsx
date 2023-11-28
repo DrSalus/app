@@ -22,3 +22,4 @@ export default function AgendaDetail(p: {
 		return <div>AAA</div>;
 	}
 }
+//
