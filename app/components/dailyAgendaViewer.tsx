@@ -33,9 +33,15 @@ export function DailyAgendaView(p: {
 			</div>
 			<div className="py-4 flex-grow flex flex-col gap-y-2 items-stretch w-full relative">
 				{p.calendar.slots.map((slot, i) => {
-					const isSelected =
-						slot.booking?.id != null &&
-						slot.booking?.id === p.selectedBookingId;
+					// const isSelected =
+					// 	slot.booking?.id != null &&
+					// 	slot.booking?.id === p.selectedBookingId;
+					const isCompleted = slot.booking?.status === BookingState.COMPLETED;
+					const isCancelled = slot.booking?.status === BookingState.CANCELLED;
+					const isGray = slot.available;
+					const isBlue = !slot.available && !isCompleted;
+					const isGreen = isCompleted;
+					const isRed = isCancelled;
 					return (
 						<div
 							onKeyDown={() => p.onSelectBooking?.(slot.booking?.id ?? null)}
@@ -43,10 +49,12 @@ export function DailyAgendaView(p: {
 							className={classNames(
 								"h-16  border cursor-pointer flex items-center mx-4 px-4 rounded",
 								{
-									"bg-gray-50 hover:bg-gray-100": slot.available && !isSelected,
+									"bg-gray-50 hover:bg-gray-100": isGray,
 									"bg-blue-100 bg-opacity-40  border-primary border-2 border-opacity-30":
-										!slot.available && !isSelected,
-									"bg-primary": isSelected,
+										isBlue,
+									"bg-green-100 bg-opacity-40  border-green-600 border-2 border-opacity-30":
+										isGreen,
+									// "bg-primary": isSelected,
 								},
 							)}
 						>
@@ -59,17 +67,15 @@ export function DailyAgendaView(p: {
 										<div className="flex flex-col">
 											<div
 												className={classNames({
-													"text-white font-bold": !slot.available && isSelected,
-													"text-primary font-bold":
-														!slot.available && !isSelected,
+													// "text-white font-bold": ,
+													"text-primary font-bold": isBlue,
 												})}
 											>
 												{slot.booking.patient}
 											</div>
 											<div
 												className={classNames("text-sm", {
-													"text-gray-100": !slot.available && isSelected,
-													"text-gray-600": !slot.available && !isSelected,
+													"text-gray-600": !slot.available,
 												})}
 											>
 												{slot.booking.service}
@@ -82,9 +88,8 @@ export function DailyAgendaView(p: {
 							</div>
 							<div
 								className={classNames("text-lg text-gray-800", {
-									"text-primary font-medium": !slot.available && !isSelected,
-									"text-white font-medium": !slot.available && isSelected,
-									"text-gray-400": slot.available,
+									"text-primary font-medium": isBlue,
+									"text-gray-400": isGray,
 								})}
 							>
 								{DateTime.fromISO(slot.time).toLocaleString(
@@ -104,7 +109,7 @@ function BookingStatusIcon(p: { status: BookingState; className?: string }) {
 		return <StopCircleIcon className="h-8 text-red-200" />;
 	}
 	if (p.status === BookingState.COMPLETED) {
-		return <CheckCircleIcon className="h-8 text-primary" />;
+		return <CheckCircleIcon className="h-8 text-green-600" />;
 	}
 
 	return <CalendarDaysIcon className="h-8 text-gray-400" />;

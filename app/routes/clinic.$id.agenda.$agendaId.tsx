@@ -47,6 +47,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 						service: {
 							include: {
 								service: true,
+								doctor: true,
 							},
 						},
 					},

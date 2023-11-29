@@ -149,8 +149,10 @@ model ServiceBooking {
 
   status BookingState @default(BOOKED)
 
-  bookedAt DateTime
-  duration Int
+  bookedAt   DateTime
+  acceptedAt DateTime?
+  rejectedAt DateTime?
+  duration   Int
 }
 
 model Agenda {
