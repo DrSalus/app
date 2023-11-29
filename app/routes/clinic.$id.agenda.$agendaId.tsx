@@ -6,6 +6,7 @@ import { ClientOnly } from "remix-utils/client-only";
 import AgendaDetail from "~/components/agenda/agendaDetail";
 import CalendarStream from "~/components/calendarStream";
 import { DailyAgendaView } from "~/components/dailyAgendaViewer";
+import { DailyCalendarSlot } from "~/components/simpleCalendar";
 import { authenticator } from "~/services/auth.server";
 import { getCalendarSlots } from "~/utils/calendar";
 import { db } from "~/utils/db.server";
@@ -16,7 +17,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 	});
 	const url = new URL(request.url);
 	const queryDate = url.searchParams.get("date");
-	const bookingId = url.searchParams.get("bookingId");
+	const slot = url.searchParams.get("slot");
 	const agenda = await db.agenda.findUnique({
 		where: {
 			id: params.agendaId,
@@ -37,6 +38,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 		date,
 		includeBookings: true,
 	});
+	const bookingId =
+		slot != null
+			? slots[0].slots.find((d) => d.time === slot)?.booking?.id
+			: null;
 
 	const booking =
 		bookingId != null
@@ -63,7 +68,8 @@ export type AgendaBooking = Response["booking"];
 export default function AgendaPage() {
 	const { agenda, slots, date, booking } = useLoaderData<typeof loader>();
 	const [searchParams, setSearchParams] = useSearchParams();
-	const bookingId = searchParams.get("bookingId");
+	const slot = searchParams.get("slot");
+	const selectedSlot = slots[0].slots.find((d) => d.time === slot);
 
 	return (
 		<div className="flex flex-col items-stretch flex-grow -mt-4">
@@ -85,17 +91,17 @@ export default function AgendaPage() {
 				<DailyAgendaView
 					className="w-1/2"
 					agenda={agenda}
-					onSelectBooking={(id) => {
+					onSelectSlot={(slot) => {
 						setSearchParams((prev) => {
-							if (id != null) {
-								prev.set("bookingId", id);
+							if (slot != null) {
+								prev.set("slot", slot?.time);
 							} else {
-								prev.delete("bookingId");
+								prev.delete("slot");
 							}
 							return prev;
 						});
 					}}
-					selectedBookingId={bookingId ?? null}
+					selectedSlot={selectedSlot}
 					calendar={slots[0]}
 				/>
 				<AgendaDetail agenda={agenda} booking={booking} className="w-1/2" />

@@ -13,11 +13,11 @@ import {
 
 export function DailyAgendaView(p: {
 	className?: string;
-	selectedBookingId?: string | null;
+	selectedSlot?: DailyCalendarSlot | null;
 	agenda: WithSerializedTypes<
 		Agenda & { doctor?: WithSerializedTypes<Doctor> }
 	>;
-	onSelectBooking?: (bookingId: string | null) => void;
+	onSelectSlot?: (slot: DailyCalendarSlot | null) => void;
 	calendar: CalendarSlot;
 }) {
 	return (
@@ -33,9 +33,7 @@ export function DailyAgendaView(p: {
 			</div>
 			<div className="py-4 flex-grow flex flex-col gap-y-2 items-stretch w-full relative">
 				{p.calendar.slots.map((slot, i) => {
-					// const isSelected =
-					// 	slot.booking?.id != null &&
-					// 	slot.booking?.id === p.selectedBookingId;
+					const isSelected = slot.time === p.selectedSlot?.time;
 					const isCompleted = slot.booking?.status === BookingState.COMPLETED;
 					const isCancelled = slot.booking?.status === BookingState.CANCELLED;
 					const isGray = slot.available;
@@ -44,31 +42,56 @@ export function DailyAgendaView(p: {
 					const isRed = isCancelled;
 					return (
 						<div
-							onKeyDown={() => p.onSelectBooking?.(slot.booking?.id ?? null)}
-							onClick={() => p.onSelectBooking?.(slot.booking?.id ?? null)}
+							onKeyDown={() => p.onSelectSlot?.(slot)}
+							onClick={() => p.onSelectSlot?.(slot)}
 							className={classNames(
-								"h-16  border cursor-pointer flex items-center mx-4 px-4 rounded",
+								"h-16 relative  border cursor-pointer flex items-center mx-4 px-4 rounded",
 								{
 									"bg-gray-50 hover:bg-gray-100": isGray,
-									"bg-blue-100 bg-opacity-40  border-primary border-2 border-opacity-30":
+									"bg-blue-100   border-primary border-2 border-opacity-30":
 										isBlue,
-									"bg-green-100 bg-opacity-40  border-green-600 border-2 border-opacity-30":
+									"bg-green-100   border-green-600 border-2 border-opacity-30":
 										isGreen,
-									// "bg-primary": isSelected,
+									"bg-red-100   border-red-600 border-2 border-opacity-30":
+										isRed,
+									"bg-opacity-20": !isSelected,
+									"bg-opacity-80": isSelected,
 								},
 							)}
 						>
 							<div className="flex-grow flex items-center">
+								{isSelected && (
+									<div
+										className={classNames(
+											"absolute -top-0.5 -left-0.5 -bottom-0.5 w-3 rounded-l",
+											{
+												"bg-primary": isBlue || isGray,
+												"bg-green-600": isGreen,
+												"bg-red-600": isRed,
+											},
+										)}
+									/>
+								)}
 								{slot.booking != null ? (
 									<>
-										<div className="pr-4">
-											<BookingStatusIcon status={slot.booking.status} />
+										<div className="pr-4 pl-2">
+											<BookingStatusIcon
+												status={slot.booking.status}
+												className={classNames({
+													"text-black text-opacity-30": !isSelected,
+													"text-green-600 ": isGreen && isSelected,
+													"text-red-600 ": isRed && isSelected,
+													"text-primary ": isBlue && isSelected,
+												})}
+											/>
 										</div>
 										<div className="flex flex-col">
 											<div
 												className={classNames({
-													// "text-white font-bold": ,
-													"text-primary font-bold": isBlue,
+													"text-gray-700 font-medium": !isSelected,
+													"text-green-600 font-medium": isGreen && isSelected,
+													"text-red-600 font-medium": isRed && isSelected,
+													"text-primary font-medium": isBlue && isSelected,
 												})}
 											>
 												{slot.booking.patient}
@@ -86,12 +109,7 @@ export function DailyAgendaView(p: {
 									<React.Fragment />
 								)}
 							</div>
-							<div
-								className={classNames("text-lg text-gray-800", {
-									"text-primary font-medium": isBlue,
-									"text-gray-400": isGray,
-								})}
-							>
+							<div className={classNames("text-lg text-gray-800", {})}>
 								{DateTime.fromISO(slot.time).toLocaleString(
 									DateTime.TIME_SIMPLE,
 								)}
@@ -106,11 +124,11 @@ export function DailyAgendaView(p: {
 
 function BookingStatusIcon(p: { status: BookingState; className?: string }) {
 	if (p.status === BookingState.CANCELLED) {
-		return <StopCircleIcon className="h-8 text-red-200" />;
+		return <StopCircleIcon className={classNames("h-8 ", p.className)} />;
 	}
 	if (p.status === BookingState.COMPLETED) {
-		return <CheckCircleIcon className="h-8 text-green-600" />;
+		return <CheckCircleIcon className={classNames("h-8 ", p.className)} />;
 	}
 
-	return <CalendarDaysIcon className="h-8 text-gray-400" />;
+	return <CalendarDaysIcon className={classNames("h-8 ", p.className)} />;
 }

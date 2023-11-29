@@ -18,6 +18,7 @@ import {
 import { useDialog } from "~/utils/dialog";
 import { AgendaAcceptDialog } from "../../dialogs/agendaAcceptDialog";
 import { ClientOnly } from "remix-utils/client-only";
+import { AgendaCancellationDialog } from "~/dialogs/agendaCancellationDialog";
 
 export default function AgendaDetail(p: {
 	agenda: WithSerializedTypes<Agenda>;
@@ -50,6 +51,12 @@ function AgendaBookingDetail(p: {
 		acceptBooking,
 		openAcceptDialog,
 		closeAcceptDialog,
+	] = useDialog<AgendaBooking | null>();
+	const [
+		isCancelDialogOpen,
+		cancelBooking,
+		openCancellationDialog,
+		cancelAcceptDialog,
 	] = useDialog<AgendaBooking | null>();
 	return (
 		<div className="flex flex-col divide-y">
@@ -96,17 +103,25 @@ function AgendaBookingDetail(p: {
 			<AgendaQuickActionsGrid>
 				<AgendaQuickAction
 					title="Accettazione"
-					icon={<PlayCircleIcon className="h-12 group-hover:text-green-500" />}
+					icon={<PlayCircleIcon className="h-12 group-hover:text-green-600" />}
 					onClick={() => openAcceptDialog(p.booking)}
 				/>
 				<ClientOnly>
 					{() => (
-						<AgendaAcceptDialog
-							isOpen={isAcceptDialogOpen}
-							booking={acceptBooking}
-							redirectTo={window.location.pathname + window.location.search}
-							onClose={closeAcceptDialog}
-						/>
+						<>
+							<AgendaAcceptDialog
+								isOpen={isAcceptDialogOpen}
+								booking={acceptBooking}
+								redirectTo={window.location.pathname + window.location.search}
+								onClose={closeAcceptDialog}
+							/>
+							<AgendaCancellationDialog
+								isOpen={isCancelDialogOpen}
+								booking={cancelBooking}
+								redirectTo={window.location.pathname + window.location.search}
+								onClose={cancelAcceptDialog}
+							/>
+						</>
 					)}
 				</ClientOnly>
 				<AgendaQuickAction
@@ -117,7 +132,8 @@ function AgendaBookingDetail(p: {
 				/>
 				<AgendaQuickAction
 					title="Annulla"
-					icon={<XCircleIcon className="h-12  group-hover:text-red-500" />}
+					icon={<XCircleIcon className="h-12  group-hover:text-red-600" />}
+					onClick={() => openCancellationDialog(p.booking)}
 				/>
 			</AgendaQuickActionsGrid>
 		</div>
