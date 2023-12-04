@@ -16,19 +16,22 @@ type Props<T> = {
   name: string;
   minimal?: boolean;
   defaultValue?: T;
+  onChangeValue?: (val: T | null) => void;
   searchAction?: string;
   valueGetter?: (val: T) => string;
   renderDisplayName?: (val: T) => string;
 };
 
-type SelectOption = { label: string; value: string };
+export type SelectOption = { label: string; value: string };
 export function Select(props: Props<SelectOption>) {
   return (
     <RemoteSelect<SelectOption>
       {...props}
       options={props.options}
       valueGetter={(t) => (isString(t) ? t : t.value)}
-      renderDisplayName={(t) => (isString(t) ? t : t.label)}
+      renderDisplayName={(t) =>
+        props.renderDisplayName?.(t) ?? (isString(t) ? t : t.label)
+      }
     />
   );
 }
@@ -41,6 +44,7 @@ export function RemoteSelect<T>(props: Props<T>) {
     options,
     valueGetter,
     searchAction,
+    onChangeValue,
   } = props;
 
   const fetcher = useFetcher<T[]>();
@@ -72,6 +76,7 @@ export function RemoteSelect<T>(props: Props<T>) {
     (u: T) => {
       inputRef.current?.blur();
       setValue(u);
+      onChangeValue?.(u);
       setQuery(renderDisplayName?.(u) ?? String(u));
     },
     [renderDisplayName]
@@ -159,7 +164,7 @@ function SuggestionList<T>(p: {
   onChange: (value: T) => void;
 }) {
   return p.isOpen ? (
-    <div className="absolute top-full z-50 left-0 right-0 shadow-lg rounded-b border-gray-200 border border-t-0 overflow-scroll h-52">
+    <div className="absolute top-full z-50 left-0 right-0 shadow-lg rounded-b border-gray-200 bg-white border border-t-0 overflow-scroll h-52">
       {p.items.map((item: T, index: number) => {
         return (
           <div
