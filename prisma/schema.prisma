@@ -175,20 +175,27 @@ model Agenda {
   validFrom  DateTime? @db.Date
   validUntil DateTime? @db.Date
 
-  services   ServiceOffering[]
-  dailyPlans DailyCalendarPlan[]
-  booking    ServiceBooking[]
+  services ServiceOffering[]
+  booking  ServiceBooking[]
+  plans    AgendaPlan[]
 }
 
-model DailyCalendarPlan {
+model AgendaPlan {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  dayOfWeek Int
-  fromHour  Int
-  toHour    Int
+  validFrom  DateTime? @db.Date
+  validUntil DateTime? @db.Date
 
   agenda   Agenda @relation(fields: [agendaId], references: [id])
   agendaId String
+
+  mon Json?
+  tue Json?
+  wed Json?
+  thu Json?
+  fri Json?
+  sat Json?
+  sun Json?
 }
