@@ -8,7 +8,6 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
 
 export default function NavigationBar() {
   const data = useLoaderData<{ user?: User }>();
-  console.log("=>", data);
 
   return data?.user != null ? (
     <div className="navigation-bar print:hiddeny">

@@ -4,6 +4,7 @@ import { isEmpty } from "lodash-es";
 import classNames from "classnames";
 import { Form, Outlet } from "@remix-run/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import Tab from "./tab";
 
 interface Tab {
   icon: JSX.Element;
@@ -50,20 +51,11 @@ export default function Header(p: HeaderProps) {
         <div className="flex flex-col border-t border-gray-100 -mx-4 px-6 -mb-2">
           <div className="flex  items-stretch text-sm font-semibold">
             {(p.tabs ?? []).map((tab) => (
-              <div
-                onClick={() => p.onSelectTab?.(tab.id)}
-                className={classNames(
-                  "hover:bg-gray-100 py-2 px-4 border-b-2 border-transparent cursor-pointer text-gray-600 flex items-center gap-x-1.5",
-                  {
-                    "text-primary  border-primary bg-gray-50":
-                      p.selectedTab === tab.id,
-                  }
-                )}
+              <Tab
                 key={tab.id}
-              >
-                <div className="w-4">{tab.icon}</div>
-                <div>{tab.title}</div>
-              </div>
+                tab={tab}
+                onClick={() => p.onSelectTab?.(tab.id)}
+              />
             ))}
           </div>
         </div>

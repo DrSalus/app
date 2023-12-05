@@ -90,7 +90,10 @@ export function RemoteSelect<T>(props: Props<T>) {
 
   return (
     <div
-      className={classNames("flex flex-col items-stretch relative", className)}
+      className={classNames(
+        "flex flex-col input-container items-stretch relative",
+        className
+      )}
     >
       <input
         type="hidden"
