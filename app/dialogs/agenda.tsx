@@ -33,6 +33,7 @@ import { useState } from "react";
 import Show from "~/components/show";
 import classNames from "classnames";
 import Field from "~/components/field";
+import TimeRange from "~/components/fields/timeRangeField";
 
 export function AgendaDialog(p: {
 	agenda?: WithSerializedTypes<Agenda | null>;
@@ -153,7 +154,13 @@ export function AgendaDialog(p: {
 							hidden: selectedTab !== "timeslots",
 						})}
 					>
-						A
+						<TimeRange label="Lunedì" name="monday" />
+						<TimeRange label="Martedì" name="tuesday" />
+						<TimeRange label="Mercoledì" name="wednesday" />
+						<TimeRange label="Giovedì" name="thursday" />
+						<TimeRange label="Venerdì" name="friday" />
+						<TimeRange label="Sabato" name="saturday" />
+						<TimeRange label="Domenica" name="sunday" />
 					</div>
 					<div className="p-4 pb-2">
 						<Button

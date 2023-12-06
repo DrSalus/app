@@ -207,6 +207,7 @@
 
   .form-grid input,
   .form-grid .input-container,
+  .form-grid .input-row-container,
   .form-grid .PhoneInput,
   .form-grid .input {
     @apply col-span-5 xl:col-span-5;
@@ -214,6 +215,10 @@
 
   .form-grid .input-container {
     @apply flex flex-col items-stretch justify-center;
+  }
+  
+  .form-grid .input-row-container {
+    @apply flex;
   }
 
   .form-grid button[type="submit"] {
@@ -265,11 +270,11 @@
   }
 
   .btn-danger {
-    @apply bg-red-700 hover:bg-red-600 text-white hover:text-gray-100;
+    @apply bg-red-700 hover:bg-red-600 text-white hover:bg-red-100;
   }
 
   .btn-danger svg {
-    @apply text-gray-200;
+    @apply text-red-700;
   }
 
   .btn-disabled {
