@@ -86,9 +86,6 @@ function DayItem(p: {
 		<div
 			onClick={onClick}
 			onKeyDown={onClick}
-			// className={`scroll-view-item ${endOfMonth && "end-of-month"} ${
-			// 	isFuture && "is-future"
-			// } ${p.isActive && "active"}`}
 			style={p.style}
 			className={classNames(
 				"flex flex-col items-center justify-center border-b cursor-pointer",
@@ -113,6 +110,14 @@ function DayItem(p: {
 				})}
 			>
 				{date.monthShort} {shortYear}
+			</div>
+			<div
+				className={classNames("text-sm font-semibold", {
+					"text-gray-100": p.isActive,
+					"text-gray-600": !p.isActive,
+				})}
+			>
+				{date.weekdayShort}
 			</div>
 		</div>
 	);
