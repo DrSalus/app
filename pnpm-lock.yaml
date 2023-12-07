@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@emotion/react':
     specifier: ^11.11.1
@@ -82,6 +86,9 @@ dependencies:
   react-phone-number-input:
     specifier: ^3.3.7
     version: 3.3.7(react-dom@18.2.0)(react@18.2.0)
+  react-tiny-popover:
+    specifier: ^8.0.4
+    version: 8.0.4(react-dom@18.2.0)(react@18.2.0)
   remix-auth:
     specifier: ^3.6.0
     version: 3.6.0(@remix-run/react@2.2.0)(@remix-run/server-runtime@1.19.3)
@@ -6443,6 +6450,16 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-tiny-popover@8.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-pn0Y/G0gyMdYTBEWSKCCnaZsXAa54PkfnRE4fnMM5633SSClYrXxwXKc6vPYgJ9shLatGginxMjnhXq6guZmng==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-window@1.8.10(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Y0Cx+dnU6NLa5/EvoHukUD0BklJ8qITCtVEPY1C/nL8wwoZ0b5aEw8Ff1dOVHw7fCzMt55XfJDd8S8W8LCaUCg==}
     engines: {node: '>8.0.0'}
@@ -7908,7 +7925,3 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

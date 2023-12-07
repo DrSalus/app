@@ -16,6 +16,15 @@ const optionalDateSchema = z
     message: "Must be a valid ISO string date",
   });
 
+const dailyPlan = z
+  .array(
+    z.object({
+      from: z.string(),
+      to: z.string(),
+    })
+  )
+  .optional();
+
 const agenda = z.object({
   name: z.string().min(1, { message: "Il nome è obbligatorio" }),
   clinicId: z.string(),
@@ -33,7 +42,16 @@ const agenda = z.object({
     .min(1, { message: "La durata dello slot è obbligatorio" }),
   validFrom: dateSchema,
   validUntil: optionalDateSchema,
+
+  mon: dailyPlan,
+  tue: dailyPlan,
+  wed: dailyPlan,
+  thu: dailyPlan,
+  fri: dailyPlan,
+  sat: dailyPlan,
+  sun: dailyPlan,
 });
 
+export type Agenda = z.infer<typeof agenda>;
 const union = getBaseUnion(agenda);
 export const validator = withZod(union);

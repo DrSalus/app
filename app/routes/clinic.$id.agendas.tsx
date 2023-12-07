@@ -15,7 +15,10 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     ...queryParams,
     include: {
       doctor: true,
-      services: true
+      services: true,
+      plans: {
+        take: 1,
+      },
     },
     where: {
       AND: [where],
@@ -23,11 +26,11 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   });
   const services = await db.serviceOffering.findMany({
     where: {
-      clinicId: params.id
+      clinicId: params.id,
     },
     include: {
-      service: true
-    }
+      service: true,
+    },
   });
   const doctors = await db.doctor.findMany({
     ...queryParams,
@@ -45,5 +48,9 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
 export default function ClinicDashboard() {
   const { id } = useParams();
-  return <AgendasTable clinic={id!} />;
+  return (
+    <div>
+      <AgendasTable clinic={id!} />
+    </div>
+  );
 }

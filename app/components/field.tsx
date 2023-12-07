@@ -3,7 +3,7 @@ import { useControlField, useField } from "remix-validated-form";
 
 export interface FieldProps {
   name: string;
-  label: string;
+  label: string | JSX.Element;
   showLabel?: boolean;
   showError?: boolean;
   helperText?: string;

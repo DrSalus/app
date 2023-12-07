@@ -37,6 +37,7 @@
     "react-cool-dimensions": "^3.0.1",
     "react-dom": "^18.2.0",
     "react-phone-number-input": "^3.3.7",
+    "react-tiny-popover": "^8.0.4",
     "remix-auth": "^3.6.0",
     "remix-auth-form": "^1.4.0",
     "remix-auth-webauthn": "^0.0.11",

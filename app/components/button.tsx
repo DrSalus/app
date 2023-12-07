@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useMemo } from "react";
 import type { LinkProps } from "@remix-run/react";
 import { Link, useNavigation } from "@remix-run/react";
 import Spinner from "~/components/spinner";
@@ -40,7 +40,10 @@ export default function Button<T>(props: ButtonProps<T>) {
     },
     props.className
   );
-  const Component: any = props.component ?? ((p: T) => <button {...p} />);
+  const Component: any = useMemo(
+    () => props.component ?? ((p: T) => <button {...p} />),
+    [props.component]
+  );
   const componentProps = props.componentProps ?? ({} as T);
   const spacer =
     props.text != null && props.icon != null ? (
