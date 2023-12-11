@@ -204,13 +204,17 @@ function AgendaDetailEmpty(p: {
           onClose={closeAgendaDialog}
           source="agenda"
         />
-        <BookingDialog
-          isOpen={isBookingOpen}
-          agenda={p.agenda}
-          slot={p.slot}
-          redirectTo={window.location.pathname + window.location.search}
-          onClose={closeBookingDialog}
-        />
+        <ClientOnly>
+          {() => (
+            <BookingDialog
+              isOpen={isBookingOpen}
+              agenda={p.agenda}
+              slot={p.slot}
+              redirectTo={window.location.pathname + window.location.search}
+              onClose={closeBookingDialog}
+            />
+          )}
+        </ClientOnly>
       </AgendaQuickActionsGrid>
     </div>
   );
