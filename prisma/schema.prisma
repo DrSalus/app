@@ -31,6 +31,14 @@ enum BookingState {
   COMPLETED
 }
 
+enum UserKind {
+  ADMIN
+  DOCTOR
+  DOCTOR_ASSISTANT
+  PATIENT
+  CLINIC_MANAGER
+}
+
 model User {
   id                   String    @id @default(uuid())
   createdAt            DateTime  @default(now())
@@ -40,10 +48,14 @@ model User {
   lastName             String
   email                String    @unique
   password             String
+  kind                 UserKind  @default(DOCTOR)
   isAdmin              Boolean   @default(false)
-  companyId            String?
   resetPasswordToken   String?   @unique
   resetPasswordExpires DateTime?
+  doctorId             String?
+  doctor               Doctor?   @relation(fields: [doctorId], references: [id])
+  clinicId             String?
+  clinic               Clinic?   @relation(fields: [clinicId], references: [id])
 }
 
 model Patient {
@@ -74,6 +86,7 @@ model Clinic {
   doctors     Doctor[]
   services    ServiceOffering[]
   plans       Agenda[]
+  users       User[]
 }
 
 model ClinicalService {
@@ -101,6 +114,7 @@ model Doctor {
   services     ServiceOffering[]
   agendas      Agenda[]
   specialities DoctorSpecialty[]
+  users        User[]
 }
 
 model DoctorSpecialty {
