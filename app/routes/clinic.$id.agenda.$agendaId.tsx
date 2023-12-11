@@ -29,6 +29,16 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 		},
 		include: {
 			doctor: true,
+			plans: true,
+			services: {
+				include: {
+					service: {
+						select: {
+							name: true,
+						},
+					},
+				},
+			},
 		},
 	});
 
@@ -120,7 +130,12 @@ export default function AgendaPage() {
 						/>
 					</div>
 				</Show>
-				<AgendaDetail agenda={agenda} booking={booking} className="w-1/2" />
+				<AgendaDetail
+					slot={slot}
+					agenda={agenda}
+					booking={booking}
+					className="w-1/2"
+				/>
 			</div>
 		</div>
 	);

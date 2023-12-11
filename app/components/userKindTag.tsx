@@ -30,7 +30,7 @@ export function UserKindTag(p: { kind: UserKind }) {
 			text = "Accettazione";
 			break;
 		case UserKind.CLINIC_MANAGER:
-			colors = "bg-red-100 text-red-800";
+			colors = "bg-yellow-100 text-yellow-800";
 			icon = <BuildingOfficeIcon className={iconClassName} />;
 			text = "Gestore Struttura";
 			break;

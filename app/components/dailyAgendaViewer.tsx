@@ -28,9 +28,11 @@ export function DailyAgendaView(p: {
 				p.className,
 			)}
 		>
-			<div className="flex self-stretch flex-col items-center sticky bg-gray-50 z-10 py-2 border-b top-0">
-				<div className="text-xl font-normal text-gray-800">{p.agenda.name}</div>
-				<div className="text-sm text-gray-500">
+			<div className="flex items-center self-stretch px-4 sticky bg-gray-50 z-10 py-2 border-b top-0">
+				<div className="text-lg flex-grow font-semibold text-primary ">
+					{p.agenda.name}
+				</div>
+				<div className="text-base text-gray-600">
 					{p.agenda.doctor != null ? getDisplayName(p.agenda.doctor) : ""}
 				</div>
 			</div>

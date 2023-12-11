@@ -13,15 +13,20 @@ import {
 	DocumentMinusIcon,
 	PlayCircleIcon,
 	PlusCircleIcon,
+	WrenchIcon,
 	XCircleIcon,
 } from "@heroicons/react/24/solid";
 import { useDialog } from "~/utils/dialog";
 import { AgendaAcceptDialog } from "../../dialogs/agendaAcceptDialog";
 import { ClientOnly } from "remix-utils/client-only";
 import { AgendaCancellationDialog } from "~/dialogs/agendaCancellationDialog";
+import { AgendaDialog, AgendaWithPlans } from "~/dialogs/agenda";
+import { BookingDialog } from "~/dialogs/bookingDialog";
+import { DailyCalendarSlot } from "../simpleCalendar";
 
 export default function AgendaDetail(p: {
-	agenda: WithSerializedTypes<Agenda>;
+	agenda: WithSerializedTypes<AgendaWithPlans>;
+	slot?: string | null;
 	className?: string;
 	booking?: AgendaBooking;
 }) {
@@ -175,15 +180,37 @@ function AgendaBookingField(p: { label: string; value: string | JSX.Element }) {
 }
 
 function AgendaDetailEmpty(p: {
-	agenda: WithSerializedTypes<Agenda>;
+	agenda: WithSerializedTypes<AgendaWithPlans>;
 	className?: string;
+	slot?: string | null;
 }) {
+	const [isAgendaOpen, agenda, openAgenda, closeAgendaDialog] = useDialog();
+	const [isBookingOpen, _, openBooking, closeBookingDialog] = useDialog();
 	return (
 		<div className="flex flex-col divide-y">
 			<AgendaQuickActionsGrid>
 				<AgendaQuickAction
 					title="Nuova Prenotazione"
 					icon={<PlusCircleIcon className="h-12 group-hover:text-primary" />}
+					onClick={() => openBooking()}
+				/>
+				<AgendaQuickAction
+					title="Gestisci Agenda"
+					icon={<WrenchIcon className="h-12 group-hover:text-primary" />}
+					onClick={() => openAgenda(p.agenda)}
+				/>
+				<AgendaDialog
+					isOpen={isAgendaOpen}
+					agenda={p.agenda}
+					onClose={closeAgendaDialog}
+					source="agenda"
+				/>
+				<BookingDialog
+					isOpen={isBookingOpen}
+					agenda={p.agenda}
+					slot={p.slot}
+					redirectTo={window.location.pathname + window.location.search}
+					onClose={closeBookingDialog}
 				/>
 			</AgendaQuickActionsGrid>
 		</div>

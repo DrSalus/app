@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { User } from "@prisma/client";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
@@ -46,10 +46,10 @@ export default function Users() {
 					<table>
 						<thead>
 							<tr>
-								<th className="w-40">Tipo</th>
+								<th className="w-48">Tipo</th>
 								<th className="w-52">Nome</th>
 								<th className="w-52">Email</th>
-								<th>_</th>
+								<th>Azioni</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -62,7 +62,14 @@ export default function Users() {
 									</td>
 									<td className="">{getDisplayName(u)} </td>
 									<td className="">{u.email} </td>
-									<td>_</td>
+									<td>
+										<Button
+											onClick={() => openModal(u)}
+											small
+											text="Modifica"
+											icon={<PencilIcon />}
+										/>
+									</td>
 								</tr>
 							))}
 						</tbody>
@@ -79,22 +86,7 @@ export default function Users() {
 						/>
 					}
 				/>
-				<UserDialog isOpen={isModalOpen} onClose={onCloseModal} />
-				{/* <AgendaDialog
-				isOpen={isModalOpen}
-				doctors={doctors}
-				services={services}
-				onClose={onCloseModal}
-				clinicId={p.clinic}
-				agenda={agenda}
-			/>
-
-			<DeleteModal
-				id={agendaToRemove ?? ""}
-				isOpen={isRemoveOpen}
-				action="/agendas/upsert"
-				onClose={onCloseRemove}
-			/> */}
+				<UserDialog isOpen={isModalOpen} user={user} onClose={onCloseModal} />
 			</div>
 		</div>
 	);

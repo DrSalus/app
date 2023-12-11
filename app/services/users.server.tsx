@@ -28,6 +28,19 @@ export async function handleRequest(request: Request) {
 			});
 			break;
 		}
+		case "update": {
+			const { _action, _redirect, _id, ...user } = data;
+
+			await db.user.update({
+				where: {
+					id: _id,
+				},
+				data: {
+					...user,
+				},
+			});
+			break;
+		}
 	}
 
 	return _redirect;
