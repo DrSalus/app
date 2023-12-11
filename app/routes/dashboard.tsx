@@ -62,7 +62,7 @@ export default function Dashboard() {
         <HomeItem
           icon={<BuildingOfficeIcon />}
           to="/clinics"
-          title="Gestione Cliniche"
+          title="Gestione Strutture"
         />
         <HomeItem
           icon={<ReceiptPercentIcon />}

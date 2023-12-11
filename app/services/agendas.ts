@@ -50,6 +50,7 @@ export async function handleRequest(request: Request) {
         _redirect,
         _source,
         _id,
+
         services,
         doctorId,
         clinicId,
@@ -79,22 +80,6 @@ export async function handleRequest(request: Request) {
         };
       }
 
-      console.log(_source);
-      console.log(
-        omitBy(
-          {
-            ...other,
-            validFrom: new Date(other.validFrom),
-            validUntil: !isEmpty(other.validUntil)
-              ? new Date(other.validUntil)
-              : undefined,
-            doctor,
-            services: serviceToSet,
-          },
-          isNil
-        )
-      );
-
       applyPlanData(_id as string, { mon, tue, wed, thu, fri, sat, sun });
       await db.agenda.update({
         where: { id: _id },
@@ -118,6 +103,7 @@ export async function handleRequest(request: Request) {
       const {
         _action,
         _redirect,
+        _source,
         doctorId,
         clinicId,
         services,

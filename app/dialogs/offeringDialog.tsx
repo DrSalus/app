@@ -13,6 +13,7 @@ import SelectField from "~/components/fields/selectField";
 import DoctorField from "~/components/fields/doctorField";
 import ServiceTypeField from "~/components/fields/serviceTypeField";
 import ServiceField from "~/components/fields/serviceField";
+import { useMemo } from "react";
 
 export function OfferingDialog(p: {
   serviceOffering?: WithSerializedTypes<ServiceOffering | null>;
@@ -27,6 +28,11 @@ export function OfferingDialog(p: {
   const matches = useMatches();
   const redirectTo = p.redirectTo ?? last(matches)?.pathname;
 
+  const key = useMemo(
+    () => p.serviceOffering?.id ?? v4(),
+    [p.isOpen, p.serviceOffering]
+  );
+
   return (
     <Overlay isOpen={p.isOpen}>
       <div className="card w-3/5 z-10">
@@ -35,7 +41,7 @@ export function OfferingDialog(p: {
 
         <ValidatedForm
           method="post"
-          key={p.serviceOffering?.id ?? v4()}
+          key={key}
           validator={validator}
           resetAfterSubmit={true}
           defaultValues={p.serviceOffering ?? {}}
@@ -56,9 +62,7 @@ export function OfferingDialog(p: {
             <ServiceTypeField />
             <DoctorField doctors={p.doctors} />
 
-            <ServiceField
-              services={p.services}
-            />
+            <ServiceField services={p.services} />
             <InputField
               inputProps={{ type: "number" }}
               name="amount"

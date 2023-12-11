@@ -13,6 +13,7 @@ import { validator } from "~/validators/booking";
 import BookingCalendar from "~/components/bookings/bookingCalendar";
 import BookingInputs from "~/components/bookings/bookingInputs";
 import { ShowIfDate } from "~/components/bookings/showIfDate";
+import Background from "~/components/background";
 
 export const links: LinksFunction = () => [
   {
@@ -21,10 +22,6 @@ export const links: LinksFunction = () => [
   },
 ];
 export async function loader({ request, params }: LoaderFunctionArgs) {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
-  });
-
   const agenda = await db.agenda.findUnique({
     where: { id: params.agendaId },
     include: {
@@ -50,61 +47,68 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     ignoreEmptyDays: true,
   });
 
-  return { user, agenda, slots };
+  return { agenda, slots };
 }
 
 export default function ClinicBooking() {
   const { agenda, slots } = useLoaderData<typeof loader>();
   return (
-    <div className="flex flex-col items-center ">
-      <div className="grid grid-cols-12">
-        <div className="col-start-3 col-span-4 flex flex-col items-stretch bg-white rounded-lg mx-4 border shadow-xl">
-          <BookingHeader
-            className="py-4 px-2 bg-gray-50 rounded-t-lg overflow-hidden self-stretch"
-            type={agenda.doctor ? "doctor" : "clinic"}
-            title={
-              agenda.doctor ? getDisplayName(agenda.doctor) : agenda.clinic.name
-            }
-            subtitle={
-              agenda.doctor
-                ? getSpecializations(agenda.doctor)
-                : agenda.clinic.address
-            }
-          />
-          <ValidatedForm
-            method="post"
-            className="form-col items-stretch"
-            key={agenda.id}
-            validator={validator}
-            resetAfterSubmit={true}
-            encType="multipart/form-data"
-            action="/booking/upsert"
-          >
-            <BookingCalendar className="pt-4 pb-8 self-center" slots={slots} />
-            <input type="hidden" name="agendaId" value={agenda.id} />
-            <input type="hidden" name="clinicId" value={agenda.clinicId} />
-
-            <BookingInputs
-              services={agenda.services.map((service) => ({
-                value: service.id,
-                label: service.service.name,
-              }))}
+    <Background className="flex items-center">
+      <div className="flex flex-col items-center z-20">
+        <div className="grid grid-cols-12">
+          <div className="col-start-3 col-span-4 flex flex-col items-stretch bg-white rounded-lg mx-4 border shadow-xl">
+            <BookingHeader
+              className="py-4 px-2 bg-gray-50 rounded-t-lg overflow-hidden self-stretch"
+              type={agenda.doctor ? "doctor" : "clinic"}
+              title={
+                agenda.doctor
+                  ? getDisplayName(agenda.doctor)
+                  : agenda.clinic.name
+              }
+              subtitle={
+                agenda.doctor
+                  ? getSpecializations(agenda.doctor)
+                  : agenda.clinic.address
+              }
             />
+            <ValidatedForm
+              method="post"
+              className="form-col items-stretch"
+              key={agenda.id}
+              validator={validator}
+              resetAfterSubmit={true}
+              encType="multipart/form-data"
+              action="/booking/upsert"
+            >
+              <BookingCalendar
+                className="pt-4 pb-8 self-center"
+                slots={slots}
+              />
+              <input type="hidden" name="agendaId" value={agenda.id} />
+              <input type="hidden" name="clinicId" value={agenda.clinicId} />
 
-            <ShowIfDate>
-              <div className="pb-2 self-stretch px-4 mt-4">
-                <SubmitButton />
-              </div>
-            </ShowIfDate>
-          </ValidatedForm>
-        </div>
-        <div className="col-span-4 col-start-7">
-          <ClientOnly>
-            {() => <BookingDetail className="mt-2" clinic={agenda.clinic} />}
-          </ClientOnly>
+              <BookingInputs
+                services={agenda.services.map((service) => ({
+                  value: service.id,
+                  label: service.service.name,
+                }))}
+              />
+
+              <ShowIfDate>
+                <div className="pb-2 self-stretch px-4 mt-4">
+                  <SubmitButton />
+                </div>
+              </ShowIfDate>
+            </ValidatedForm>
+          </div>
+          <div className="col-span-4 col-start-7">
+            <ClientOnly>
+              {() => <BookingDetail className="mt-2" clinic={agenda.clinic} />}
+            </ClientOnly>
+          </div>
         </div>
       </div>
-    </div>
+    </Background>
   );
 }
 

@@ -20,7 +20,7 @@ export function ClinicDialog(p: {
   return (
     <Overlay isOpen={p.isOpen}>
       <div className="card w-3/5 z-10">
-        <h2>{isNew ? "Aggiungi Clinica" : "Modifica Clinica"}</h2>
+        <h2>{isNew ? "Aggiungi Struttura" : "Modifica Struttura"}</h2>
         <XMarkIcon className="close-button" onClick={p.onClose} />
 
         <ValidatedForm
@@ -45,7 +45,7 @@ export function ClinicDialog(p: {
             <InputField
               name="name"
               label="Nome"
-              helperText="Il nome della clinica."
+              helperText="Il nome della struttura."
             />
             <InputField name="address" label="Indirizzo" />
             <InputField name="city" label="Città" />
@@ -67,7 +67,7 @@ export function ClinicDialog(p: {
               intent="primary"
               className="w-full"
               type="submit"
-              text={isNew ? "Aggiungi Clinica" : "Modifica Clinica"}
+              text={isNew ? "Aggiungi Struttura" : "Modifica Struttura"}
               icon={<PlusIcon />}
             />
           </div>

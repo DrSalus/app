@@ -4,7 +4,13 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import classNames from "classnames";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { useFetcher } from "@remix-run/react";
 import Button from "./button";
 import { isString } from "lodash-es";
@@ -21,6 +27,8 @@ type Props<T> = {
   valueGetter?: (val: T) => string;
   renderDisplayName?: (val: T) => string;
 };
+
+const VIEW_LIMIT = 20;
 
 export type SelectOption = { label: string; value: string };
 export function Select(props: Props<SelectOption>) {
@@ -117,6 +125,7 @@ export function RemoteSelect<T>(props: Props<T>) {
             type="text"
             placeholder={props.placeholder}
             name="query"
+            autoComplete="off"
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -152,6 +161,7 @@ export function RemoteSelect<T>(props: Props<T>) {
       </div>
       <SuggestionList
         isOpen={isOpen}
+        query={query}
         items={props.options ?? items}
         onChange={handleChange}
         renderDisplayName={renderDisplayName}
@@ -163,12 +173,20 @@ export function RemoteSelect<T>(props: Props<T>) {
 function SuggestionList<T>(p: {
   items: T[];
   isOpen?: boolean;
+  query?: string;
   renderDisplayName?: (item: T) => string;
   onChange: (value: T) => void;
 }) {
+  const options = useMemo(() => {
+    return p.items.filter((d) => {
+      const label = (p.renderDisplayName?.(d) ?? String(d)).toLowerCase();
+      return label.includes((p.query ?? "").toLowerCase());
+    });
+  }, [p.items, p.query]);
+
   return p.isOpen ? (
     <div className="absolute top-full z-50 left-0 right-0 shadow-lg rounded-b border-gray-200 bg-white border border-t-0 overflow-scroll h-52">
-      {p.items.map((item: T, index: number) => {
+      {options.slice(0, VIEW_LIMIT).map((item: T, index: number) => {
         return (
           <div
             key={index}

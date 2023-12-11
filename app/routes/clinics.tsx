@@ -52,7 +52,7 @@ export default function Clinics() {
   return (
     <div className="page">
       <div className="headed-card">
-        <Header title="Gestione Cliniche" />
+        <Header title="Gestione Strutture" />
       </div>
       <div className="table mx-4">
         <table>

@@ -107,6 +107,7 @@ model Doctor {
   updatedAt  DateTime @updatedAt
   firstName  String
   lastName   String
+  rating     Float    @default(4)
   email      String?
   fiscalCode String?
 

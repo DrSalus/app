@@ -40,7 +40,12 @@ export default function Screen() {
   const data = useActionData<LoaderData>();
 
   return (
-    <div className="page place-content-center">
+    <div className="page place-content-center bg-gradient-to-b from-sky-800 to-sky-700">
+      <img
+        src="/hero.jpg"
+        alt="A doctor in background"
+        className="absolute opacity-10 w-full h-full object-cover overflow-hidden"
+      />
       <div className="card self-center">
         <Logo className="self-center my-4 h-24" />
         <Form method="post" className="form-grid">

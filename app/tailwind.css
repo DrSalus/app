@@ -257,6 +257,14 @@
     @apply bg-transparent hover:bg-gray-100;
   }
 
+  .btn.btn-minimal.btn-dark {
+    @apply text-white;
+  }
+
+  .btn.btn-minimal.btn-dark:hover {
+    @apply text-primary;
+  }
+
   .btn-primary svg {
     @apply text-gray-50;
   }
@@ -533,4 +541,11 @@
 
 .react-switch-label:active .react-switch-button {
   width: 2rem;
+}
+
+.service-input {
+  height: 100%;
+}
+.service-input .flex {
+  height: 100%;
 }
