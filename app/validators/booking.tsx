@@ -6,6 +6,7 @@ const booking = z.object({
   date: z.string().refine((val) => DateTime.fromISO(val).isValid, {
     message: "La data  non è valida",
   }),
+  _redirect: z.string().optional(),
   firstName: z.string().min(2, { message: "Il nome è obbligatorio" }),
   agendaId: z.string(),
   clinicId: z.string(),
