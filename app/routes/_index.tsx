@@ -7,14 +7,17 @@ import {
 	UserIcon,
 } from "@heroicons/react/24/solid";
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
+import { isEmpty } from "lodash-es";
 import { useEffect, useState } from "react";
 import Button, { LinkButton } from "~/components/button";
 import Logo from "~/components/logo";
 import RatingView from "~/components/ratingsView";
 import { Select, SelectOption } from "~/components/select";
 import Show from "~/components/show";
+import { AgendaWithPlans } from "~/dialogs/agenda";
 import { authenticator } from "~/services/auth.server";
+import { getCalendarSlots } from "~/utils/calendar";
 import { db } from "~/utils/db.server";
 import { getDisplayName, getSpecializations } from "~/utils/patient";
 
@@ -36,6 +39,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 			clinic: true,
 		},
 	});
+
 	return { services, agendas };
 }
 
@@ -111,6 +115,7 @@ export default function Home() {
           /> */}
 				</div>
 			</div>
+			<Outlet />
 			<Show if={disabled}>
 				<div className="h-2/3 md:h-1/2 flex flex-col items-center px-4 py-2 justify-center">
 					<div className="text-3xl flex flex-col md:flex-row items-center font-bold text-primary mt-4">

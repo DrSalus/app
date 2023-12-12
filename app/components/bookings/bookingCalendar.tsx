@@ -33,8 +33,8 @@ export default function BookingCalendar(p: {
 			name="date"
 			slots={p.slots}
 			options={{
-				numberOfDays: 5,
-				numberOfSlots: 10,
+				numberOfDays: 4,
+				numberOfSlots: 6,
 			}}
 		/>
 	);
