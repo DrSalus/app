@@ -17,9 +17,9 @@ import { DateTime } from "luxon";
 export async function handleRequest(request: Request) {
   const form = await parseMultipartFormData(request);
 
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
-  });
+  // const user = await authenticator.isAuthenticated(request, {
+  //   failureRedirect: "/login",
+  // });
 
   // Validate
   const result = await validator.validate(form);
@@ -65,7 +65,7 @@ export async function handleRequest(request: Request) {
   const bookedAt = DateTime.fromISO(date).toISO()!;
 
   // Let's create the booking.
-  await db.serviceBooking.create({
+  const booking = await db.serviceBooking.create({
     data: {
       patientId: patient.id,
       bookedAt,
@@ -90,5 +90,5 @@ export async function handleRequest(request: Request) {
   // 	to: `whatsapp:+39${phoneNumber}`,
   // });
   // console.log(res);
-  return _redirect;
+  return _redirect ?? `/confirmation/${booking.id}`;
 }

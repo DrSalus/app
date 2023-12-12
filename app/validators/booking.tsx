@@ -12,8 +12,10 @@ const booking = z.object({
   clinicId: z.string(),
   serviceId: z.string(),
   lastName: z.string().min(2, { message: "Il cognome è obbligatorio" }),
-  phoneNumber: z.string(),
-  emailAddress: z.string(),
+  phoneNumber: z
+    .string()
+    .min(3, { message: "Il numero di telefono è obbligatorio" }),
+  emailAddress: z.string().email({ message: "L'email non è valida" }),
 });
 
 export const validator = withZod(booking);

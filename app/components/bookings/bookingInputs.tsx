@@ -21,13 +21,8 @@ export default function BookingInputs(p: {
       <SelectField
         name="serviceId"
         label="Servizio"
-        options={[
-          {
-            value: "",
-            label: "Seleziona un servizio...",
-          },
-          ...p.services,
-        ]}
+        placeholder="Scegli un servizio..."
+        options={p.services}
       />
     </div>
   );

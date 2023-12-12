@@ -83,6 +83,8 @@ model Clinic {
   province    String
   postalCode  String
   phoneNumber String?
+  latitude    Float?
+  longitude   Float?
   doctors     Doctor[]
   services    ServiceOffering[]
   plans       Agenda[]
