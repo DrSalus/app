@@ -4,8 +4,9 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
+    "build": "prisma generate; npm run build:css && remix build",
     "dev": "remix dev --manual",
+    "build:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --minify",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc"
   },
