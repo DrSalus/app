@@ -7,7 +7,7 @@ export default defineConfig({
       ignoredRouteFiles: ["**/.*"],
     }),
   ],
-  ssr: {
-    external: ["@heroicons/react/24/solid", "@heroicons/react/24/outline"],
+  esbuild: {
+    treeShaking: true
   }
 });
