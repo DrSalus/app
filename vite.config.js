@@ -7,4 +7,7 @@ export default defineConfig({
       ignoredRouteFiles: ["**/.*"],
     }),
   ],
+  ssr: {
+    noExternal: ["react-phone-number-input", "@heroicons/react"],
+  },
 });
