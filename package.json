@@ -1,6 +1,7 @@
 {
   "name": "medicapp",
   "private": true,
+  "type": "module",
   "sideEffects": false,
   "scripts": {
     "dev:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --watch",
