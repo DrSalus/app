@@ -75,6 +75,7 @@ export default function Home() {
 					className="absolute opacity-10 w-full h-full object-cover overflow-hidden"
 				/>
 				<div className="z-10 flex flex-col items-start w-full max-w-3xl py-4">
+					<Logo mono className="h-24 self-center mb-8" />
 					<div className="font-semibold text-2xl text-white">
 						Prenota la tua visita in pochi click!
 					</div>
@@ -119,7 +120,8 @@ export default function Home() {
 			<Show if={disabled}>
 				<div className="h-2/3 md:h-1/2 flex flex-col items-center px-4 py-2 justify-center">
 					<div className="text-3xl flex flex-col md:flex-row items-center font-bold text-primary mt-4">
-						<div>La tua salute passa da</div> <Logo className="h-10" />
+						<div className="pr-3">La tua salute passa da</div>{" "}
+						<Logo className="h-10" />
 					</div>
 					<div className="text-base  text-center text-gray-600 mt-2 max-w-lg">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
