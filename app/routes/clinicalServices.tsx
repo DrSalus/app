@@ -31,8 +31,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	const [queryParams, pagination] = await getPaginationState(
 		request,
-		db.clinic.count(),
-		13,
+		db.clinicalService.count(),
+		22,
 	);
 
 	const clinicalServices = await db.clinicalService.findMany({

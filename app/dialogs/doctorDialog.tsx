@@ -60,7 +60,11 @@ export function DoctorDialog(p: {
 						<InputField name="lastName" label="Cognome" />
 						<InputField name="fiscalCode" label="Codice Fiscale" />
 						<InputField name="email" label="Indirizzo Email" />
-						<RelationshipField name="specialities" options={p.specialities} />
+						<RelationshipField
+							name="specialities"
+							label="Specializzazioni"
+							options={p.specialities}
+						/>
 					</div>
 
 					<div className="p-4 pb-2">
