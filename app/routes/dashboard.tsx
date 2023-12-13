@@ -9,6 +9,7 @@ import {
 	ReceiptPercentIcon,
 	UserCircleIcon,
 	UserGroupIcon,
+	UsersIcon,
 	WrenchIcon,
 } from "@heroicons/react/24/solid";
 import HomeItem from "~/components/homeItem";
@@ -74,6 +75,7 @@ export default function Dashboard() {
 					to="/doctors"
 					title="Gestione Dottori"
 				/>
+				<HomeItem icon={<UsersIcon />} to="/users" title="Gestione Utenti" />
 				<HomeItem icon={<WrenchIcon />} to="/admin" title="Admin" />
 			</div>
 		</div>
