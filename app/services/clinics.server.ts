@@ -56,7 +56,7 @@ export async function handleRequest(request: Request) {
 
 async function fillGeocodeInfo(clinic: Clinic) {
 	const result = await geocode(
-		`${clinic.address} ${clinic.city} ${clinic.province} ${clinic.postalCode}}`,
+		`${clinic.address} ${clinic.city} ${clinic.province} ${clinic.postalCode}`,
 	);
 	if (result.length > 0) {
 		await db.clinic.update({

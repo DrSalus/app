@@ -2493,6 +2493,10 @@ table {
   --tw-gradient-to: #0369a1 var(--tw-gradient-to-position);
 }
 
+.fill-primary {
+  fill: #387fa3;
+}
+
 .stroke-primary {
   stroke: #387fa3;
 }

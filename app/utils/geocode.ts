@@ -12,6 +12,7 @@ export async function geocode(query: string): Promise<GeocodeResult[]> {
 	);
 
 	const data: any = await response.json();
+	console.log(`[Geocode]: ${query} -> ${data?.data?.[0]?.label}`);
 	return (
 		data?.data?.map((item: any) => {
 			return {

@@ -19,7 +19,7 @@ export default function BookingConfirmed() {
 		<Background className="flex items-center justify-center">
 			<div className="bg-white rounded-xl shadow border z-20">
 				<NonIdealState
-					icon={<CalendarDaysIcon className="h-16 stroke-primary" />}
+					icon={<CalendarDaysIcon className="h-16 fill-primary" />}
 					title="Prenotazione confermata"
 					description="Riceverai una mail ed un SMS di conferma con tutti i dettagli della prenotazione."
 				/>
