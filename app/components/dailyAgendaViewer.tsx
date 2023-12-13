@@ -1,4 +1,4 @@
-import { Agenda, BookingState, Doctor } from "@prisma/client/edge";
+import { Agenda, BookingState, Doctor } from "@prisma/client/edge.js";
 import classNames from "classnames";
 import { WithSerializedTypes } from "~/utils/client";
 import { getDisplayName } from "~/utils/patient";

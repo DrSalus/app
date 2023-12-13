@@ -1,4 +1,4 @@
-import { ServiceType } from "@prisma/client/edge";
+import { ServiceType } from "@prisma/client/edge.js";
 import { withZod } from "@remix-validated-form/with-zod";
 import z from "zod";
 

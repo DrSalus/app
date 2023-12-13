@@ -1,4 +1,4 @@
-import type { Doctor } from "@prisma/client/edge";
+import type { Doctor } from "@prisma/client/edge.js";
 import SelectField from "./selectField";
 
 export default function DoctorField(p: {

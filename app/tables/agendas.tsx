@@ -4,7 +4,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import type { Agenda, ClinicalService, Doctor } from "@prisma/client/edge";
+import type { Agenda, ClinicalService, Doctor } from "@prisma/client/edge.js";
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import { DateTime } from "luxon";
 import React from "react";

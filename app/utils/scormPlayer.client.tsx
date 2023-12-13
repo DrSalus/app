@@ -1,4 +1,4 @@
-import { VideoView } from "@prisma/client/edge";
+import { VideoView } from "@prisma/client/edge.js";
 import { Duration } from "luxon";
 import { useEffect, useRef } from "react";
 

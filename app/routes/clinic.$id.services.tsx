@@ -1,5 +1,5 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { ServiceOffering } from "@prisma/client/edge";
+import { ServiceOffering } from "@prisma/client/edge.js";
 import { useLoaderData, useParams } from "@remix-run/react";
 import Button from "~/components/button";
 import Pagination, { getPaginationState } from "~/components/pagination";

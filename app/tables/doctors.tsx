@@ -9,7 +9,7 @@ import {
   DoctorSpecialty,
   Gender,
   type Patient,
-} from "@prisma/client/edge";
+} from "@prisma/client/edge.js";
 import { Form, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
 import { DateTime } from "luxon";

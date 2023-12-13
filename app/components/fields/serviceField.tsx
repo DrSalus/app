@@ -1,4 +1,4 @@
-import { ClinicalService, ServiceType } from "@prisma/client/edge";
+import { ClinicalService, ServiceType } from "@prisma/client/edge.js";
 import SelectField from "./selectField";
 import { WithSerializedTypes } from "~/utils/client";
 import { useControlField } from "remix-validated-form";

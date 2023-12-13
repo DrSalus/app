@@ -6,7 +6,7 @@ import {
   StopCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/solid";
-import { BookingState, ServiceBooking } from "@prisma/client/edge";
+import { BookingState, ServiceBooking } from "@prisma/client/edge.js";
 import classNames from "classnames";
 
 export function BookingStatus(p: { booking: Pick<ServiceBooking, "status"> }) {

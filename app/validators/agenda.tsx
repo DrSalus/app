@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { getBaseUnion } from "./base";
 import { withZod } from "@remix-validated-form/with-zod";
-import { ServiceType } from "@prisma/client/edge";
+import { ServiceType } from "@prisma/client/edge.js";
 import { DateTime } from "luxon";
 import { isEmpty } from "lodash-es";
 

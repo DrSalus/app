@@ -3,7 +3,7 @@ import type {
   ClinicalService,
   Doctor,
   ServiceOffering,
-} from "@prisma/client/edge";
+} from "@prisma/client/edge.js";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";

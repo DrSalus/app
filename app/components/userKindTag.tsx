@@ -4,7 +4,7 @@ import {
   PhoneArrowDownLeftIcon,
   WrenchIcon,
 } from "@heroicons/react/24/solid";
-import { UserKind } from "@prisma/client/edge";
+import { UserKind } from "@prisma/client/edge.js";
 import classNames from "classnames";
 import React from "react";
 

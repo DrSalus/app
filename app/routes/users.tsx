@@ -1,5 +1,5 @@
 import { PencilIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { User } from "@prisma/client/edge";
+import { User } from "@prisma/client/edge.js";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Button from "~/components/button";
