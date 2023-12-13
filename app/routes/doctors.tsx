@@ -1,10 +1,10 @@
 import {
-  MagnifyingGlassIcon,
-  PencilIcon,
-  PlusIcon,
-  TrashIcon,
+	MagnifyingGlassIcon,
+	PencilIcon,
+	PlusIcon,
+	TrashIcon,
 } from "@heroicons/react/24/solid";
-import { Doctor, Gender, type Patient } from "@prisma/client/edge.js";
+import { Doctor, Gender, type Patient } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
@@ -21,52 +21,52 @@ import { db } from "~/utils/db.server";
 import { useDialog } from "~/utils/dialog";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const query = url.searchParams.get("query") ?? "";
+	const url = new URL(request.url);
+	const query = url.searchParams.get("query") ?? "";
 
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
-  });
+	const user = await authenticator.isAuthenticated(request, {
+		failureRedirect: "/login",
+	});
 
-  const [queryParams, pagination] = await getPaginationState(
-    request,
-    db.doctor.count(),
-    13
-  );
+	const [queryParams, pagination] = await getPaginationState(
+		request,
+		db.doctor.count(),
+		13,
+	);
 
-  const specialities = await db.doctorSpecialty.findMany({});
+	const specialities = await db.doctorSpecialty.findMany({});
 
-  const doctors = await db.doctor.findMany({
-    ...queryParams,
-    include: {
-      specialities: true,
-    },
-    where: {
-      OR: [
-        {
-          firstName: {
-            contains: query,
-          },
-        },
-        {
-          lastName: {
-            contains: query,
-          },
-        },
-      ],
-    },
-  });
+	const doctors = await db.doctor.findMany({
+		...queryParams,
+		include: {
+			specialities: true,
+		},
+		where: {
+			OR: [
+				{
+					firstName: {
+						contains: query,
+					},
+				},
+				{
+					lastName: {
+						contains: query,
+					},
+				},
+			],
+		},
+	});
 
-  return { user, pagination, doctors, specialities };
+	return { user, pagination, doctors, specialities };
 }
 
 export default function Doctors() {
-  return (
-    <div className="page">
-      <div className="headed-card">
-        <Header title="Lista Dottori" />
-      </div>
-      <DoctorsTable />
-    </div>
-  );
+	return (
+		<div className="page">
+			<div className="headed-card">
+				<Header title="Lista Dottori" />
+			</div>
+			<DoctorsTable />
+		</div>
+	);
 }
