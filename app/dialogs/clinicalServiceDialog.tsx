@@ -9,6 +9,7 @@ import { validator } from "~/validators/clinicalService";
 import InputField from "~/components/fields/inputField";
 import { v4 } from "uuid";
 import ServiceTypeField from "~/components/fields/serviceTypeField";
+import { useMemo } from "react";
 
 export function ClinicalServiceDialog(p: {
   clinicalService?: WithSerializedTypes<ClinicalService | null>;
@@ -17,6 +18,10 @@ export function ClinicalServiceDialog(p: {
   onClose?: () => void;
 }) {
   const isNew = p.clinicalService == null;
+  const key = useMemo(
+    () => p.clinicalService?.id ?? v4(),
+    [p.clinicalService, p.isOpen]
+  );
 
   return (
     <Overlay isOpen={p.isOpen}>
@@ -26,7 +31,7 @@ export function ClinicalServiceDialog(p: {
 
         <ValidatedForm
           method="post"
-          key={p.clinicalService?.id ?? v4()}
+          key={key}
           validator={validator}
           defaultValues={p.clinicalService ?? {}}
           encType="multipart/form-data"
