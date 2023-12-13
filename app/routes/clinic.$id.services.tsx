@@ -1,9 +1,11 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { ServiceOffering } from "@prisma/client";
+import { ServiceOffering } from "@prisma/client/edge";
 import { useLoaderData, useParams } from "@remix-run/react";
 import Button from "~/components/button";
 import Pagination, { getPaginationState } from "~/components/pagination";
-import ServiceTypeLabel, { ServiceTypeTag } from "~/components/serviceTypeLabel";
+import ServiceTypeLabel, {
+  ServiceTypeTag,
+} from "~/components/serviceTypeLabel";
 import { OfferingDialog } from "~/dialogs/offeringDialog";
 import { authenticator } from "~/services/auth.server";
 import { WithSerializedTypes } from "~/utils/client";
@@ -78,7 +80,11 @@ export default function ClinicDashboard() {
                 <td className="">
                   {u.doctor.firstName} {u.doctor.lastName}
                 </td>
-                <td><div className="flex"><ServiceTypeTag type={u.service.type} /></div></td>
+                <td>
+                  <div className="flex">
+                    <ServiceTypeTag type={u.service.type} />
+                  </div>
+                </td>
                 <td className="">{u.service.name}</td>
                 <td className="">{amountFormatter.format(u.amount)}</td>
                 <td className="">{u.duration} min</td>

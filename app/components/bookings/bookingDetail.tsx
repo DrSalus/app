@@ -3,7 +3,7 @@ import {
   MapPinIcon,
   PhoneIcon,
 } from "@heroicons/react/24/solid";
-import type { Clinic } from "@prisma/client";
+import type { Clinic } from "@prisma/client/edge";
 import classNames from "classnames";
 import type { WithSerializedTypes } from "~/utils/client";
 import Map from "~/components/map.client";

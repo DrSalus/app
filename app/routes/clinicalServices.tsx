@@ -4,14 +4,16 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import type { Clinic, ClinicalService } from "@prisma/client";
+import type { Clinic, ClinicalService } from "@prisma/client/edge";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import Button from "~/components/button";
 import DeleteModal from "~/components/deleteModal";
 import Header from "~/components/header";
 import Pagination, { getPaginationState } from "~/components/pagination";
-import ServiceTypeLabel, { ServiceTypeTag } from "~/components/serviceTypeLabel";
+import ServiceTypeLabel, {
+  ServiceTypeTag,
+} from "~/components/serviceTypeLabel";
 import { ClinicDialog } from "~/dialogs/clinicDialog";
 import { ClinicalServiceDialog } from "~/dialogs/clinicalServiceDialog";
 import { authenticator } from "~/services/auth.server";
@@ -74,7 +76,11 @@ export default function ClinicalService() {
                 <td>{u.branchCode}</td>
                 <td className="text-gray-600">{u.nomenCode}</td>
                 <td className="text-gray-600">{u.leaCode}</td>
-                <td className=""><div className="flex"><ServiceTypeTag type={u.type} /></div></td>
+                <td className="">
+                  <div className="flex">
+                    <ServiceTypeTag type={u.type} />
+                  </div>
+                </td>
                 <td className="font-medium">{u.name}</td>
                 <td className="flex gap-x-2">
                   <Button

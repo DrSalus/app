@@ -1,5 +1,5 @@
 import React from "react";
-import type { User } from "@prisma/client";
+import type { User } from "@prisma/client/edge";
 import { useLoaderData } from "@remix-run/react";
 
 export default function IfAdmin(p: { children: JSX.Element }) {

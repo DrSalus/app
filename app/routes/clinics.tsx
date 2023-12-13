@@ -4,7 +4,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import type { Clinic } from "@prisma/client";
+import type { Clinic } from "@prisma/client/edge";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import Button from "~/components/button";

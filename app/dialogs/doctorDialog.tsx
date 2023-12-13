@@ -1,5 +1,10 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Doctor, DoctorSpecialty, Gender, type Patient } from "@prisma/client";
+import {
+  Doctor,
+  DoctorSpecialty,
+  Gender,
+  type Patient,
+} from "@prisma/client/edge";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";

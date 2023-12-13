@@ -1,4 +1,4 @@
-import type { ServiceOffering, ClinicalService } from "@prisma/client";
+import type { ServiceOffering, ClinicalService } from "@prisma/client/edge";
 import type { WithSerializedTypes } from "~/utils/client";
 import RelationshipField from "../relationshipField";
 

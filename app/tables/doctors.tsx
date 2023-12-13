@@ -4,7 +4,12 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { Doctor, DoctorSpecialty, Gender, type Patient } from "@prisma/client";
+import {
+  Doctor,
+  DoctorSpecialty,
+  Gender,
+  type Patient,
+} from "@prisma/client/edge";
 import { Form, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
 import { DateTime } from "luxon";

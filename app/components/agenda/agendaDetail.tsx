@@ -1,4 +1,4 @@
-import type { Agenda } from "@prisma/client";
+import type { Agenda } from "@prisma/client/edge";
 import classNames from "classnames";
 import { DateTime } from "luxon";
 import React from "react";

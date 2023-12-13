@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { getBaseUnion } from "./base";
-import { Gender } from "@prisma/client";
+import { Gender } from "@prisma/client/edge";
 import CodiceFiscale from "codice-fiscale-js";
 import { withZod } from "@remix-validated-form/with-zod";
 import { DateTime } from "luxon";

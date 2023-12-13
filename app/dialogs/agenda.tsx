@@ -11,7 +11,7 @@ import {
   ClinicalService,
   ServiceOffering,
   AgendaPlan,
-} from "@prisma/client";
+} from "@prisma/client/edge";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";

@@ -4,7 +4,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
-import { Gender, type Patient } from "@prisma/client";
+import { Gender, type Patient } from "@prisma/client/edge";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import classNames from "classnames";

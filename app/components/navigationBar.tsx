@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "@prisma/client/edge";
 import React from "react";
 import { Link, useLoaderData } from "@remix-run/react";
 import IfAdmin from "./admin";

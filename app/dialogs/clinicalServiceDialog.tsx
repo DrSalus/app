@@ -1,5 +1,5 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import type { ClinicalService } from "@prisma/client";
+import type { ClinicalService } from "@prisma/client/edge";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
@@ -47,7 +47,7 @@ export function ClinicalServiceDialog(p: {
               label="Nome"
               helperText="Il nome della prestazione."
             />
-                        <ServiceTypeField />
+            <ServiceTypeField />
 
             <InputField
               name="nomenCode"
