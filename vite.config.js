@@ -8,6 +8,6 @@ export default defineConfig({
     }),
   ],
   ssr: {
-    external: ["react-phone-number-input", "@heroicons/react"],
-  },
+    external: ["@heroicons/react/24/solid", "@heroicons/react/24/outline"],
+  }
 });
