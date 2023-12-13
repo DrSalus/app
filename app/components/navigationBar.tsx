@@ -16,13 +16,13 @@ export default function NavigationBar() {
         <h1>Home</h1>
       </Link>
       <div className="navigation-bar-items">
-        <IfAdmin>
+        {/* <IfAdmin>
           <>
             <Link to="/company">
               <span>Aziende</span>
             </Link>
           </>
-        </IfAdmin>
+        </IfAdmin> */}
       </div>
       <div className="navigation-bar-right">
         {data.user.firstName} {data.user.lastName}
