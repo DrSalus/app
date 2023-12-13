@@ -8,7 +8,7 @@
     "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
     "build": "prisma generate; npm run build:css && remix build",
     "build:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --minify",
-    "start": "remix-serve ./build/index.js",
+    "start": "remix-serve --experimental-specifier-resolution=node ./build/index.js",
     "typecheck": "tsc"
   },
   "dependencies": {
