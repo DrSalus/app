@@ -1,0 +1,551 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer components {
+  body {
+    @apply bg-gray-100 min-h-screen flex flex-col;
+  }
+  body.dark {
+    @apply bg-slate-800;
+  }
+
+  .dashboard {
+    @apply px-6 py-4 gap-y-6 flex flex-col items-stretch;
+  }
+
+  .dashboard .course-grid {
+    @apply grid-rows-1 grid-cols-2 md:grid-cols-2 lg:grid-cols-2;
+  }
+  .dashboard .course-grid.full {
+    @apply grid-cols-2 md:grid-cols-4 lg:grid-cols-4;
+  }
+
+  .search-bar-container {
+    @apply flex items-center px-6 py-1 mb-6;
+  }
+
+  .search-bar-container > .btn {
+    @apply ml-3;
+  }
+
+  .search-bar {
+    @apply bg-white border flex-grow border-gray-200 shadow-md rounded flex   items-stretch;
+  }
+
+  .toast-container {
+    @apply fixed z-50;
+  }
+
+  .toast-container-top-left {
+    @apply top-6 right-6;
+  }
+
+  .toast {
+    @apply w-96 p-2 rounded bg-no-repeat opacity-90 text-white relative shadow-lg shadow-gray-300 hover:cursor-pointer hover:opacity-100;
+  }
+
+  .toast svg {
+    @apply h-8 w-8;
+  }
+
+  .search-bar input {
+    @apply flex-grow py-2 px-3 rounded-l text-gray-800;
+  }
+
+  .search-bar button {
+    @apply border-l hover:bg-gray-200 rounded-r;
+  }
+
+  body > div:not(.navigation-bar) {
+    @apply flex-grow;
+  }
+
+  .navigation-bar {
+    @apply w-screen h-12 bg-primary text-white border-b border-gray-100 px-4 mb-3 shadow-lg flex items-center;
+  }
+
+  .navigation-bar img {
+    @apply h-7 mr-2;
+  }
+
+  .navigation-bar h1 {
+    @apply font-medium text-lg antialiased;
+  }
+
+  .navigation-bar-right {
+    @apply flex-1 flex justify-end;
+  }
+
+  .navigation-bar-items {
+    @apply self-stretch px-4  flex relative items-stretch;
+  }
+
+  .navigation-bar-items a {
+    @apply text-gray-200 tracking-wide
+     hover:bg-sky-900 hover:text-white flex items-center px-3;
+  }
+
+  .breadcrumbs {
+    @apply flex items-center;
+  }
+
+  .breadcrumbs svg {
+    @apply h-6 text-gray-500;
+  }
+
+  .page {
+    @apply h-full flex flex-col;
+  }
+
+
+  .card {
+    @apply rounded-xl relative shadow-2xl border-2 px-4 py-3 m-2 bg-white flex flex-col;
+  }
+
+  .headed-card {
+    @apply flex flex-col bg-white -mt-3 shadow-lg mb-4;
+  }
+
+  .non-ideal-state {
+    @apply flex flex-col p-24 items-center;
+  }
+
+  .non-ideal-state svg {
+    @apply h-32 w-32 text-stone-300;
+  }
+
+  .course-grid {
+    @apply grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 gap-6 sm:grid-cols-2 grid-rows-4;
+  }
+
+  .course-grid .course,
+  .course-container .course {
+    @apply relative flex flex-col items-stretch cursor-pointer shadow-md rounded-xl outline-1 transition-all hover:shadow-2xl hover:bg-gray-100 hover:dark:bg-slate-700;
+  }
+
+  .course-grid .course .duration,
+  .course-container .course .duration {
+    @apply absolute top-2 right-2 bg-orange-600 text-white px-2 py-0.5 text-xs uppercase rounded-lg;
+  }
+
+  .course .enrolled {
+    @apply absolute top-2 left-2 bg-orange-600 text-white px-2 py-0.5 text-xs uppercase rounded-lg;
+  }
+
+  .course-grid .course img,
+  .course-grid .course > svg,
+  .course-container .course img,
+  .course-container .course > svg {
+    @apply rounded-t-xl shadow flex-grow  border-slate-300 dark:border-slate-900 border-4 h-48 object-cover;
+  }
+
+  .course-image {
+    @apply rounded-xl shadow flex-grow h-48 object-cover;
+  }
+  .course-grid .course > svg {
+    @apply text-sky-800 p-16 hover:text-sky-700 dark:text-white;
+  }
+
+  .course-grid .course h4,
+  .course-container .course h4 {
+    @apply bg-slate-300 dark:bg-slate-900 text-lg text-center pb-2 pt-1 text-sky-900 dark:text-gray-50 rounded-b-xl font-medium;
+  }
+
+  h2 {
+    @apply text-sky-700 font-semibold text-2xl mb-4 pb-3 border-b;
+  }
+  h3 {
+    @apply text-sky-700 font-semibold text-2xl print:text-xl flex items-center;
+  }
+  h3 > svg {
+    @apply h-6 pr-2 print:h-5 print:pr-1;
+  }
+  h4 {
+    @apply text-gray-800 font-medium text-lg;
+  }
+  .tag {
+    @apply text-xs bg-orange-500 text-white uppercase px-2 py-1 rounded-3xl flex items-center;
+  }
+  .tag.small {
+    @apply py-0.5 px-2 rounded-md;
+  }
+  .form-grid {
+    @apply grid gap-2 grid-cols-8;
+  }
+
+  .form-grid label {
+    @apply text-gray-700 py-2 col-span-3 xl:col-span-3;
+  }
+  .form-grid div.label-container {
+    @apply flex flex-col gap-y-1 text-gray-700 py-2 col-span-3 xl:col-span-3;
+  }
+
+  .form-col {
+    @apply flex flex-col;
+  }
+
+  .form-col label {
+    @apply text-gray-700 py-2 col-span-3 xl:col-span-3;
+  }
+
+  .form-col .helperText {
+    @apply text-gray-400 italic text-sm -mt-2 mb-2;
+  }
+  .form-col .errorText {
+    @apply text-red-400 italic text-sm -mt-2 mb-2 flex items-center;
+  }
+  .form-col .errorText svg {
+    @apply h-5 mr-2; 
+  }
+  
+  .form-col input.PhoneInputInput {
+    @apply mb-0
+  }
+
+  .form-grid input,
+  .form-grid .input-container,
+  .form-grid .input-row-container,
+  .form-grid .PhoneInput,
+  .form-grid .input {
+    @apply col-span-5 xl:col-span-5;
+  }
+
+  .form-grid .input-container {
+    @apply flex flex-col items-stretch justify-center;
+  }
+  
+  .form-grid .input-row-container {
+    @apply flex;
+  }
+
+  .form-grid button[type="submit"] {
+    @apply col-span-8 mt-2;
+  }
+
+  .form-grid button[type="submit"].w-full {
+    @apply col-start-1 col-span-8;
+  }
+
+  .form-grid .helperText {
+    @apply col-start-4 col-span-5 xl:col-start-4 xl:col-span-6 text-gray-400 italic text-sm -mt-2 mb-2;
+  }
+  .form-grid .errorText {
+    @apply col-start-4 col-span-5 xl:col-start-4 xl:col-span-6 text-red-400 italic text-sm -mt-2 mb-2 flex items-center;
+  }
+  .form-grid .errorText svg {
+    @apply h-5 mr-2; 
+  }
+  .input {
+    @apply bg-white rounded border px-3 py-2 mb-2;
+  }
+  .input.error {
+    @apply bg-red-100 border-red-300;
+  }
+
+  .btn {
+    @apply bg-gray-200 hover:bg-gray-300 hover:text-sky-800 text-gray-700 cursor-pointer flex items-center justify-center  font-semibold px-3 py-2 rounded;
+  }
+
+  .btn.btn-primary {
+    @apply bg-sky-700 hover:bg-sky-600 text-white;
+  }
+
+  .btn.btn-minimal {
+    @apply bg-transparent hover:bg-gray-100;
+  }
+
+  .btn.btn-minimal.btn-dark {
+    @apply text-white;
+  }
+
+  .btn.btn-minimal.btn-dark:hover {
+    @apply text-primary;
+  }
+
+  .btn-primary svg {
+    @apply text-gray-50;
+  }
+
+  .btn.btn-small {
+    @apply px-2 py-1 text-sm;
+  }
+
+  .btn.btn-submitting {
+    @apply opacity-70 pointer-events-none;
+  }
+
+  .btn-danger {
+    @apply bg-red-700 hover:bg-red-600 text-white hover:bg-red-400 hover:text-white;
+  }
+
+  .btn-danger svg {
+    @apply text-white;
+  }
+
+  .btn-disabled {
+    @apply opacity-30 cursor-not-allowed;
+  }
+
+  .btn > svg {
+    @apply w-5 h-5;
+  }
+  
+  .btn.btn-small > svg {
+    @apply w-4 h-4;
+  }
+
+  .btn#text {
+    @apply ml-2;
+  }
+
+  .form-grid .btn {
+    /* @apply mt-2; */
+  }
+
+  .card-list {
+    @apply flex flex-col px-4 pt-6 pb-2;
+  }
+
+  .card-list li:not(.btn) {
+    @apply flex items-center px-2 py-2;
+  }
+
+  .card-list li {
+    @apply mb-2 hover:bg-gray-50 cursor-pointer rounded;
+  }
+
+  .card-list .chapter-name {
+    @apply flex-grow font-semibold;
+  }
+  .card-list .chapter-description {
+    @apply text-gray-500 text-sm;
+  }
+  .card-list .chapter-duration {
+    @apply shrink-0 text-xs text-slate-500 px-2;
+  }
+
+  .card-list .chapter-name {
+    @apply flex-grow flex items-center;
+  }
+
+  .card-list li .dot-button {
+    @apply h-8 pr-2 text-sky-800 font-semibold;
+  }
+
+  .table {
+    @apply bg-white border rounded-md shadow overflow-hidden relative print:text-xs print:shadow-none print:ring-1 print:ring-gray-200;
+  }
+
+  .table.minimal {
+    @apply border-none shadow-none;
+  }
+
+  .table tr:last-child {
+    @apply border-b;
+  }
+
+  .table.minimal thead tr:first-child {
+    @apply bg-transparent;
+  }
+
+  .table.minimal tr th {
+    @apply font-medium;
+  }
+  .table.minimal tr th,
+  .table.minimal tr td {
+    @apply border-none;
+  }
+
+  table {
+    @apply w-full;
+  }
+
+  .table thead tr:first-child {
+    @apply bg-gray-50 text-sky-800;
+  }
+  .table tr td {
+    @apply border-t;
+  }
+
+  .table th {
+    @apply text-left px-3 py-0.5;
+  }
+
+  .table tr td {
+    @apply px-3 py-1.5 print:px-2 print:py-1.5;
+  }
+  .table td:not(:last-child),
+  .table th:not(:last-child) {
+    @apply border-r;
+  }
+
+  .question-check {
+    @apply w-4 h-4 border-2 border-gray-300 mr-2;
+  }
+
+  .question-check.correct {
+    @apply border-green-600 bg-green-50 text-green-600;
+  }
+
+  .video-question-container {
+    @apply absolute w-full h-full z-10 bg-black bg-opacity-80;
+  }
+
+  .video-question-card {
+    @apply absolute top-2 right-2 bottom-2 left-2 rounded-lg bg-white;
+  }
+
+  .video-question-body {
+    @apply p-4 bg-gray-50 rounded-t-lg font-medium  border-b;
+  }
+
+  .video-question-options {
+    @apply flex flex-col;
+  }
+
+  .video-question-options .video-question-option {
+    @apply px-4 py-3 cursor-pointer hover:bg-gray-50 flex items-center border-b;
+  }
+  .video-question-option.selected {
+    @apply bg-sky-700 hover:bg-sky-700 text-white;
+  }
+
+  .video-question-options .video-question-check {
+    @apply h-5 w-5 border-2 border-gray-400 mr-4;
+  }
+
+  .video-question-option.selected .video-question-check {
+    @apply border-white text-gray-300;
+  }
+  .video-question-instruction {
+    @apply flex-grow text-gray-600 italic p-4;
+  }
+
+  .video-question-timer:hover .video-question-timer-bar {
+    @apply bg-gray-500;
+  }
+  .video-question-timer:hover {
+    @apply bg-gray-200;
+  }
+  .video-question-timer {
+    @apply m-2 bg-gray-100 h-10 relative rounded cursor-pointer;
+  }
+  .video-question-timer-bar {
+    @apply absolute left-0 right-0 h-full bg-gray-400 rounded-l transition-all;
+  }
+
+  .video-question-timer.answered {
+    @apply bg-sky-700 text-white;
+  }
+
+  .video-question-timer.answered .btn {
+    @apply text-white;
+  }
+
+  .video-question-timer.answered .video-question-timer-bar {
+    @apply bg-sky-800;
+  }
+
+  .video-question-timer .btn {
+    @apply bg-transparent hover:bg-transparent;
+  }
+
+  .video-question-button-text {
+    @apply absolute w-full h-full text-center font-medium;
+  }
+
+  .card .close-button {
+    @apply absolute top-2 p-2 right-2 h-10 text-gray-700 hover:text-sky-800 cursor-pointer hover:bg-gray-100 rounded;
+  }
+
+  .overlay {
+    @apply fixed top-0 hidden left-0 right-0 bottom-0 bg-black bg-opacity-70 z-30;
+  }
+
+  .overlay.open {
+    @apply flex items-center justify-center;
+  }
+
+  .header {
+    @apply bg-white border-b shadow-md self-stretch flex flex-col items-center py-8;
+  }
+
+  .pagination {
+    @apply bg-white border-t flex justify-center fixed bottom-0 py-3 left-0 w-full h-14 gap-x-2;
+  }
+  .pagination .btn:not(.btn-primary) {
+    @apply bg-white shadow-md hover:bg-gray-100;
+  }
+
+  .pagination .btn svg {
+    @apply h-5 w-5;
+  }
+}
+
+.toast-top {
+  top: 15px;
+  left: 50%;
+  right: 50%;
+  transition: transform 0.6s ease-in;
+  animation: toast-in 0.7s;
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* switch component */
+.react-switch-checkbox {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.react-switch-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 4rem;
+  height: 1.8rem;
+  border-radius: 100px;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.react-switch-label .react-switch-button {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 45px;
+  transition: 0.2s;
+  background: #fff;
+  box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+}
+
+.react-switch-checkbox:checked + .react-switch-label .react-switch-button {
+  left: calc(100% - 2px);
+  transform: translateX(-100%);
+}
+
+.react-switch-label:active .react-switch-button {
+  width: 2rem;
+}
+
+.service-input {
+  height: 100%;
+}
+.service-input .flex {
+  height: 100%;
+}
