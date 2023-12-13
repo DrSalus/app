@@ -6,8 +6,5 @@ export default defineConfig({
     remix({
       ignoredRouteFiles: ["**/.*"],
     }),
-  ],
-  esbuild: {
-    treeShaking: true
-  }
+  ]
 });
