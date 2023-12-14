@@ -34,7 +34,6 @@ export async function handleRequest(request: Request) {
 
 		case "create": {
 			const { _action, _redirect, worksAt, specialities, ...other } = data;
-			console.log(data, specialities, worksAt);
 			await db.doctor.create({
 				data: {
 					...other,

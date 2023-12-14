@@ -1,6 +1,6 @@
 import { useControlField, useFieldArray } from "remix-validated-form";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Field from "./field";
 import { ValueField } from "./fields/valueField";
 import Button from "./button";
@@ -20,7 +20,14 @@ export default function RelationshipField<
 	const [items, { push, remove }] = useFieldArray<{ id: string; name: string }>(
 		p.name,
 	);
+	const [control] = useControlField<{ id: string; name: string }[]>(p.name);
 	const [value, setValue] = useState<Value | null>(null);
+	const options = useMemo(() => {
+		const ids = control?.map((d) => d.id) ?? [];
+		return p.options
+			.filter((f) => !ids.includes(f.id))
+			.map((o) => ({ label: o.name, value: o.id }));
+	}, [control, p.options]);
 	return (
 		<Field
 			name={p.name}
@@ -52,24 +59,22 @@ export default function RelationshipField<
 					</div>
 				))}
 
-				<div className="flex flex-grow items-center gap-x-2">
+				<div className="flex flex-grow items-center gap-x-2 pr-1">
 					<Select
-						value={value?.id ?? ""}
-						onChange={(e) => {
-							const value = p.options.find((s) => s.id === e.target.value);
+						value={
+							value != null ? { value: value.id, label: value.name } : null
+						}
+						onChangeValue={(e) => {
+							const value = p.options.find((s) => s.id === e?.value);
 							if (value != null) {
 								setValue(value);
 							}
 						}}
-						className="input flex-grow border-none mb-0"
-						options={p.options.map((o) => ({ label: o.name, value: o.id }))}
+						minimal={true}
+						className="input flex-grow border-none mb-0 p-0"
+						options={options}
 					/>
-					{/* <option value="">-</option>
-						{p.options.map((offering) => (
-							<option key={offering.id} value={offering.id}>
-								{offering.name}
-							</option>
-						))} */}
+
 					<Button
 						intent="primary"
 						icon={<PlusIcon />}

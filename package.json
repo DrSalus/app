@@ -6,6 +6,7 @@
   "scripts": {
     "dev:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --watch",
     "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
+    "remix": "remix dev",
     "build": "prisma generate; npm run build:css && remix build",
     "build:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --minify",
     "start": "remix-serve ./build/index.js",

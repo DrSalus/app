@@ -256,6 +256,10 @@
   .btn.btn-minimal {
     @apply bg-transparent hover:bg-gray-100;
   }
+  
+  .btn.btn-minimal.btn-primary {
+    @apply bg-transparent hover:bg-gray-100 text-sky-700;
+  }
 
   .btn.btn-minimal.btn-dark {
     @apply text-white;

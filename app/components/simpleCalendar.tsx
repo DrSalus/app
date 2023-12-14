@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { BookingState } from "@prisma/client";
 import React from "react";
 import Show from "./show";
+import Button from "./button";
 
 export interface SimpleCalendarOptions {
 	numberOfDays: number;
@@ -35,9 +36,11 @@ export default function SimpleCalendar(p: {
 	onSelectSlot: (slot: DailyCalendarSlot) => void;
 	selectedSlot: DailyCalendarSlot | null;
 	slots: CalendarSlot[];
+	lockPastSlots?: boolean;
 	className?: string;
 }) {
 	const [page, setPage] = useState(0);
+	const [showMore, setShowMore] = useState(false);
 	const options: SimpleCalendarOptions = defaults(p.options ?? {}, {
 		numberOfDays: 4,
 		numberOfSlots: 4,
@@ -50,49 +53,59 @@ export default function SimpleCalendar(p: {
 				direction="previous"
 				onClick={() => setPage((p) => p - 1)}
 			/>
-			<div className="flex gap-x-8">
-				{times(options.numberOfDays).map((index) => {
-					const day = p.slots[index + page * options.numberOfDays];
-					if (day == null) {
-						return <div>?!</div>;
-					}
-					const date = DateTime.fromISO(day.date)!;
-					return (
-						<div key={index} className="flex flex-col items-center">
-							<SmallDay day={date} />
-							<div className="text-gray-500 text-xs mb-4">
-								{date.toLocaleString(
-									{
-										day: "2-digit",
-										month: "short",
-									},
-									{
-										locale: "it",
-									},
-								)}
-							</div>
-							<div className="flex flex-col gap-y-3 items-center">
-								{times(Math.min(day.slots.length, options.numberOfSlots)).map(
-									(index) => {
+			<div className="flex flex-col">
+				<div className="flex gap-x-8">
+					{times(options.numberOfDays).map((index) => {
+						const day = p.slots[index + page * options.numberOfDays];
+						if (day == null) {
+							return <React.Fragment />;
+						}
+						const date = DateTime.fromISO(day.date)!;
+						const numberOfSlots = showMore
+							? day.slots.length
+							: Math.min(day.slots.length, options.numberOfSlots);
+						return (
+							<div key={index} className="flex flex-col items-center">
+								<SmallDay day={date} />
+								<div className="text-gray-500 text-xs mb-4">
+									{date.toLocaleString(
+										{
+											day: "2-digit",
+											month: "short",
+										},
+										{
+											locale: "it",
+										},
+									)}
+								</div>
+								<div className="flex flex-col gap-y-3 items-center">
+									{times(numberOfSlots).map((index) => {
 										const slot = day.slots[index];
-										const time = DateTime.fromISO(slot.time);
+										const time = DateTime.fromISO(slot.time).set({
+											day: date.day,
+											month: date.month,
+											year: date.year,
+										});
+										const isPast = time < DateTime.now();
+										const available = slot.available && !isPast;
+
 										return (
 											<React.Fragment key={index}>
 												<div
 													onClick={() =>
-														slot.available ? p.onSelectSlot(slot) : undefined
+														available ? p.onSelectSlot(slot) : undefined
 													}
 													onKeyDown={() =>
-														slot.available ? p.onSelectSlot(slot) : undefined
+														available ? p.onSelectSlot(slot) : undefined
 													}
 													className={classNames(" px-2 py-1 rounded", {
 														"bg-opacity-100 text-white":
 															p.selectedSlot?.time === slot.time,
 														"bg-opacity-0 cursor-not-allowed text-gray-500 line-through":
-															slot.available === false,
+															available === false,
 
 														"bg-primary bg-opacity-10  text-primary font-medium hover:bg-primary hover:text-white cursor-pointer":
-															slot.available,
+															available,
 													})}
 												>
 													{time.toLocaleString(DateTime.TIME_SIMPLE, {
@@ -101,12 +114,18 @@ export default function SimpleCalendar(p: {
 												</div>
 											</React.Fragment>
 										);
-									},
-								)}
+									})}
+								</div>
 							</div>
-						</div>
-					);
-				})}
+						);
+					})}
+				</div>
+				<Button
+					className="mt-4 font-normal"
+					minimal
+					text={showMore ? "Mostra Meno" : "Mostra altro"}
+					onClick={() => setShowMore((p) => !p)}
+				/>
 			</div>
 			<PageButton direction="next" onClick={() => setPage((p) => p + 1)} />
 		</div>
