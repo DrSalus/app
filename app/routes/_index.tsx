@@ -157,32 +157,34 @@ export default function Home() {
 										key={agenda.id}
 										className="bg-white relative group rounded-2xl shadow-md border "
 									>
-										<div className="w-80 flex flex-col items-center py-8 group">
+										<div className="w-80 flex flex-col items-center py-8 group px-4">
 											<UserIcon className="w-16 md:w-20 h-16 md:h-20 bg-primary text-white p-2 rounded-full" />
 											<div className="font-medium text-xl mt-3">
 												{agenda.doctor != null
 													? getDisplayName(agenda.doctor)
 													: agenda.clinic.name}
 											</div>
-											<div className="text-base text-gray-600">
+											<div className="text-base text-center text-gray-600">
 												{getSpecializations(agenda.doctor)}
 											</div>
 											<Show if={agenda.doctor != null}>
 												<RatingView value={agenda.doctor?.rating ?? 0} />
 											</Show>
-											<div className="flex flex-col items-start self-start px-4 mt-6 gap-y-1">
-												<div className="flex items-center gap-x-2">
-													<MapPinIcon className="h-5 text-gray-400" />
-													{agenda.clinic.address} {agenda.clinic.city}
+											<div className="flex flex-col items-start self-start mt-6 gap-y-1">
+												<div className="flex items-start gap-x-2">
+													<MapPinIcon className="h-5 mt-0.5 text-gray-400" />
+													<div>
+														{agenda.clinic.address} {agenda.clinic.city}
+													</div>
 												</div>
-												<div className="flex items-center gap-x-2">
-													<PhoneIcon className="h-5 text-gray-400" />
-													{agenda.clinic.phoneNumber}
+												<div className="flex items-start gap-x-2">
+													<PhoneIcon className="h-4 mt-0.5 text-gray-400" />
+													<div>{agenda.clinic.phoneNumber}</div>
 												</div>
-												<div className="flex items-center gap-x-2">
-													<ReceiptPercentIcon className="h-5 text-gray-400" />
+												<div className="flex items-start gap-x-2">
+													<ReceiptPercentIcon className="h-6 mt-0.5 text-gray-400" />
 													<div className="flex-grow">{service?.label}</div>
-													<div className="font-semibold">
+													<div className="font-semibold text-primary">
 														{amount != null
 															? amountFormatter.format(amount)
 															: "-"}

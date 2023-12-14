@@ -15,10 +15,11 @@ export const action: ActionFunction = async ({ request }) => {
 		return { agendas: [] };
 	}
 
+	console.log("Searching for", result.data);
 	const agendas = await db.agenda.findMany({
 		where: {
 			services: {
-				every: {
+				some: {
 					serviceId: result.data.service,
 				},
 			},
