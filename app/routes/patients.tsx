@@ -74,7 +74,7 @@ export default function Patients() {
 						type="text"
 						name="query"
 						defaultValue={""}
-						placeholder="Cerca strutture..."
+						placeholder="Cerca Paziente..."
 					/>
 					<button type="submit">
 						<MagnifyingGlassIcon className="h-6 px-2 text-sky-800" />
@@ -83,7 +83,7 @@ export default function Patients() {
 				<Button
 					onClick={() => openModal()}
 					intent="primary"
-					text="Aggiungi Pazeinte"
+					text="Aggiungi Paziente"
 					icon={<PlusIcon />}
 				/>
 			</div>
