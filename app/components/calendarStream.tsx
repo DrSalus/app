@@ -73,7 +73,10 @@ export default function CalendarStream(props: {
 }
 
 function dayFromIndex(index: number) {
-	return DateTime.local().startOf("day").minus({ days: index });
+	return DateTime.local()
+		.startOf("day")
+		.minus({ days: index })
+		.plus({ hours: 3 });
 }
 
 function DayItem(p: {
