@@ -7,6 +7,7 @@ import InputField from "~/components/fields/inputField";
 import Button from "~/components/button";
 import { AgendaBooking } from "~/routes/clinic.$id.agenda.$agendaId";
 import { v4 } from "uuid";
+import { useMemo } from "react";
 
 export function AgendaAcceptDialog(p: {
 	isOpen: boolean;
@@ -14,6 +15,7 @@ export function AgendaAcceptDialog(p: {
 	redirectTo?: string;
 	onClose: () => void;
 }) {
+	const key = useMemo(() => p.booking?.id ?? v4(), [p.booking?.id, p.isOpen]);
 	return (
 		<Overlay isOpen={p.isOpen}>
 			<div className="card w-3/5 z-10">
@@ -21,7 +23,7 @@ export function AgendaAcceptDialog(p: {
 				<XMarkIcon className="close-button" onClick={p.onClose} />
 				<ValidatedForm
 					method="post"
-					key={p.booking?.id ?? v4()}
+					key={key}
 					validator={validator}
 					defaultValues={
 						p.booking != null

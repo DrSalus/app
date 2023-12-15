@@ -11,7 +11,7 @@ import {
 import { validator } from "~/validators/patient";
 import InputField from "~/components/fields/inputField";
 import SelectField from "~/components/fields/selectField";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import CodiceFiscale from "codice-fiscale-js";
 import { DateTime } from "luxon";
 import { upperFirst } from "lodash-es";
@@ -33,6 +33,7 @@ export function PatientDialog(p: {
 			birthDate: defaultValues.birthDate.split("T")[0],
 		};
 	}
+	const key = useMemo(() => p.patient?.id ?? v4(), [p.patient?.id, p.isOpen]);
 
 	return (
 		<Overlay isOpen={p.isOpen}>
@@ -42,7 +43,7 @@ export function PatientDialog(p: {
 
 				<ValidatedForm
 					method="post"
-					key={p.patient?.id ?? v4()}
+					key={key}
 					validator={validator}
 					resetAfterSubmit={true}
 					defaultValues={defaultValues}

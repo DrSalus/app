@@ -10,7 +10,7 @@ import {
 } from "remix-validated-form";
 import { validator } from "~/validators/doctor";
 import InputField from "~/components/fields/inputField";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import CodiceFiscale from "codice-fiscale-js";
 import { DateTime } from "luxon";
 import { last, upperFirst } from "lodash-es";
@@ -29,6 +29,7 @@ export function DoctorDialog(p: {
 	const isNew = p.doctor == null;
 	const matches = useMatches();
 	const redirectTo = p.redirectTo ?? last(matches)?.pathname;
+	const key = useMemo(() => p.doctor?.id ?? v4(), [p.doctor?.id, p.isOpen]);
 
 	return (
 		<Overlay isOpen={p.isOpen}>
@@ -38,7 +39,7 @@ export function DoctorDialog(p: {
 
 				<ValidatedForm
 					method="post"
-					key={p.doctor?.id ?? v4()}
+					key={key}
 					validator={validator}
 					resetAfterSubmit={true}
 					defaultValues={p.doctor ?? {}}

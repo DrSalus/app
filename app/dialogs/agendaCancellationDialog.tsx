@@ -9,6 +9,7 @@ import { AgendaBooking } from "~/routes/clinic.$id.agenda.$agendaId";
 import { v4 } from "uuid";
 import { getDisplayName } from "~/utils/patient";
 import { DateTime } from "luxon";
+import { useMemo } from "react";
 
 export function AgendaCancellationDialog(p: {
 	isOpen: boolean;
@@ -16,6 +17,7 @@ export function AgendaCancellationDialog(p: {
 	redirectTo?: string;
 	onClose: () => void;
 }) {
+	const key = useMemo(() => p.booking?.id ?? v4(), [p.booking?.id, p.isOpen]);
 	return (
 		<Overlay isOpen={p.isOpen}>
 			<div className="card w-3/5 z-10">
@@ -23,7 +25,7 @@ export function AgendaCancellationDialog(p: {
 				<XMarkIcon className="close-button" onClick={p.onClose} />
 				<ValidatedForm
 					method="post"
-					key={p.booking?.id ?? v4()}
+					key={key}
 					validator={validator}
 					defaultValues={
 						p.booking != null

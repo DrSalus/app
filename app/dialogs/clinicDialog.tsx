@@ -8,6 +8,7 @@ import { validator } from "~/validators/clinic";
 import InputField from "~/components/fields/inputField";
 import { v4 } from "uuid";
 import PhoneInputField from "~/components/fields/phoneInputField";
+import { useMemo } from "react";
 
 export function ClinicDialog(p: {
 	clinic?: WithSerializedTypes<Clinic | null>;
@@ -16,7 +17,7 @@ export function ClinicDialog(p: {
 	onClose?: () => void;
 }) {
 	const isNew = p.clinic == null;
-
+	const key = useMemo(() => p.clinic?.id ?? v4(), [p.clinic?.id, p.isOpen]);
 	return (
 		<Overlay isOpen={p.isOpen}>
 			<div className="card w-3/5 z-10">
@@ -25,7 +26,7 @@ export function ClinicDialog(p: {
 
 				<ValidatedForm
 					method="post"
-					key={p.clinic?.id ?? v4()}
+					key={key}
 					validator={validator}
 					resetAfterSubmit={true}
 					defaultValues={p.clinic ?? {}}
