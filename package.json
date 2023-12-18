@@ -48,6 +48,7 @@
     "remix-validated-form": "^5.1.5",
     "twilio": "^4.19.3",
     "uuid": "^9.0.1",
+    "whatsapp-business": "^1.7.2",
     "zod": "^3.22.4",
     "zod-form-data": "^2.0.2"
   },

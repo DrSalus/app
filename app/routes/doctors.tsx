@@ -19,6 +19,7 @@ import DoctorsTable from "~/tables/doctors";
 import type { WithSerializedTypes } from "~/utils/client";
 import { db } from "~/utils/db.server";
 import { useDialog } from "~/utils/dialog";
+import { sendBookingConfirmation } from "~/utils/whatsapp";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const url = new URL(request.url);
@@ -35,6 +36,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	);
 
 	const specialities = await db.doctorSpecialty.findMany({});
+
+	// sendBookingConfirmation({
+	// 	address: "Via Peppiniello 24",
+	// 	bookedAt: new Date().toISOString(),
+	// 	clinic: "Clinica San Paolo",
+	// 	name: "Daniele Finocchiaro",
+	// 	recipient: "393271686940",
+	// 	service: "Visita Medica",
+	// })
+	// 	.then((res) => {
+	// 		console.log(res);
+	// 	})
+	// 	.catch((err) => {
+	// 		console.error(err);
+	// 	});
 
 	const doctors = await db.doctor.findMany({
 		...queryParams,
