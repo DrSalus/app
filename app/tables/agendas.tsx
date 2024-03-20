@@ -20,7 +20,7 @@ import useStopPropagation from "~/utils/events";
 import { getDisplayName } from "~/utils/patient";
 
 export default function AgendasTable(p: { clinic: string }) {
-	const { agendas, services, doctors } = useLoaderData<typeof loader>();
+	const { agendas, services, users, doctors } = useLoaderData<typeof loader>();
 	const [isModalOpen, agenda, openModal, onCloseModal] =
 		useDialog<WithSerializedTypes<Agenda>>();
 	const [isRemoveOpen, agendaToRemove, removeAgenda, onCloseRemove] =
@@ -105,13 +105,13 @@ export default function AgendasTable(p: { clinic: string }) {
 										text="Modifica"
 										icon={<PencilIcon />}
 									/>
-									<Button
+									{/* <Button
 										onClick={() => removeAgenda(u.id)}
 										small
 										intent="danger"
 										text="Rimuovi"
 										icon={<TrashIcon />}
-									/>
+									/> */}
 								</td>
 							</tr>
 						))}
@@ -132,6 +132,7 @@ export default function AgendasTable(p: { clinic: string }) {
 			<AgendaDialog
 				isOpen={isModalOpen}
 				doctors={doctors}
+				users={users}
 				services={services}
 				onClose={onCloseModal}
 				clinicId={p.clinic}

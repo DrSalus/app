@@ -12,7 +12,7 @@ export default function NavigationBar() {
 	return data?.user != null ? (
 		<div className="navigation-bar print:hiddeny">
 			<Logo small={true} mono={true} />
-			<Link to="/dashboard">
+			<Link to="/">
 				<h1>Home</h1>
 			</Link>
 			<div className="navigation-bar-items">

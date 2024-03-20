@@ -200,6 +200,7 @@ function AgendaDetailEmpty(p: {
 				<AgendaDialog
 					isOpen={isAgendaOpen}
 					agenda={p.agenda}
+					users={[]}
 					clinicId={p.agenda.clinicId}
 					onClose={closeAgendaDialog}
 					source="agenda"

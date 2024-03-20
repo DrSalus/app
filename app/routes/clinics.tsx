@@ -4,9 +4,15 @@ import {
 	PlusIcon,
 	TrashIcon,
 } from "@heroicons/react/24/solid";
-import type { Clinic } from "@prisma/client";
+import { UserKind, type Clinic } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
+import {
+	Form,
+	redirect,
+	useLoaderData,
+	useNavigate,
+	useSearchParams,
+} from "@remix-run/react";
 import Button from "~/components/button";
 import DeleteModal from "~/components/deleteModal";
 import Header from "~/components/header";
@@ -26,14 +32,40 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		failureRedirect: "/login",
 	});
 
+	if (user.kind !== UserKind.ADMIN) {
+		return redirect("/");
+	}
+
 	const [queryParams, pagination] = await getPaginationState(
 		request,
 		db.clinic.count(),
-		13,
+		20,
 	);
-
 	const clinics = await db.clinic.findMany({
 		...queryParams,
+		orderBy: [{ name: "asc" }],
+		where: {
+			OR: [
+				{
+					name: {
+						contains: query,
+						mode: "insensitive",
+					},
+				},
+				{
+					city: {
+						contains: query,
+						mode: "insensitive",
+					},
+				},
+				{
+					address: {
+						contains: query,
+						mode: "insensitive",
+					},
+				},
+			],
+		},
 	});
 
 	return { user, pagination, clinics };
@@ -46,6 +78,7 @@ export default function Clinics() {
 		useDialog<WithSerializedTypes<Clinic>>();
 	const [isRemoveOpen, clinicToRemove, removeClinic, onCloseRemove] =
 		useDialog<string>();
+	const [search] = useSearchParams();
 
 	const stopPropagation = useStopPropagation();
 
@@ -53,6 +86,25 @@ export default function Clinics() {
 		<div className="page">
 			<div className="headed-card">
 				<Header title="Gestione Strutture" />
+			</div>
+			<div className="search-bar-container -mx-2">
+				<Form className="search-bar">
+					<input
+						type="text"
+						name="query"
+						defaultValue={search.get("query") ?? ""}
+						placeholder="Cerca per nome struttura, indirizzo o città..."
+					/>
+					<button type="submit">
+						<MagnifyingGlassIcon className="h-6 px-2 text-sky-800" />
+					</button>
+				</Form>
+				<Button
+					onClick={() => openModal()}
+					intent="primary"
+					text="Aggiungi Struttura"
+					icon={<PlusIcon />}
+				/>
 			</div>
 			<div className="table mx-4">
 				<table>
@@ -68,7 +120,7 @@ export default function Clinics() {
 							<tr
 								key={u.id}
 								className="hover:bg-gray-100 cursor-pointer"
-								onClick={() => navigate(`/clinic/${u.id}/dashboard`)}
+								onClick={() => navigate(`/clinic/${u.id}/home`)}
 							>
 								<td className="font-medium">{u.name}</td>
 								<td className="text-gray-800">

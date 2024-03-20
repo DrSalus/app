@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Gender, type Patient } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import classNames from "classnames";
 import { DateTime } from "luxon";
 import React from "react";
@@ -30,26 +30,30 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const [queryParams, pagination] = await getPaginationState(
 		request,
 		db.patient.count(),
-		13,
+		20,
 	);
 
 	const patients = await db.patient.findMany({
 		...queryParams,
+		orderBy: [{ firstName: "asc" }, { lastName: "asc" }],
 		where: {
 			OR: [
 				{
 					firstName: {
 						contains: query,
+						mode: "insensitive",
 					},
 				},
 				{
 					lastName: {
 						contains: query,
+						mode: "insensitive",
 					},
 				},
 				{
 					fiscalCode: {
 						contains: query,
+						mode: "insensitive",
 					},
 				},
 			],
@@ -65,6 +69,7 @@ export default function Patients() {
 		useDialog<WithSerializedTypes<Patient>>();
 	const [isRemoveOpen, patientToRemove, removePatient, onCloseRemove] =
 		useDialog<string>();
+	const [search] = useSearchParams();
 
 	return (
 		<div className="flex flex-col pt-4">
@@ -73,7 +78,7 @@ export default function Patients() {
 					<input
 						type="text"
 						name="query"
-						defaultValue={""}
+						defaultValue={search.get("query") ?? ""}
 						placeholder="Cerca Paziente..."
 					/>
 					<button type="submit">

@@ -56,6 +56,7 @@ model User {
   doctor               Doctor?   @relation(fields: [doctorId], references: [id])
   clinicId             String?
   clinic               Clinic?   @relation(fields: [clinicId], references: [id])
+  agendas              Agenda[]
 }
 
 model Patient {
@@ -195,6 +196,8 @@ model Agenda {
   services ServiceOffering[]
   booking  ServiceBooking[]
   plans    AgendaPlan[]
+
+  users User[]
 }
 
 model AgendaPlan {

@@ -5,9 +5,12 @@ import { validator } from "~/validators/acceptance";
 import Field from "~/components/field";
 import InputField from "~/components/fields/inputField";
 import Button from "~/components/button";
-import { AgendaBooking } from "~/routes/clinic.$id.agenda.$agendaId";
 import { v4 } from "uuid";
 import { useMemo } from "react";
+import { AgendaBooking } from "~/services/agendas";
+import { DateTime } from "luxon";
+import Show from "~/components/show";
+import Callout from "~/components/callout";
 
 export function AgendaAcceptDialog(p: {
 	isOpen: boolean;
@@ -16,6 +19,10 @@ export function AgendaAcceptDialog(p: {
 	onClose: () => void;
 }) {
 	const key = useMemo(() => p.booking?.id ?? v4(), [p.booking?.id, p.isOpen]);
+	const isToday = DateTime.fromISO(p.booking?.bookedAt ?? "").hasSame(
+		DateTime.now(),
+		"day",
+	);
 	return (
 		<Overlay isOpen={p.isOpen}>
 			<div className="card w-3/5 z-10">
@@ -49,6 +56,12 @@ export function AgendaAcceptDialog(p: {
 						<InputField name="lastName" label="Cognome" />
 						<InputField name="fiscalCode" label="Codice Fiscale" />
 					</div>
+					<Show unless={isToday}>
+						<Callout
+							text="Attenzione: La data di accettazione non corrisponde a oggi, asicurati di aver verificato i dati della prenotazione."
+							intent="warning"
+						/>
+					</Show>
 					<div className="p-4 pb-2">
 						<Button
 							intent="primary"

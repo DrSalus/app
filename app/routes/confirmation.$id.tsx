@@ -21,7 +21,7 @@ export default function BookingConfirmed() {
 				<NonIdealState
 					icon={<CalendarDaysIcon className="h-16 fill-primary" />}
 					title="Prenotazione confermata"
-					description="Riceverai una mail ed un SMS di conferma con tutti i dettagli della prenotazione."
+					description="Riceverai una mail ed un messaggio WhatsApp di conferma con tutti i dettagli della prenotazione."
 				/>
 			</div>
 		</Background>

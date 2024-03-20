@@ -40,7 +40,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 		},
 	});
 	if (agenda == null) {
-		return redirect("/dashboard");
+		return redirect("/");
 	}
 
 	const slots = await getCalendarSlots(agenda, {
@@ -88,6 +88,7 @@ export default function ClinicBooking() {
 							services={agenda.services.map((service) => ({
 								value: service.id,
 								label: service.service.name,
+								serviceId: service.serviceId,
 							}))}
 						/>
 
@@ -109,14 +110,16 @@ export default function ClinicBooking() {
 }
 
 function SubmitButton() {
-	const { isValid } = useFormContext();
+	const { isValid, getValues } = useFormContext();
 	return (
-		<Button
-			intent="primary"
-			className="w-full"
-			disabled={!isValid}
-			type="submit"
-			text={"Prenota"}
-		/>
+		<>
+			<Button
+				intent="primary"
+				className="w-full"
+				disabled={!isValid}
+				type="submit"
+				text={"Prenota"}
+			/>
+		</>
 	);
 }

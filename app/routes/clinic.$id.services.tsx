@@ -1,6 +1,16 @@
-import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+	MagnifyingGlassIcon,
+	PencilIcon,
+	PlusIcon,
+	TrashIcon,
+} from "@heroicons/react/24/solid";
 import { ServiceOffering } from "@prisma/client";
-import { useLoaderData, useParams } from "@remix-run/react";
+import {
+	Form,
+	useLoaderData,
+	useParams,
+	useSearchParams,
+} from "@remix-run/react";
 import Button from "~/components/button";
 import Pagination, { getPaginationState } from "~/components/pagination";
 import ServiceTypeLabel, {
@@ -20,11 +30,18 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 		failureRedirect: "/login",
 	});
 
-	const where = { clinicId: params.id };
+	const where = {
+		clinicId: params.id,
+		OR: [
+			{ doctor: { firstName: { contains: query, mode: "insensitive" } } },
+			{ doctor: { lastName: { contains: query, mode: "insensitive" } } },
+			{ service: { name: { contains: query, mode: "insensitive" } } },
+		],
+	};
 	const [queryParams, pagination] = await getPaginationState(
 		request,
-		db.serviceOffering.count({ where }),
-		13,
+		db.serviceOffering.count({ where: { AND: where } }),
+		20,
 	);
 
 	const offering = await db.serviceOffering.findMany({
@@ -33,6 +50,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 			doctor: true,
 			service: true,
 		},
+		orderBy: [{ service: { name: "asc" } }],
 		where: {
 			AND: [where],
 		},
@@ -55,6 +73,7 @@ export default function ClinicDashboard() {
 	const { offering, services, doctors } = useLoaderData<typeof loader>();
 	const [isModalOpen, serviceOffering, openModal, onCloseModal] =
 		useDialog<WithSerializedTypes<ServiceOffering>>();
+	const [search] = useSearchParams();
 
 	const amountFormatter = new Intl.NumberFormat("it-IT", {
 		style: "currency",
@@ -63,6 +82,17 @@ export default function ClinicDashboard() {
 
 	return (
 		<div className="flex flex-col">
+			<Form className="search-bar mx-4 mb-4">
+				<input
+					type="text"
+					name="query"
+					defaultValue={search.get("query") ?? ""}
+					placeholder="Cerca per nome, prestazione o specializzazione..."
+				/>
+				<button type="submit">
+					<MagnifyingGlassIcon className="h-6 px-2 text-sky-800" />
+				</button>
+			</Form>
 			<div className="table mx-4">
 				<table>
 					<thead>
@@ -72,6 +102,7 @@ export default function ClinicDashboard() {
 							<th className="">Prestazione</th>
 							<th className="">Costo</th>
 							<th className="">Durata</th>
+							<th className=""></th>
 						</tr>
 					</thead>
 					<tbody>

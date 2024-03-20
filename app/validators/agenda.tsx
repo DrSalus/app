@@ -40,6 +40,13 @@ const agenda = z.object({
 			}),
 		)
 		.optional(),
+	users: z
+		.array(
+			z.object({
+				id: z.string(),
+			}),
+		)
+		.optional(),
 	slotInterval: z.coerce
 		.number()
 		.min(1, { message: "La durata dello slot è obbligatorio" }),

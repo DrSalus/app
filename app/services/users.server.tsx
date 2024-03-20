@@ -2,6 +2,7 @@ import { hashPassword, parseMultipartFormData } from "~/utils/utils.server";
 import { validator } from "~/validators/user";
 import { validationError } from "remix-validated-form";
 import { db } from "~/utils/db.server";
+import { isEmpty } from "lodash-es";
 
 export async function handleRequest(request: Request) {
 	const form = await parseMultipartFormData(request);
@@ -24,6 +25,7 @@ export async function handleRequest(request: Request) {
 				data: {
 					...user,
 					password: hashedPassword,
+					clinicId: !isEmpty(user.clinicId) ? user.clinicId : undefined,
 				},
 			});
 			break;
@@ -37,6 +39,7 @@ export async function handleRequest(request: Request) {
 				},
 				data: {
 					...user,
+					clinicId: !isEmpty(user.clinicId) ? user.clinicId : undefined,
 				},
 			});
 			break;

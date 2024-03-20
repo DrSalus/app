@@ -51,7 +51,6 @@ export default function RelationshipField<
 						</div>
 						<Button
 							onClick={() => remove(index)}
-							minimal
 							small
 							intent="danger"
 							icon={<TrashIcon />}

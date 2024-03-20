@@ -7,6 +7,7 @@ const baseUser = z.object({
 	firstName: z.string().min(2, { message: "Il nome è obbligatorio" }),
 	lastName: z.string().min(2, { message: "Il cognome è obbligatorio" }),
 	email: z.string().email({ message: "L'email non è valida" }),
+	clinicId: z.string().optional(),
 	kind: z.enum([
 		"ADMIN",
 		"DOCTOR",

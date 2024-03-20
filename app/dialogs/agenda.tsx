@@ -1,5 +1,6 @@
 import {
 	ClockIcon,
+	LockOpenIcon,
 	PencilSquareIcon,
 	PlusIcon,
 	ReceiptPercentIcon,
@@ -11,6 +12,7 @@ import {
 	ClinicalService,
 	ServiceOffering,
 	AgendaPlan,
+	User,
 } from "@prisma/client";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
@@ -32,6 +34,7 @@ import classNames from "classnames";
 import TimeRange from "~/components/fields/timeRangeField";
 import Show from "~/components/show";
 import FormDebug from "~/components/formDebug";
+import UsersField from "~/components/fields/usersField";
 
 export type AgendaWithPlans = Agenda & {
 	plans: AgendaPlan[];
@@ -45,6 +48,7 @@ export function AgendaDialog(p: {
 	agenda?: WithSerializedTypes<AgendaWithPlans | null>;
 	doctors?: Doctor[];
 	services?: WithSerializedTypes<ClinicalServiceOffering>[];
+	users?: WithSerializedTypes<User>[];
 	redirectTo?: string;
 	source?: string;
 	clinicId: string;
@@ -106,6 +110,17 @@ export function AgendaDialog(p: {
 							onClick={() => setSelectedTab("services")}
 						/>
 					</Show>
+					<Show if={p.users != null}>
+						<Tab
+							selectedTab={selectedTab}
+							tab={{
+								id: "users",
+								title: "Permessi",
+								icon: <LockOpenIcon />,
+							}}
+							onClick={() => setSelectedTab("users")}
+						/>
+					</Show>
 				</div>
 
 				<XMarkIcon className="close-button" onClick={p.onClose} />
@@ -160,6 +175,15 @@ export function AgendaDialog(p: {
 							})}
 						>
 							<ServicesField name="services" options={p.services ?? []} />
+						</div>
+					</Show>
+					<Show if={p.users != null}>
+						<div
+							className={classNames("form-grid px-4 pt-4", {
+								hidden: selectedTab !== "users",
+							})}
+						>
+							<UsersField label="Utenti" name="users" options={p.users ?? []} />
 						</div>
 					</Show>
 

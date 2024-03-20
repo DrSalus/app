@@ -22,14 +22,42 @@ import { getCalendarSlots } from "~/utils/calendar";
 import { db } from "~/utils/db.server";
 import { getDisplayName, getSpecializations } from "~/utils/patient";
 import { action } from "./search";
-import { Agenda, Clinic, Doctor, ServiceOffering } from "@prisma/client";
+import {
+	Agenda,
+	Clinic,
+	Doctor,
+	ServiceOffering,
+	UserKind,
+} from "@prisma/client";
 import NonIdealState from "~/components/nonIdealState";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
 	const user = await authenticator.isAuthenticated(request, {});
 
 	if (user != null) {
-		return redirect("/dashboard");
+		let kind = user.kind;
+
+		// In testing, we change the user kind lot of times, so
+		// we need to retrieve each time.
+		console.log(process.env.FORCE_GET_USER_KIND);
+		if (process.env.FORCE_GET_USER_KIND) {
+			console.log(
+				"[WARNING]: Force get user kind is enabled, please disable in production",
+			);
+			kind =
+				(await db.user.findUnique({ where: { id: user.id } }))?.kind ?? kind;
+		}
+		console.log(`User ${user.email} is ${kind}`);
+
+		switch (kind) {
+			case UserKind.DOCTOR_ASSISTANT:
+			case UserKind.DOCTOR:
+				return redirect("/agenda");
+			case UserKind.ADMIN:
+				return redirect("/admin");
+			case UserKind.CLINIC_MANAGER:
+				return redirect("/manager");
+		}
 	}
 
 	const services = await db.clinicalService.findMany({});
@@ -192,7 +220,7 @@ export default function Home() {
 												</div>
 											</div>
 											<a
-												href={`/book/${agenda.id}`}
+												href={`/book/${agenda.id}?service=${service?.value}`}
 												className="absolute bottom-0 left-0 font-bold text-gray-600 right-0 text-center py-3 rounded-b-xl group-hover:bg-primary group-hover:text-white cursor-pointer border-t"
 											>
 												PRENOTA

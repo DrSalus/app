@@ -62,8 +62,15 @@ export async function getCalendarSlots(
 			plan,
 			["mon", "tue", "wed", "thu", "fri", "sat", "sun"][dayOfWeek - 1],
 		);
-		console.log(dailyPlan);
 		let slots: DailyCalendarSlot[] = [];
+
+		const validFrom = DateTime.fromJSDate(
+			agenda.validFrom ?? new Date(0),
+		).startOf("day");
+		const validUntil =
+			agenda.validUntil != null
+				? DateTime.fromJSDate(agenda.validUntil).endOf("day")
+				: null;
 
 		if (dailyPlan != null && dailyPlan.length > 0) {
 			for (const [slotIndex, singleSlot] of dailyPlan.entries()) {
@@ -74,7 +81,6 @@ export async function getCalendarSlots(
 					to.diff(from, "minutes").minutes / agenda.slotInterval,
 				);
 
-				console.log("dailyPlan", dailyPlan, numberOfSlots);
 				const nextSlots = times(numberOfSlots).map((index) => {
 					const time = d.startOf("day").plus({
 						hours: from.hour,
@@ -88,7 +94,10 @@ export async function getCalendarSlots(
 							bookedAt.hasSame(time, "minute")
 						);
 					});
-					const available = booking == null;
+					const isValidFrom = time >= validFrom;
+					const isValidUntil = validUntil == null || time <= validUntil;
+					const available = booking == null && isValidFrom && isValidUntil;
+					console.log(booking == null, isValidFrom, isValidUntil);
 					return {
 						time: time.toISO()!,
 						available,

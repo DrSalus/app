@@ -14,6 +14,7 @@ import {
 } from "@heroicons/react/24/solid";
 import HomeItem from "~/components/homeItem";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
+import DashboardHeader from "~/components/dashboardHeader";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	// If the user is already authenticated redirect to /dashboard directly
@@ -24,36 +25,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	return json({ user });
 }
 
-export default function Dashboard() {
+export default function Admion() {
 	const { user } = useLoaderData<typeof loader>();
 
 	return (
 		<div className="flex flex-col">
-			<div className="-mt-3 header flex px-4">
-				<div className="flex flex-col items-center gap-x-2">
-					<UserCircleIcon className="h-24 text-gray-400" />
-					{/* <img src={workspace?.logo} className="h-24" /> */}
-					<h4 className="text-sky-700 text-2xl">
-						{user.firstName} {user.lastName}
-					</h4>
-					<div className="text-gray-800">{user.email}</div>
-					<div className="text-gray-500 text-sm">
-						Iscritto il{" "}
-						{DateTime.fromISO(user.createdAt, {
-							zone: "Europe/Rome",
-							setZone: true,
-						}).toLocaleString(DateTime.DATE_MED)}
-					</div>
-					<LinkButton
-						className="mt-2"
-						intent="danger"
-						to="/logout"
-						text="Logout"
-						small={true}
-						icon={<ArrowRightOnRectangleIcon />}
-					/>
-				</div>
-			</div>
+			<DashboardHeader user={user} />
 			<div className="grid grid-cols-5 gap-4 p-4">
 				<HomeItem
 					icon={<UserGroupIcon />}
@@ -76,7 +53,6 @@ export default function Dashboard() {
 					title="Gestione Dottori"
 				/>
 				<HomeItem icon={<UsersIcon />} to="/users" title="Gestione Utenti" />
-				<HomeItem icon={<WrenchIcon />} to="/admin" title="Admin" />
 			</div>
 		</div>
 	);

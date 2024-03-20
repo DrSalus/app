@@ -1,5 +1,5 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Gender, User, type Patient, UserKind } from "@prisma/client";
+import { Gender, User, type Patient, UserKind, Clinic } from "@prisma/client";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
@@ -14,11 +14,14 @@ import SelectField from "~/components/fields/selectField";
 import { v4 } from "uuid";
 import Show from "~/components/show";
 import { useMemo } from "react";
+import ClinicField from "~/components/fields/clinicField";
 
 export function UserDialog(p: {
 	redirectTo?: string;
 	isOpen: boolean;
+	isAdmin?: boolean;
 	user?: WithSerializedTypes<User | null>;
+	clinics?: WithSerializedTypes<Pick<Clinic, "id" | "name">>[];
 	onClose?: () => void;
 }) {
 	const isNew = p.user == null;
@@ -57,14 +60,41 @@ export function UserDialog(p: {
 						<SelectField
 							name="kind"
 							label="Tipo Account"
-							options={[
-								{ value: UserKind.PATIENT, label: "Paziente" },
-								{ value: UserKind.DOCTOR, label: "Dottore" },
-								{ value: UserKind.DOCTOR_ASSISTANT, label: "Accettazione" },
-								{ value: UserKind.ADMIN, label: "Amministratore" },
-								{ value: UserKind.CLINIC_MANAGER, label: "Gestore Struttura" },
-							]}
+							options={
+								p.isAdmin
+									? [
+											{ value: UserKind.PATIENT, label: "Paziente" },
+											{ value: UserKind.DOCTOR, label: "Dottore" },
+											{
+												value: UserKind.DOCTOR_ASSISTANT,
+												label: "Accettazione",
+											},
+											{ value: UserKind.ADMIN, label: "Amministratore" },
+											{
+												value: UserKind.CLINIC_MANAGER,
+												label: "Gestore Struttura",
+											},
+									  ]
+									: [
+											{ value: UserKind.DOCTOR, label: "Dottore" },
+											{
+												value: UserKind.DOCTOR_ASSISTANT,
+												label: "Accettazione",
+											},
+											{
+												value: UserKind.CLINIC_MANAGER,
+												label: "Gestore Struttura",
+											},
+									  ]
+							}
 						/>
+
+						{p.isAdmin ? (
+							<ClinicField clinics={p.clinics ?? []} />
+						) : (
+							<input type="hidden" name="clinicId" value={p.clinics?.[0]?.id} />
+						)}
+
 						<InputField name="email" label="Indirizzo Email" />
 						<Show if={isNew}>
 							<>
@@ -87,7 +117,7 @@ export function UserDialog(p: {
 							intent="primary"
 							className="w-full"
 							type="submit"
-							text={"Aggiungi Utente"}
+							text={isNew ? "Aggiungi Utente" : "Modifica Utente"}
 							icon={<PlusIcon />}
 						/>
 					</div>
