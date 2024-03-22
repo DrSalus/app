@@ -7,6 +7,7 @@ import { date } from "zod";
 import Twillio from "twilio";
 import { getDisplayName } from "~/utils/patient";
 import { DateTime } from "luxon";
+import { sendBookingConfirmation } from "~/utils/whatsapp";
 
 // const FROM_TWILLIO = process.env.TWILLIO_BOOKING_FROM;
 // const client = Twillio(
@@ -75,20 +76,15 @@ export async function handleRequest(request: Request) {
 		},
 	});
 
-	// // Send the confrimation message.
-	// const res = await client.messages.create({
-	// 	contentSid: process.env.TWILLIO_BOOKING_TEMPLATE_SID,
-	// 	from: process.env.TWILLIO_BOOKING_FROM,
-	// 	contentVariables: JSON.stringify({
-	// 		1: getDisplayName({ firstName, lastName }),
-	// 		2: service.service.name,
-	// 		3: service.clinic.name,
-	// 		4: `${service.clinic.address}, ${service.clinic.city}`,
-	// 		5: DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED),
-	// 		6: DateTime.fromISO(date).toLocaleString(DateTime.TIME_24_SIMPLE),
-	// 	}),
-	// 	to: `whatsapp:+39${phoneNumber}`,
-	// });
-	// console.log(res);
+	await sendBookingConfirmation({
+		address: `${service.clinic.address}, ${service.clinic.city}`,
+		name: getDisplayName(patient),
+		bookedAt: booking.bookedAt.toISOString(),
+		bookingId: booking.id,
+		clinic: service.clinic.name,
+		recipient: patient.phoneNumber!,
+		service: service.service.name,
+	});
+
 	return _redirect ?? `/confirmation/${booking.id}`;
 }

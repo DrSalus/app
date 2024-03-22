@@ -5,7 +5,7 @@ import {
 	TrashIcon,
 } from "@heroicons/react/24/solid";
 import { UserKind, type Clinic } from "@prisma/client";
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
 	Form,
 	redirect,
@@ -24,6 +24,12 @@ import { db } from "~/utils/db.server";
 import { useDialog } from "~/utils/dialog";
 import useStopPropagation from "~/utils/events";
 
+export const links: LinksFunction = () => [
+	{
+		rel: "stylesheet",
+		href: "https://unpkg.com/leaflet@1.8.0/dist/leaflet.css",
+	},
+];
 export async function loader({ request }: LoaderFunctionArgs) {
 	const url = new URL(request.url);
 	const query = url.searchParams.get("query") ?? "";

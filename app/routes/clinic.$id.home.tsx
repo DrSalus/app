@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import { DateTime } from "luxon";
-import Button from "~/components/button";
+import Button, { LinkButton } from "~/components/button";
 import Pagination, { getPaginationState } from "~/components/pagination";
 import ServiceTypeLabel, {
 	ServiceTypeTag,
@@ -83,6 +83,16 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 export default function ClinicDashboard() {
 	const { bookings } = useLoaderData<typeof loader>();
 	const [search] = useSearchParams();
+	const sendReminder = async (id: string) => {
+		const response = await fetch(`/booking/${id}/remind`, {
+			method: "POST",
+		});
+		if (response.ok) {
+			alert("Reminder sent!");
+		} else {
+			alert("Failed to send reminder");
+		}
+	};
 	return (
 		<div className="flex flex-col">
 			<div className="search-bar-container -mx-2">
@@ -103,6 +113,7 @@ export default function ClinicDashboard() {
 					<thead>
 						<tr>
 							<th className="">Paziente</th>
+							<th className="">Telefono</th>
 							<th className="">Tipo</th>
 							<th className="">Prestazione</th>
 							<th className="">Orario</th>
@@ -113,6 +124,7 @@ export default function ClinicDashboard() {
 						{bookings.map((u) => (
 							<tr key={u.id}>
 								<td className="">{getDisplayName(u.patient)}</td>
+								<td className="">{u.patient.phoneNumber}</td>
 								<td className="">
 									<div className="flex items-center">
 										<ServiceTypeTag type={u.service.service.type} />
@@ -125,7 +137,15 @@ export default function ClinicDashboard() {
 										DateTime.DATETIME_MED,
 									)}
 								</td>
-								<td className="flex gap-x-2"></td>
+								<td className="flex gap-x-2">
+									<LinkButton
+										small
+										text="Remind"
+										to={`/booking/${u.id}/remind`}
+									>
+										Modifica
+									</LinkButton>
+								</td>
 							</tr>
 						))}
 					</tbody>

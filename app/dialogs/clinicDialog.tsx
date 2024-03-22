@@ -9,6 +9,8 @@ import InputField from "~/components/fields/inputField";
 import { v4 } from "uuid";
 import PhoneInputField from "~/components/fields/phoneInputField";
 import { useMemo } from "react";
+import { LocationField } from "~/components/fields/locationField.client";
+import { ClientOnly } from "remix-utils/client-only";
 
 export function ClinicDialog(p: {
 	clinic?: WithSerializedTypes<Clinic | null>;
@@ -61,6 +63,7 @@ export function ClinicDialog(p: {
 							inputProps={{ maxLength: 5 }}
 						/>
 						<PhoneInputField name="phoneNumber" label="Numero di Telefono" />
+						<ClientOnly>{() => <LocationField />}</ClientOnly>
 					</div>
 
 					<div className="p-4 pb-2">

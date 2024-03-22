@@ -37,21 +37,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	const specialities = await db.doctorSpecialty.findMany({});
 
-	// sendBookingConfirmation({
-	// 	address: "Via Peppiniello 24",
-	// 	bookedAt: new Date().toISOString(),
-	// 	clinic: "Clinica San Paolo",
-	// 	name: "Daniele Finocchiaro",
-	// 	recipient: "393271686940",
-	// 	service: "Visita Medica",
-	// })
-	// 	.then((res) => {
-	// 		console.log(res);
-	// 	})
-	// 	.catch((err) => {
-	// 		console.error(err);
-	// 	});
-
 	const doctors = await db.doctor.findMany({
 		...queryParams,
 		include: {

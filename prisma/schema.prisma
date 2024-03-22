@@ -172,6 +172,7 @@ model ServiceBooking {
   cancelledAt         DateTime?
   cancellationMessage String?
   duration            Int
+  messages            Message[]
 }
 
 model Agenda {
@@ -198,6 +199,27 @@ model Agenda {
   plans    AgendaPlan[]
 
   users User[]
+}
+
+enum MessageKind {
+  BOOKING_CONFIRMATION
+  REMIND_24H
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipient String
+
+  kind MessageKind
+
+  booking   ServiceBooking @relation(fields: [bookingId], references: [id])
+  bookingId String
+
+  errorMessage String?
+  errorCode    Int?
 }
 
 model AgendaPlan {

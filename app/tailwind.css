@@ -1748,6 +1748,10 @@ table {
   grid-column: span 2 / span 2;
 }
 
+.col-span-8 {
+  grid-column: span 8 / span 8;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -1859,6 +1863,10 @@ table {
   margin-top: 1.5rem;
 }
 
+.block {
+  display: block;
+}
+
 .flex {
   display: flex;
 }
@@ -1903,6 +1911,14 @@ table {
   height: 6rem;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
+.h-3\.5 {
+  height: 0.875rem;
+}
+
 .h-32 {
   height: 8rem;
 }
@@ -1925,6 +1941,10 @@ table {
 
 .h-8 {
   height: 2rem;
+}
+
+.h-\[240px\] {
+  height: 240px;
 }
 
 .h-full {
@@ -1981,6 +2001,10 @@ table {
 
 .w-4 {
   width: 1rem;
+}
+
+.w-40 {
+  width: 10rem;
 }
 
 .w-44 {
@@ -2473,6 +2497,10 @@ table {
   background-color: rgb(3 105 161 / var(--tw-bg-opacity));
 }
 
+.bg-transparent {
+  background-color: transparent;
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -2481,10 +2509,6 @@ table {
 .bg-yellow-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity));
-}
-
-.bg-transparent {
-  background-color: transparent;
 }
 
 .bg-opacity-0 {
@@ -2792,6 +2816,11 @@ table {
 .text-green-600 {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+
+.text-green-800 {
+  --tw-text-opacity: 1;
+  color: rgb(22 101 52 / var(--tw-text-opacity));
 }
 
 .text-lime-950 {

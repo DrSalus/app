@@ -6,9 +6,9 @@ import {
 import type { Clinic } from "@prisma/client";
 import classNames from "classnames";
 import type { WithSerializedTypes } from "~/utils/client";
-import Map from "~/components/map.client";
 import useDimensions from "react-cool-dimensions";
 import Show from "../show";
+import LeafletMap from "~/components/map.client";
 
 const MAP_HEIGHT = 280;
 
@@ -29,7 +29,7 @@ export default function BookingDetail(p: {
 		>
 			<div className="hidden md:block">
 				<Show if={p.clinic.latitude != null && p.clinic.longitude != null}>
-					<Map
+					<LeafletMap
 						height={MAP_HEIGHT}
 						width={width}
 						name="Test"

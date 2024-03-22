@@ -6,6 +6,7 @@ import { LinkButton } from "~/components/button";
 import {
 	ArrowRightOnRectangleIcon,
 	BuildingOfficeIcon,
+	ChatBubbleLeftEllipsisIcon,
 	ReceiptPercentIcon,
 	UserCircleIcon,
 	UserGroupIcon,
@@ -53,6 +54,12 @@ export default function Admion() {
 					title="Gestione Dottori"
 				/>
 				<HomeItem icon={<UsersIcon />} to="/users" title="Gestione Utenti" />
+
+				<HomeItem
+					icon={<ChatBubbleLeftEllipsisIcon />}
+					to="/messages"
+					title="Messaggi"
+				/>
 			</div>
 		</div>
 	);

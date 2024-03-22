@@ -21,6 +21,7 @@ import type { AgendaWithPlans } from "~/dialogs/agenda";
 import { AgendaDialog } from "~/dialogs/agenda";
 import { BookingDialog } from "~/dialogs/bookingDialog";
 import { DailyCalendarSlot } from "../simpleCalendar";
+import { AgendaMoveDialog } from "~/dialogs/agendaMoveDialog";
 
 export default function AgendaDetail(p: {
 	agenda: WithSerializedTypes<AgendaWithPlans>;
@@ -61,6 +62,8 @@ function AgendaBookingDetail(p: {
 		openCancellationDialog,
 		cancelAcceptDialog,
 	] = useDialog<AgendaBooking | null>();
+	const [isMoveDialogOpen, moveBooking, openMoveDialog, cancelMoveDialog] =
+		useDialog<AgendaBooking | null>();
 	return (
 		<div className="flex flex-col divide-y">
 			<AgendaBookingField
@@ -124,6 +127,12 @@ function AgendaBookingDetail(p: {
 								redirectTo={window.location.pathname + window.location.search}
 								onClose={cancelAcceptDialog}
 							/>
+							<AgendaMoveDialog
+								isOpen={isMoveDialogOpen}
+								booking={moveBooking}
+								redirectTo={window.location.pathname + window.location.search}
+								onClose={cancelMoveDialog}
+							/>
 						</>
 					)}
 				</ClientOnly>
@@ -132,6 +141,7 @@ function AgendaBookingDetail(p: {
 					icon={
 						<DocumentDuplicateIcon className="h-12 group-hover:text-primary" />
 					}
+					onClick={() => openMoveDialog(p.booking)}
 				/>
 				<AgendaQuickAction
 					title="Annulla"
