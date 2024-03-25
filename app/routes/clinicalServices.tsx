@@ -8,6 +8,7 @@ import { UserKind, type Clinic, type ClinicalService } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import React from "react";
+import IfAdmin from "~/components/admin";
 import Button from "~/components/button";
 import DeleteModal from "~/components/deleteModal";
 import Header from "~/components/header";
@@ -83,12 +84,14 @@ export default function ClinicalServicePage() {
 						<MagnifyingGlassIcon className="h-6 px-2 text-sky-800" />
 					</button>
 				</Form>
-				<Button
-					onClick={() => openModal()}
-					intent="primary"
-					text="Aggiungi Struttura"
-					icon={<PlusIcon />}
-				/>
+				<IfAdmin>
+					<Button
+						onClick={() => openModal()}
+						intent="primary"
+						text="Aggiungi Prestazione"
+						icon={<PlusIcon />}
+					/>
+				</IfAdmin>
 			</div>
 			<div className="table mx-6">
 				<table>

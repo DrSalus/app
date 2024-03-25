@@ -3,6 +3,6 @@ import { z } from "zod";
 
 export const searchRequest = z.object({
 	service: z.string(),
-	city: z.string().optional(),
+	city: z.string(),
 });
 export const validator = withZod(searchRequest);

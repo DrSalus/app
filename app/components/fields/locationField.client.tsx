@@ -25,24 +25,32 @@ export function LocationField() {
 				console.log("Set lat lng", res.result[0]);
 				setLatitude(res.result[0].latitude);
 				letLongitude(res.result[0].longitude);
+				return { lat: res.result[0].latitude, lng: res.result[0].longitude };
 			}
 			return null;
 		}, 1000),
 	);
 
 	useEffect(() => {
+		console.log("changed", address, city);
 		if (!isEmpty(address) && !isEmpty(city)) {
 			const promise = throttled.current(address!, city!);
 			if (promise != null) {
-				promise.then((result) => {});
+				promise.then((result) => {
+					console.log("Gor result", result);
+					if (result != null) {
+						setLatitude(result.lat);
+						letLongitude(result.lng);
+					}
+				});
 			}
 		}
 	}, [address, city]);
 
 	return (
 		<>
-			<input name="latitude" value={lat} />
-			<input name="longitude" value={lng} />
+			{/* <input name="latitude" value={lat ?? 0} />
+			<input name="longitude" value={lng ?? 0} /> */}
 			<div
 				className="col-span-8 h-[240px] rounded overflow-hidden block"
 				ref={observe}

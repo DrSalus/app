@@ -5,7 +5,12 @@ import {
 	TrashIcon,
 } from "@heroicons/react/24/solid";
 import { Gender, type Patient } from "@prisma/client";
-import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+	Form,
+	useLoaderData,
+	useNavigate,
+	useSearchParams,
+} from "@remix-run/react";
 import classNames from "classnames";
 import { uniq } from "lodash-es";
 import { DateTime } from "luxon";
@@ -31,6 +36,7 @@ export default function PatientsTable(p: {
 	const [search] = useSearchParams();
 
 	const [selectedIds, setSelectedIds] = useState([]);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setSelectedIds([]);
@@ -82,7 +88,11 @@ export default function PatientsTable(p: {
 								}
 							};
 							return (
-								<tr key={u.id}>
+								<tr
+									key={u.id}
+									className="cursor-pointer hover:bg-gray-50"
+									onClick={() => navigate(`/patient/${u.id}/bookings`)}
+								>
 									{/* <td onClick={() => toggleCheck()}>
 										<input
 											type="checkbox"
@@ -109,7 +119,10 @@ export default function PatientsTable(p: {
 										</div>
 									</td>
 									<td className="text-gray-800">{u.birthCity}</td>
-									<td className="flex gap-x-2">
+									<td
+										className="flex gap-x-2"
+										onClick={(e) => e.stopPropagation()}
+									>
 										<Button
 											onClick={() => openModal(u)}
 											small

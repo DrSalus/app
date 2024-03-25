@@ -1,5 +1,5 @@
 import { authenticator } from "~/services/auth.server";
-import { json, type LoaderFunctionArgs } from "@remix-run/node";
+import { json, redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
 import { LinkButton } from "~/components/button";
@@ -36,8 +36,12 @@ export async function loader({ request, ...other }: LoaderFunctionArgs) {
 			},
 		},
 	});
+	if (agendas?.length === 0) {
+		return redirect("/");
+	}
 
 	const agendaId = agendas?.[0].id;
+	
 	return agendaLoader({ request, ...other, params: { agendaId } });
 }
 

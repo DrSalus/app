@@ -4,6 +4,7 @@ import classNames from "classnames";
 
 interface InputFieldProps extends Omit<FieldProps, "children"> {
 	inputClassName?: string;
+	errorText?: string;
 	onChange?: (val: string) => void;
 	format?: (val: string) => any;
 	value?: string;
@@ -30,6 +31,7 @@ export default function InputField({
 		<Field
 			name={name}
 			label={label}
+			errorText={p.errorText}
 			helperText={helperText}
 			showLabel={showLabel}
 			showError={showError}

@@ -11,6 +11,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 				gte: DateTime.now().endOf("day").toISO(),
 				lt: DateTime.now().plus({ day: 1 }).endOf("day").toISO(),
 			},
+			acceptedAt: null,
+			cancelledAt: null,
 		},
 	});
 	for (const booking of tomorrowsBooking) {

@@ -1752,10 +1752,6 @@ table {
   grid-column: span 8 / span 8;
 }
 
-.m-4 {
-  margin: 1rem;
-}
-
 .m-2 {
   margin: 0.5rem;
 }

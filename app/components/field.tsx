@@ -7,6 +7,7 @@ export interface FieldProps {
   showLabel?: boolean;
   showError?: boolean;
   helperText?: string;
+  errorText?: string;
   children: JSX.Element;
 }
 
@@ -16,10 +17,12 @@ export default function Field({
   helperText,
   showLabel,
   showError,
+  errorText,
   children,
 }: FieldProps) {
-  const { error } = useField(name);
-
+  const { error: fieldError } = useField(name);
+  const error = errorText || fieldError;
+  
   return (
     <>
       {showLabel !== false && <label htmlFor={name}>{label}</label>}

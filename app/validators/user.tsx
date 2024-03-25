@@ -17,11 +17,12 @@ const baseUser = z.object({
 	]),
 });
 
+
 const user = z.discriminatedUnion("_action", [
 	baseUser.extend({
 		_action: z.literal("create"),
 		_redirect: z.string().optional(),
-		password: z.string().min(6, { message: "La password è obbligatoria" }),
+		password: z.string().min(6, { message: "E' obbligatoria una password di minimo 6 caratteri." }),
 		passwordConfirmation: z.string(),
 	}),
 	baseUser.extend({

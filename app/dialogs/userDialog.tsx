@@ -6,6 +6,7 @@ import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
 import {
 	ValidatedForm,
 	useControlField,
+	useField,
 	useUpdateControlledField,
 } from "remix-validated-form";
 import { validator } from "~/validators/user";
@@ -13,8 +14,10 @@ import InputField from "~/components/fields/inputField";
 import SelectField from "~/components/fields/selectField";
 import { v4 } from "uuid";
 import Show from "~/components/show";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import ClinicField from "~/components/fields/clinicField";
+import { isEmpty } from "lodash-es";
+import Callout from "~/components/callout";
 
 export function UserDialog(p: {
 	redirectTo?: string;
@@ -103,11 +106,7 @@ export function UserDialog(p: {
 									inputProps={{ type: "password" }}
 									label="Password"
 								/>
-								<InputField
-									inputProps={{ type: "password" }}
-									name="passwordConfirmation"
-									label="Conferma Password"
-								/>
+							<PasswordConfirmationInput />
 							</>
 						</Show>
 					</div>
@@ -124,5 +123,25 @@ export function UserDialog(p: {
 				</ValidatedForm>
 			</div>
 		</Overlay>
+	);
+}
+
+function PasswordConfirmationInput() {
+	const [value] = useControlField<string>('password');
+	const [confirmation] = useControlField<string>('passwordConfirmation');
+
+	const hasError = useMemo(() => {
+		return (value !== confirmation && !isEmpty(confirmation));
+	}, [value, confirmation]);
+	
+	return (
+		<>
+			<InputField
+				inputProps={{ type: "password" }}
+				name="passwordConfirmation"
+				label="Conferma Password"
+				errorText={hasError ? "Le password non corrispondono" : undefined}
+			/>
+		</>
 	);
 }
