@@ -4,6 +4,7 @@ import {
 	DocumentArrowUpIcon,
 	GlobeAmericasIcon,
 	HomeIcon,
+	UsersIcon,
 	ReceiptPercentIcon,
 } from "@heroicons/react/24/solid";
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
@@ -52,6 +53,7 @@ export default function Clinic() {
 							title: "Agende",
 							icon: <CalendarDaysIcon />,
 						},
+						{ id: "patients", title: "Pazienti", icon: <UsersIcon /> },
 						{ id: "doctors", title: "Dottori", icon: <DocumentArrowUpIcon /> },
 						{
 							id: "services",

@@ -11,11 +11,14 @@ import {
 import { validator } from "~/validators/patient";
 import InputField from "~/components/fields/inputField";
 import SelectField from "~/components/fields/selectField";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CodiceFiscale from "codice-fiscale-js";
 import { DateTime } from "luxon";
 import { upperFirst } from "lodash-es";
 import { v4 } from "uuid";
+import FiscalCodeUniqueChecker, {
+	useFiscalCodeUniqueChecker,
+} from "~/components/fiscalCodeUniqueChecker";
 
 export function PatientDialog(p: {
 	patient?: WithSerializedTypes<Patient | null>;
@@ -33,6 +36,7 @@ export function PatientDialog(p: {
 			birthDate: defaultValues.birthDate.split("T")[0],
 		};
 	}
+	const [unique, setUnique] = useState(true);
 	const key = useMemo(() => p.patient?.id ?? v4(), [p.patient?.id, p.isOpen]);
 
 	return (
@@ -81,12 +85,19 @@ export function PatientDialog(p: {
 							]}
 						/>
 					</div>
+					<FiscalCodeUniqueChecker
+						id={p.patient?.id}
+						className="m-2"
+						onUpdateUnique={setUnique}
+						message="Il codice fiscale inserito risulta già presente in piattaforma. In fase di accettazione, se inserirai lo stesso codice fiscale i dati dei pazienti verranno aggiornati. "
+					/>
 
 					<div className="p-4 pb-2">
 						<Button
 							intent="primary"
 							className="w-full"
 							type="submit"
+							disabled={!unique}
 							text={isNew ? "Aggiungi Paziente" : "Modifica Paziente"}
 							icon={<PlusIcon />}
 						/>
@@ -103,9 +114,7 @@ function FiscalCodeUpdater() {
 
 	useEffect(() => {
 		try {
-			console.log("V", value);
 			const cf = new CodiceFiscale(value);
-			console.log(cf);
 			if (cf.isValid()) {
 				setValue(
 					"birthDate",

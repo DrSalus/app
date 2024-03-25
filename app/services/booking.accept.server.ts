@@ -29,15 +29,36 @@ export async function handleRequest(request: Request) {
 		throw new Error("Booking not found");
 	}
 
-	// Update the booking
-	await db.patient.update({
-		data: {
-			firstName,
-			lastName,
-			fiscalCode,
-		},
-		where: { id: booking.patientId },
+	// Now let's check if the fiscal code is already in use.
+	const existingPatient = await db.patient.findFirst({
+		where: { fiscalCode },
 	});
+
+	// If the patient already exists, we don't need to create a new one.
+	if (existingPatient) {
+		// Link to the previous patient.
+		await db.serviceBooking.update({
+			where: { id: bookingId },
+			data: {
+				patientId: existingPatient.id,
+			},
+		});
+
+		// Delete the existing.
+		await db.patient.delete({
+			where: { id: booking.patientId },
+		});
+	} else {
+		// Update the booking
+		await db.patient.update({
+			data: {
+				firstName,
+				lastName,
+				fiscalCode,
+			},
+			where: { id: booking.patientId },
+		});
+	}
 
 	// Update the booking state.
 	await db.serviceBooking.update({

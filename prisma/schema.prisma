@@ -159,7 +159,7 @@ model ServiceBooking {
   agenda   Agenda @relation(fields: [agendaId], references: [id])
   agendaId String
 
-  patient   Patient @relation(fields: [patientId], references: [id])
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
   patientId String
 
   service   ServiceOffering @relation(fields: [serviceId], references: [id])
@@ -215,7 +215,7 @@ model Message {
 
   kind MessageKind
 
-  booking   ServiceBooking @relation(fields: [bookingId], references: [id])
+  booking   ServiceBooking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   bookingId String
 
   errorMessage String?

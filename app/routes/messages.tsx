@@ -87,7 +87,7 @@ export default function Clinics() {
 				<table>
 					<thead>
 						<tr>
-							<th className="w-40">Stato</th>
+							<th className="w-28">Stato</th>
 							<th>Tipo</th>
 							<th className="">Paziente</th>
 							<th className="">Telefono</th>
@@ -102,14 +102,14 @@ export default function Clinics() {
 							<tr key={u.id}>
 								<td>
 									{u.errorMessage == null ? (
-										<div className="bg-green-100 flex items-center justify-center px-2 text-center font-medium text-green-800">
+										<div className="bg-green-100 flex items-center px-2  font-medium text-green-800">
 											<CheckCircleIcon className="mr-2 h-3.5 mt-0.5" />
-											<div>Inviato</div>
+											<div className="text-sm uppercase">Inviato</div>
 										</div>
 									) : (
-										<div className="bg-orange-100 flex items-center justify-center px-2 text-center font-medium  text-orange-800">
+										<div className="bg-orange-100 flex items-center px-2  font-medium  text-orange-800">
 											<ExclamationTriangleIcon className="mr-2 h-3.5 mt-0.5" />
-											<div>Non Inviato</div>
+											<div className="text-sm uppercase">Errore</div>
 										</div>
 									)}
 								</td>

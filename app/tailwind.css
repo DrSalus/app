@@ -1756,6 +1756,10 @@ table {
   margin: 1rem;
 }
 
+.m-2 {
+  margin: 0.5rem;
+}
+
 .-mx-2 {
   margin-left: -0.5rem;
   margin-right: -0.5rem;
@@ -1793,6 +1797,10 @@ table {
 
 .-mb-2 {
   margin-bottom: -0.5rem;
+}
+
+.-mt-2 {
+  margin-top: -0.5rem;
 }
 
 .-mt-3 {
@@ -2001,10 +2009,6 @@ table {
 
 .w-4 {
   width: 1rem;
-}
-
-.w-40 {
-  width: 10rem;
 }
 
 .w-44 {
