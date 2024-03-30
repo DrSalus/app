@@ -1,4 +1,4 @@
-import { isEmpty, throttle } from "lodash";
+import { isEmpty, throttle } from "lodash-es";
 import React, { useEffect, useRef } from "react";
 import { useControlField, useFormContext } from "remix-validated-form";
 import InputField from "./inputField";
