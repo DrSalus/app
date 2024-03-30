@@ -1,0 +1,733 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs-eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/clinic.$id.agenda.$agendaId": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinicalServices.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/serviceOffering.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/patient.$id.bookings": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinic.$id.patients": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinic.$id.services": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/booking.$id.remind": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinic.$id.agendas": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinic.$id.doctors": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinicalServices": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/confirmation.$id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinic.$id.home": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/patients.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/agendas.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/book.$agendaId": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/booking.$id.ok": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/booking.accept": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/booking.cancel": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/booking.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinics.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/doctors.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/forgotPassword": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/booking.move": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/users.upsert": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/booking.$id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/remind.cron": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinic.$id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/fiscalCode": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/messages": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/patients": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/clinics": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/doctors": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/geocode": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/manager": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_index": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/agenda": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/logout": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/manage": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/search": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/admin": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/login": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/users": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/test": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "app/root.tsx",
+        "config": {}
+      },
+      "routes/clinic.$id.agenda.$agendaId": {
+        "file": "app/routes/clinic.$id.agenda.$agendaId.tsx",
+        "id": "routes/clinic.$id.agenda.$agendaId",
+        "path": "agenda/:agendaId",
+        "parentId": "routes/clinic.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinicalServices.upsert": {
+        "file": "app/routes/clinicalServices.upsert.tsx",
+        "id": "routes/clinicalServices.upsert",
+        "path": "upsert",
+        "parentId": "routes/clinicalServices",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/serviceOffering.upsert": {
+        "file": "app/routes/serviceOffering.upsert.tsx",
+        "id": "routes/serviceOffering.upsert",
+        "path": "serviceOffering/upsert",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/patient.$id.bookings": {
+        "file": "app/routes/patient.$id.bookings.tsx",
+        "id": "routes/patient.$id.bookings",
+        "path": "patient/:id/bookings",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinic.$id.patients": {
+        "file": "app/routes/clinic.$id.patients.tsx",
+        "id": "routes/clinic.$id.patients",
+        "path": "patients",
+        "parentId": "routes/clinic.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinic.$id.services": {
+        "file": "app/routes/clinic.$id.services.tsx",
+        "id": "routes/clinic.$id.services",
+        "path": "services",
+        "parentId": "routes/clinic.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/booking.$id.remind": {
+        "file": "app/routes/booking.$id.remind.tsx",
+        "id": "routes/booking.$id.remind",
+        "path": "remind",
+        "parentId": "routes/booking.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinic.$id.agendas": {
+        "file": "app/routes/clinic.$id.agendas.tsx",
+        "id": "routes/clinic.$id.agendas",
+        "path": "agendas",
+        "parentId": "routes/clinic.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinic.$id.doctors": {
+        "file": "app/routes/clinic.$id.doctors.tsx",
+        "id": "routes/clinic.$id.doctors",
+        "path": "doctors",
+        "parentId": "routes/clinic.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinicalServices": {
+        "file": "app/routes/clinicalServices.tsx",
+        "id": "routes/clinicalServices",
+        "path": "clinicalServices",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/confirmation.$id": {
+        "file": "app/routes/confirmation.$id.tsx",
+        "id": "routes/confirmation.$id",
+        "path": "confirmation/:id",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinic.$id.home": {
+        "file": "app/routes/clinic.$id.home.tsx",
+        "id": "routes/clinic.$id.home",
+        "path": "home",
+        "parentId": "routes/clinic.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/patients.upsert": {
+        "file": "app/routes/patients.upsert.tsx",
+        "id": "routes/patients.upsert",
+        "path": "upsert",
+        "parentId": "routes/patients",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/agendas.upsert": {
+        "file": "app/routes/agendas.upsert.tsx",
+        "id": "routes/agendas.upsert",
+        "path": "agendas/upsert",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/book.$agendaId": {
+        "file": "app/routes/book.$agendaId.tsx",
+        "id": "routes/book.$agendaId",
+        "path": "book/:agendaId",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/booking.$id.ok": {
+        "file": "app/routes/booking.$id.ok.tsx",
+        "id": "routes/booking.$id.ok",
+        "path": "ok",
+        "parentId": "routes/booking.$id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/booking.accept": {
+        "file": "app/routes/booking.accept.tsx",
+        "id": "routes/booking.accept",
+        "path": "booking/accept",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/booking.cancel": {
+        "file": "app/routes/booking.cancel.tsx",
+        "id": "routes/booking.cancel",
+        "path": "booking/cancel",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/booking.upsert": {
+        "file": "app/routes/booking.upsert.tsx",
+        "id": "routes/booking.upsert",
+        "path": "booking/upsert",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinics.upsert": {
+        "file": "app/routes/clinics.upsert.tsx",
+        "id": "routes/clinics.upsert",
+        "path": "upsert",
+        "parentId": "routes/clinics",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/doctors.upsert": {
+        "file": "app/routes/doctors.upsert.tsx",
+        "id": "routes/doctors.upsert",
+        "path": "upsert",
+        "parentId": "routes/doctors",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/forgotPassword": {
+        "file": "app/routes/forgotPassword.tsx",
+        "id": "routes/forgotPassword",
+        "path": "forgotPassword",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/booking.move": {
+        "file": "app/routes/booking.move.tsx",
+        "id": "routes/booking.move",
+        "path": "booking/move",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/users.upsert": {
+        "file": "app/routes/users.upsert.tsx",
+        "id": "routes/users.upsert",
+        "path": "upsert",
+        "parentId": "routes/users",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/booking.$id": {
+        "file": "app/routes/booking.$id.tsx",
+        "id": "routes/booking.$id",
+        "path": "booking/:id",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/remind.cron": {
+        "file": "app/routes/remind.cron.ts",
+        "id": "routes/remind.cron",
+        "path": "remind/cron",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinic.$id": {
+        "file": "app/routes/clinic.$id.tsx",
+        "id": "routes/clinic.$id",
+        "path": "clinic/:id",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/fiscalCode": {
+        "file": "app/routes/fiscalCode.tsx",
+        "id": "routes/fiscalCode",
+        "path": "fiscalCode",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/messages": {
+        "file": "app/routes/messages.tsx",
+        "id": "routes/messages",
+        "path": "messages",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/patients": {
+        "file": "app/routes/patients.tsx",
+        "id": "routes/patients",
+        "path": "patients",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/clinics": {
+        "file": "app/routes/clinics.tsx",
+        "id": "routes/clinics",
+        "path": "clinics",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/doctors": {
+        "file": "app/routes/doctors.tsx",
+        "id": "routes/doctors",
+        "path": "doctors",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/geocode": {
+        "file": "app/routes/geocode.tsx",
+        "id": "routes/geocode",
+        "path": "geocode",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/manager": {
+        "file": "app/routes/manager.tsx",
+        "id": "routes/manager",
+        "path": "manager",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_index": {
+        "file": "app/routes/_index.tsx",
+        "id": "routes/_index",
+        "index": true,
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/agenda": {
+        "file": "app/routes/agenda.tsx",
+        "id": "routes/agenda",
+        "path": "agenda",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/logout": {
+        "file": "app/routes/logout.tsx",
+        "id": "routes/logout",
+        "path": "logout",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/manage": {
+        "file": "app/routes/manage.tsx",
+        "id": "routes/manage",
+        "path": "manage",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/search": {
+        "file": "app/routes/search.tsx",
+        "id": "routes/search",
+        "path": "search",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/admin": {
+        "file": "app/routes/admin.tsx",
+        "id": "routes/admin",
+        "path": "admin",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/login": {
+        "file": "app/routes/login.tsx",
+        "id": "routes/login",
+        "path": "login",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/users": {
+        "file": "app/routes/users.tsx",
+        "id": "routes/users",
+        "path": "users",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/test": {
+        "file": "app/routes/test.tsx",
+        "id": "routes/test",
+        "path": "test",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "remixConfig": {
+    "appDirectory": "/Users/danilotorrisi/Desktop/OLDSK/medicapp/app",
+    "basename": "/",
+    "buildDirectory": "/Users/danilotorrisi/Desktop/OLDSK/medicapp/build",
+    "future": {
+      "v3_fetcherPersist": false,
+      "v3_relativeSplatPath": false,
+      "v3_throwAbortReason": false
+    },
+    "manifest": false,
+    "publicPath": "/",
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "root.tsx"
+      },
+      "routes/clinic.$id.agenda.$agendaId": {
+        "file": "routes/clinic.$id.agenda.$agendaId.tsx",
+        "id": "routes/clinic.$id.agenda.$agendaId",
+        "path": "agenda/:agendaId",
+        "parentId": "routes/clinic.$id"
+      },
+      "routes/clinicalServices.upsert": {
+        "file": "routes/clinicalServices.upsert.tsx",
+        "id": "routes/clinicalServices.upsert",
+        "path": "upsert",
+        "parentId": "routes/clinicalServices"
+      },
+      "routes/serviceOffering.upsert": {
+        "file": "routes/serviceOffering.upsert.tsx",
+        "id": "routes/serviceOffering.upsert",
+        "path": "serviceOffering/upsert",
+        "parentId": "root"
+      },
+      "routes/patient.$id.bookings": {
+        "file": "routes/patient.$id.bookings.tsx",
+        "id": "routes/patient.$id.bookings",
+        "path": "patient/:id/bookings",
+        "parentId": "root"
+      },
+      "routes/clinic.$id.patients": {
+        "file": "routes/clinic.$id.patients.tsx",
+        "id": "routes/clinic.$id.patients",
+        "path": "patients",
+        "parentId": "routes/clinic.$id"
+      },
+      "routes/clinic.$id.services": {
+        "file": "routes/clinic.$id.services.tsx",
+        "id": "routes/clinic.$id.services",
+        "path": "services",
+        "parentId": "routes/clinic.$id"
+      },
+      "routes/booking.$id.remind": {
+        "file": "routes/booking.$id.remind.tsx",
+        "id": "routes/booking.$id.remind",
+        "path": "remind",
+        "parentId": "routes/booking.$id"
+      },
+      "routes/clinic.$id.agendas": {
+        "file": "routes/clinic.$id.agendas.tsx",
+        "id": "routes/clinic.$id.agendas",
+        "path": "agendas",
+        "parentId": "routes/clinic.$id"
+      },
+      "routes/clinic.$id.doctors": {
+        "file": "routes/clinic.$id.doctors.tsx",
+        "id": "routes/clinic.$id.doctors",
+        "path": "doctors",
+        "parentId": "routes/clinic.$id"
+      },
+      "routes/clinicalServices": {
+        "file": "routes/clinicalServices.tsx",
+        "id": "routes/clinicalServices",
+        "path": "clinicalServices",
+        "parentId": "root"
+      },
+      "routes/confirmation.$id": {
+        "file": "routes/confirmation.$id.tsx",
+        "id": "routes/confirmation.$id",
+        "path": "confirmation/:id",
+        "parentId": "root"
+      },
+      "routes/clinic.$id.home": {
+        "file": "routes/clinic.$id.home.tsx",
+        "id": "routes/clinic.$id.home",
+        "path": "home",
+        "parentId": "routes/clinic.$id"
+      },
+      "routes/patients.upsert": {
+        "file": "routes/patients.upsert.tsx",
+        "id": "routes/patients.upsert",
+        "path": "upsert",
+        "parentId": "routes/patients"
+      },
+      "routes/agendas.upsert": {
+        "file": "routes/agendas.upsert.tsx",
+        "id": "routes/agendas.upsert",
+        "path": "agendas/upsert",
+        "parentId": "root"
+      },
+      "routes/book.$agendaId": {
+        "file": "routes/book.$agendaId.tsx",
+        "id": "routes/book.$agendaId",
+        "path": "book/:agendaId",
+        "parentId": "root"
+      },
+      "routes/booking.$id.ok": {
+        "file": "routes/booking.$id.ok.tsx",
+        "id": "routes/booking.$id.ok",
+        "path": "ok",
+        "parentId": "routes/booking.$id"
+      },
+      "routes/booking.accept": {
+        "file": "routes/booking.accept.tsx",
+        "id": "routes/booking.accept",
+        "path": "booking/accept",
+        "parentId": "root"
+      },
+      "routes/booking.cancel": {
+        "file": "routes/booking.cancel.tsx",
+        "id": "routes/booking.cancel",
+        "path": "booking/cancel",
+        "parentId": "root"
+      },
+      "routes/booking.upsert": {
+        "file": "routes/booking.upsert.tsx",
+        "id": "routes/booking.upsert",
+        "path": "booking/upsert",
+        "parentId": "root"
+      },
+      "routes/clinics.upsert": {
+        "file": "routes/clinics.upsert.tsx",
+        "id": "routes/clinics.upsert",
+        "path": "upsert",
+        "parentId": "routes/clinics"
+      },
+      "routes/doctors.upsert": {
+        "file": "routes/doctors.upsert.tsx",
+        "id": "routes/doctors.upsert",
+        "path": "upsert",
+        "parentId": "routes/doctors"
+      },
+      "routes/forgotPassword": {
+        "file": "routes/forgotPassword.tsx",
+        "id": "routes/forgotPassword",
+        "path": "forgotPassword",
+        "parentId": "root"
+      },
+      "routes/booking.move": {
+        "file": "routes/booking.move.tsx",
+        "id": "routes/booking.move",
+        "path": "booking/move",
+        "parentId": "root"
+      },
+      "routes/users.upsert": {
+        "file": "routes/users.upsert.tsx",
+        "id": "routes/users.upsert",
+        "path": "upsert",
+        "parentId": "routes/users"
+      },
+      "routes/booking.$id": {
+        "file": "routes/booking.$id.tsx",
+        "id": "routes/booking.$id",
+        "path": "booking/:id",
+        "parentId": "root"
+      },
+      "routes/remind.cron": {
+        "file": "routes/remind.cron.ts",
+        "id": "routes/remind.cron",
+        "path": "remind/cron",
+        "parentId": "root"
+      },
+      "routes/clinic.$id": {
+        "file": "routes/clinic.$id.tsx",
+        "id": "routes/clinic.$id",
+        "path": "clinic/:id",
+        "parentId": "root"
+      },
+      "routes/fiscalCode": {
+        "file": "routes/fiscalCode.tsx",
+        "id": "routes/fiscalCode",
+        "path": "fiscalCode",
+        "parentId": "root"
+      },
+      "routes/messages": {
+        "file": "routes/messages.tsx",
+        "id": "routes/messages",
+        "path": "messages",
+        "parentId": "root"
+      },
+      "routes/patients": {
+        "file": "routes/patients.tsx",
+        "id": "routes/patients",
+        "path": "patients",
+        "parentId": "root"
+      },
+      "routes/clinics": {
+        "file": "routes/clinics.tsx",
+        "id": "routes/clinics",
+        "path": "clinics",
+        "parentId": "root"
+      },
+      "routes/doctors": {
+        "file": "routes/doctors.tsx",
+        "id": "routes/doctors",
+        "path": "doctors",
+        "parentId": "root"
+      },
+      "routes/geocode": {
+        "file": "routes/geocode.tsx",
+        "id": "routes/geocode",
+        "path": "geocode",
+        "parentId": "root"
+      },
+      "routes/manager": {
+        "file": "routes/manager.tsx",
+        "id": "routes/manager",
+        "path": "manager",
+        "parentId": "root"
+      },
+      "routes/_index": {
+        "file": "routes/_index.tsx",
+        "id": "routes/_index",
+        "index": true,
+        "parentId": "root"
+      },
+      "routes/agenda": {
+        "file": "routes/agenda.tsx",
+        "id": "routes/agenda",
+        "path": "agenda",
+        "parentId": "root"
+      },
+      "routes/logout": {
+        "file": "routes/logout.tsx",
+        "id": "routes/logout",
+        "path": "logout",
+        "parentId": "root"
+      },
+      "routes/manage": {
+        "file": "routes/manage.tsx",
+        "id": "routes/manage",
+        "path": "manage",
+        "parentId": "root"
+      },
+      "routes/search": {
+        "file": "routes/search.tsx",
+        "id": "routes/search",
+        "path": "search",
+        "parentId": "root"
+      },
+      "routes/admin": {
+        "file": "routes/admin.tsx",
+        "id": "routes/admin",
+        "path": "admin",
+        "parentId": "root"
+      },
+      "routes/login": {
+        "file": "routes/login.tsx",
+        "id": "routes/login",
+        "path": "login",
+        "parentId": "root"
+      },
+      "routes/users": {
+        "file": "routes/users.tsx",
+        "id": "routes/users",
+        "path": "users",
+        "parentId": "root"
+      },
+      "routes/test": {
+        "file": "routes/test.tsx",
+        "id": "routes/test",
+        "path": "test",
+        "parentId": "root"
+      }
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true
+  }
+}
