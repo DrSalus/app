@@ -729,5 +729,10 @@
     "serverBuildFile": "index.js",
     "serverModuleFormat": "esm",
     "ssr": true
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
   }
 }

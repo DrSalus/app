@@ -8,7 +8,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from "@remix-run/react";
-import styles from "./tailwind.css";
+import styles from "./tailwind.css?inline";
 import AppToasts from "./components/appToasts";
 import NavigationBar from "./components/navigationBar";
 import { authenticator } from "./services/auth.server";
