@@ -1,19 +1,13 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Doctor, DoctorSpecialty, Gender, type Patient } from "@prisma/client";
+import { Doctor, DoctorSpecialty } from "@prisma/client";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
-import {
-	ValidatedForm,
-	useControlField,
-	useUpdateControlledField,
-} from "remix-validated-form";
+import { ValidatedForm } from "remix-validated-form";
 import { validator } from "~/validators/doctor";
 import InputField from "~/components/fields/inputField";
-import React, { useEffect, useMemo } from "react";
-import CodiceFiscale from "codice-fiscale-js";
-import { DateTime } from "luxon";
-import { last, upperFirst } from "lodash-es";
+import { useMemo } from "react";
+import { last } from "lodash-es";
 import { v4 } from "uuid";
 import { useMatches } from "@remix-run/react";
 import RelationshipField from "~/components/relationshipField";

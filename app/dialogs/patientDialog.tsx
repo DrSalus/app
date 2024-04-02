@@ -1,5 +1,5 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Gender, type Patient } from "@prisma/client";
+import { type Patient } from "@prisma/client";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
@@ -79,9 +79,9 @@ export function PatientDialog(p: {
 							label="Genere"
 							options={[
 								{ value: "", label: "-" },
-								{ value: Gender.MALE, label: "Maschio" },
-								{ value: Gender.FEMALE, label: "Femmina" },
-								{ value: Gender.NOT_SPECIFIED, label: "Non specificato" },
+								{ value: "MALE", label: "Maschio" },
+								{ value: "FEMALE", label: "Femmina" },
+								{ value: "NOT_SPECIFIED", label: "Non specificato" },
 							]}
 						/>
 					</div>
@@ -120,7 +120,7 @@ function FiscalCodeUpdater() {
 					"birthDate",
 					DateTime.fromJSDate(cf.birthday).toFormat("yyyy-MM-dd"),
 				);
-				setValue("gender", cf.gender === "M" ? Gender.MALE : Gender.FEMALE);
+				setValue("gender", cf.gender === "M" ? "MALE" : "FEMALE");
 				setValue("birthCity", upperFirst(cf.birthplace.nome));
 			}
 		} catch {}

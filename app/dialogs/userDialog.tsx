@@ -1,23 +1,17 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Gender, User, type Patient, UserKind, Clinic } from "@prisma/client";
+import { User, UserKind, Clinic } from "@prisma/client";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";
-import {
-	ValidatedForm,
-	useControlField,
-	useField,
-	useUpdateControlledField,
-} from "remix-validated-form";
+import { ValidatedForm, useControlField } from "remix-validated-form";
 import { validator } from "~/validators/user";
 import InputField from "~/components/fields/inputField";
 import SelectField from "~/components/fields/selectField";
 import { v4 } from "uuid";
 import Show from "~/components/show";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import ClinicField from "~/components/fields/clinicField";
 import { isEmpty } from "lodash-es";
-import Callout from "~/components/callout";
 
 export function UserDialog(p: {
 	redirectTo?: string;
@@ -106,7 +100,7 @@ export function UserDialog(p: {
 									inputProps={{ type: "password" }}
 									label="Password"
 								/>
-							<PasswordConfirmationInput />
+								<PasswordConfirmationInput />
 							</>
 						</Show>
 					</div>
@@ -127,13 +121,13 @@ export function UserDialog(p: {
 }
 
 function PasswordConfirmationInput() {
-	const [value] = useControlField<string>('password');
-	const [confirmation] = useControlField<string>('passwordConfirmation');
+	const [value] = useControlField<string>("password");
+	const [confirmation] = useControlField<string>("passwordConfirmation");
 
 	const hasError = useMemo(() => {
-		return (value !== confirmation && !isEmpty(confirmation));
+		return value !== confirmation && !isEmpty(confirmation);
 	}, [value, confirmation]);
-	
+
 	return (
 		<>
 			<InputField

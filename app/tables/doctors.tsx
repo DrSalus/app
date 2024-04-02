@@ -1,11 +1,6 @@
-import {
-	MagnifyingGlassIcon,
-	PencilIcon,
-	PlusIcon,
-	TrashIcon,
-} from "@heroicons/react/24/solid";
-import { Doctor, DoctorSpecialty, Gender, type Patient } from "@prisma/client";
-import { Form, useLoaderData } from "@remix-run/react";
+import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Doctor, DoctorSpecialty, type Patient } from "@prisma/client";
+import { useLoaderData } from "@remix-run/react";
 import classNames from "classnames";
 import { DateTime } from "luxon";
 import Button from "~/components/button";
@@ -111,10 +106,9 @@ export function PatientAge(p: { patient: WithSerializedTypes<Patient> }) {
 			className={classNames(
 				"flex rounded-lg px-2 text-sm font-semibold py-0.5",
 				{
-					"bg-blue-200 text-blue-600": p.patient.gender === Gender.MALE,
-					"bg-pink-200 text-pink-600": p.patient.gender === Gender.FEMALE,
-					"bg-gray-200 text-gray-800":
-						p.patient.gender === Gender.NOT_SPECIFIED,
+					"bg-blue-200 text-blue-600": p.patient.gender === "MALE",
+					"bg-pink-200 text-pink-600": p.patient.gender === "FEMALE",
+					"bg-gray-200 text-gray-800": p.patient.gender === "NOT_SPECIFIED",
 				},
 			)}
 		>
