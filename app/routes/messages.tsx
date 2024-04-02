@@ -1,34 +1,15 @@
 import {
 	CheckCircleIcon,
-	CheckIcon,
-	ExclamationCircleIcon,
 	ExclamationTriangleIcon,
-	MagnifyingGlassIcon,
-	PencilIcon,
-	PlusIcon,
-	TrashIcon,
 } from "@heroicons/react/24/solid";
-import { UserKind, type Clinic } from "@prisma/client";
+import { UserKind } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import {
-	Form,
-	redirect,
-	useLoaderData,
-	useNavigate,
-	useSearchParams,
-} from "@remix-run/react";
-import classNames from "classnames";
+import { redirect, useLoaderData } from "@remix-run/react";
 import { DateTime } from "luxon";
-import Button from "~/components/button";
-import DeleteModal from "~/components/deleteModal";
 import Header from "~/components/header";
 import Pagination, { getPaginationState } from "~/components/pagination";
-import { ClinicDialog } from "~/dialogs/clinicDialog";
 import { authenticator } from "~/services/auth.server";
-import type { WithSerializedTypes } from "~/utils/client";
 import { db } from "~/utils/db.server";
-import { useDialog } from "~/utils/dialog";
-import useStopPropagation from "~/utils/events";
 import { getDisplayName } from "~/utils/patient";
 
 export async function loader({ request }: LoaderFunctionArgs) {
