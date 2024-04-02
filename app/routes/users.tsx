@@ -3,7 +3,8 @@ import {
 	PencilIcon,
 	PlusIcon,
 } from "@heroicons/react/24/solid";
-import { Clinic, User, UserKind } from "@prisma/client";
+import type { Clinic, User } from "@prisma/client";
+import { UserKind } from "@prisma/client";
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import Button from "~/components/button";
