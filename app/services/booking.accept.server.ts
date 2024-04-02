@@ -3,7 +3,7 @@ import { authenticator } from "./auth.server";
 import { validator } from "~/validators/acceptance";
 import { validationError } from "remix-validated-form";
 import { db } from "~/utils/db.server";
-import { BookingState } from "@prisma/client";
+import { BookingState } from "~/utils/enum";
 
 export async function handleRequest(request: Request) {
 	const form = await parseMultipartFormData(request);

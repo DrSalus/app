@@ -1,4 +1,5 @@
-import { Agenda, BookingState, Doctor } from "@prisma/client";
+import { Agenda, Doctor } from "@prisma/client";
+import { BookingState } from "~/utils/enum";
 import classNames from "classnames";
 import { WithSerializedTypes } from "~/utils/client";
 import { getDisplayName } from "~/utils/patient";

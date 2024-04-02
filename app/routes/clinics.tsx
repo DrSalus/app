@@ -4,7 +4,8 @@ import {
 	PlusIcon,
 	TrashIcon,
 } from "@heroicons/react/24/solid";
-import { UserKind, type Clinic } from "@prisma/client";
+import { type Clinic } from "@prisma/client";
+import { UserKind } from "~/utils/enum";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
 	Form,

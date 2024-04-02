@@ -1,7 +1,5 @@
 import {
-	ChevronRightIcon,
 	FaceFrownIcon,
-	MapIcon,
 	MapPinIcon,
 	PhoneIcon,
 	ReceiptPercentIcon,
@@ -11,25 +9,18 @@ import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { isEmpty } from "lodash-es";
 import { useEffect, useState } from "react";
-import Button, { LinkButton } from "~/components/button";
+import { LinkButton } from "~/components/button";
 import Logo from "~/components/logo";
 import RatingView from "~/components/ratingsView";
-import { Select, SelectOption } from "~/components/select";
+import type { SelectOption } from "~/components/select";
+import { Select } from "~/components/select";
 import Show from "~/components/show";
-import { AgendaWithPlans } from "~/dialogs/agenda";
 import { authenticator } from "~/services/auth.server";
-import { getCalendarSlots } from "~/utils/calendar";
 import { db } from "~/utils/db.server";
 import { getDisplayName, getSpecializations } from "~/utils/patient";
-import { action } from "./search";
-import {
-	Agenda,
-	Clinic,
-	Doctor,
-	ServiceOffering,
-	UserKind,
-} from "@prisma/client";
+import type { Agenda, Clinic, Doctor, ServiceOffering } from "@prisma/client";
 import NonIdealState from "~/components/nonIdealState";
+import { UserKind } from "~/utils/enum";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
 	const user = await authenticator.isAuthenticated(request, {});

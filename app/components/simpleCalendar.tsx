@@ -4,7 +4,7 @@ import SmallDay from "./smallDay";
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import classNames from "classnames";
-import { BookingState } from "@prisma/client";
+import { BookingState } from "~/utils/enum";
 import React from "react";
 import Show from "./show";
 import Button from "./button";

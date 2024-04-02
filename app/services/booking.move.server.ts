@@ -3,7 +3,6 @@ import { authenticator } from "./auth.server";
 import { validator } from "~/validators/move";
 import { validationError } from "remix-validated-form";
 import { db } from "~/utils/db.server";
-import { BookingState } from "@prisma/client";
 import { DateTime } from "luxon";
 
 export async function handleRequest(request: Request) {

@@ -1,5 +1,6 @@
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { User, UserKind, Clinic } from "@prisma/client";
+import { User, Clinic } from "@prisma/client";
+import { UserKind } from "~/utils/enum";
 import type { WithSerializedTypes } from "~/utils/client";
 import Button from "~/components/button";
 import Overlay, { DialogCloseOnSubmit } from "~/components/overlay";

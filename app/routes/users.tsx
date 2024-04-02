@@ -4,7 +4,7 @@ import {
 	PlusIcon,
 } from "@heroicons/react/24/solid";
 import type { Clinic, User } from "@prisma/client";
-import { UserKind } from "@prisma/client";
+import { UserKind } from "~/utils/enum";
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
 import Button from "~/components/button";

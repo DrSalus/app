@@ -3,7 +3,7 @@ import {
 	BeakerIcon,
 	ServerStackIcon,
 } from "@heroicons/react/24/solid";
-import { ServiceType } from "@prisma/client";
+import { ServiceType } from "~/utils/enum";
 import className from "classnames";
 
 export default function ServiceTypeLabel(p: { type: ServiceType }) {

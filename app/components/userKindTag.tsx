@@ -4,7 +4,7 @@ import {
 	PhoneArrowDownLeftIcon,
 	WrenchIcon,
 } from "@heroicons/react/24/solid";
-import { UserKind } from "@prisma/client";
+import { UserKind } from "~/utils/enum";
 import classNames from "classnames";
 import React from "react";
 

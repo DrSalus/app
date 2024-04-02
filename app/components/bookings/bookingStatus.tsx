@@ -1,12 +1,11 @@
 import {
 	CalendarDaysIcon,
 	CheckBadgeIcon,
-	CheckCircleIcon,
-	CheckIcon,
 	StopCircleIcon,
-	XCircleIcon,
 } from "@heroicons/react/24/solid";
-import { BookingState, ServiceBooking } from "@prisma/client";
+import { ServiceBooking } from "@prisma/client";
+import { BookingState } from "~/utils/enum";
+
 import classNames from "classnames";
 
 export function BookingStatus(p: { booking: Pick<ServiceBooking, "status"> }) {

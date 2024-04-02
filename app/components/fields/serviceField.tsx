@@ -1,5 +1,7 @@
-import { ClinicalService, ServiceType } from "@prisma/client";
+import { ClinicalService } from "@prisma/client";
 import SelectField from "./selectField";
+import { ServiceType } from "~/utils/enum";
+
 import { WithSerializedTypes } from "~/utils/client";
 import { useControlField } from "remix-validated-form";
 

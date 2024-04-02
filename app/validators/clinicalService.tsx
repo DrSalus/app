@@ -1,4 +1,4 @@
-import { ServiceType } from "@prisma/client";
+import { ServiceType } from "~/utils/enum";
 import { withZod } from "@remix-validated-form/with-zod";
 import z from "zod";
 

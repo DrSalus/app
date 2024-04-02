@@ -1,4 +1,4 @@
-import { ServiceType } from "@prisma/client";
+import { ServiceType } from "~/utils/enum";
 import SelectField from "./selectField";
 
 export default function ServiceTypeField(p: { name?: string; label?: string }) {
