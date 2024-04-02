@@ -1,8 +1,8 @@
-import ColorLogo from "../../public/salus_shit.svg";
-import MonoLogo from "../../public/salus_mono_shit.svg";
-import ColorNotShitLogo from "../../public/salus_less_not_shit.svg";
-import MonoNotShitLogo from "../../public/salus_mono_less_not_shit.svg";
-import MonoShitSmallLogo from "../../public/salus_mono_shit_small.svg";
+import ColorLogo from "../../public/salus.svg";
+import MonoLogo from "../../public/salus_mono.svg";
+import ColorNotShitLogo from "../../public/salus_less_not.svg";
+import MonoNotShitLogo from "../../public/salus_mono_less_not.svg";
+import MonoShitSmallLogo from "../../public/salus_mono_small.svg";
 
 export default function Logo(p: {
 	mono?: boolean;
