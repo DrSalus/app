@@ -1,24 +1,8 @@
-import {
-	MagnifyingGlassIcon,
-	PencilIcon,
-	PlusIcon,
-	TrashIcon,
-} from "@heroicons/react/24/solid";
-import { Gender, type Patient } from "@prisma/client";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useLoaderData, useSearchParams } from "@remix-run/react";
-import classNames from "classnames";
-import { DateTime } from "luxon";
-import React from "react";
-import Button from "~/components/button";
-import DeleteModal from "~/components/deleteModal";
-import Pagination, { getPaginationState } from "~/components/pagination";
-import { PatientDialog } from "~/dialogs/patientDialog";
+import { getPaginationState } from "~/components/pagination";
 import { authenticator } from "~/services/auth.server";
 import PatientsTable from "~/tables/patients";
-import type { WithSerializedTypes } from "~/utils/client";
 import { db } from "~/utils/db.server";
-import { useDialog } from "~/utils/dialog";
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	const url = new URL(request.url);
