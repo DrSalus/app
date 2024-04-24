@@ -74,8 +74,8 @@ export async function getCalendarSlots(
 
 		if (dailyPlan != null && dailyPlan.length > 0) {
 			for (const [slotIndex, singleSlot] of dailyPlan.entries()) {
-				const from = DateTime.fromISO(singleSlot.from);
-				const to = DateTime.fromISO(singleSlot.to);
+				const from = DateTime.fromISO(singleSlot.from).setZone("Europe/Rome");
+				const to = DateTime.fromISO(singleSlot.to).setZone("Europe/Rome");
 
 				const numberOfSlots = Math.ceil(
 					to.diff(from, "minutes").minutes / agenda.slotInterval,
@@ -110,7 +110,7 @@ export async function getCalendarSlots(
 										patient: getDisplayName(booking.patient),
 										service: booking.service.service.name,
 										status: booking.status,
-								  }
+									}
 								: undefined,
 					};
 				});
