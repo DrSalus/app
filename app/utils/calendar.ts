@@ -28,7 +28,7 @@ export async function getCalendarSlots(
 ): Promise<CalendarSlot[]> {
 	const lookAhead = options?.lookAhead ?? 1;
 	const maxLookAhead = options?.maxLookAhead ?? 30;
-	const date = options?.date ?? DateTime.now();
+	const date = (options?.date ?? DateTime.now()).setZone("Europe/Rome");
 
 	const plan = await db.agendaPlan.findFirst({
 		where: { agendaId: agenda.id },
@@ -74,8 +74,8 @@ export async function getCalendarSlots(
 
 		if (dailyPlan != null && dailyPlan.length > 0) {
 			for (const [slotIndex, singleSlot] of dailyPlan.entries()) {
-				const from = DateTime.fromISO(singleSlot.from).setZone("Europe/Rome");
-				const to = DateTime.fromISO(singleSlot.to).setZone("Europe/Rome");
+				const from = DateTime.fromISO(singleSlot.from);
+				const to = DateTime.fromISO(singleSlot.to);
 
 				const numberOfSlots = Math.ceil(
 					to.diff(from, "minutes").minutes / agenda.slotInterval,
